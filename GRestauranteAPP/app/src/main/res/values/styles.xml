@@ -1,0 +1,29 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/actionBar</item>
+        <item name="height">0dp</item>
+        <item name="background">@color/actionBar</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/gray</item>
+    </style>
+        <style name="Theme" parent="Theme.AppCompat.DayNight">
+            <item name="android:actionBarStyle">@style/ActionBar</item>
+            <item name="background">@color/fundo</item>
+        </style>
+
+    <style name="ThemeExcepcion" parent="Theme.AppCompat.DayNight">
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="background">@color/colorPrimaryDark</item>
+    </style>
+        <style name="ActionBar" parent="Theme.AppCompat">
+            <item name="android:background">@color/actionBar</item>
+            <item name="elevation">0dp</item>
+        </style>
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">#fff</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+
+</resources>

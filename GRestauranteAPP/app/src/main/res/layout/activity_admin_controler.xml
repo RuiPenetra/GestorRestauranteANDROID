@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.AdminControlerActivity"
+    android:orientation="horizontal"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_margin="30dp"
+        android:padding="40dp">
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="FUNCIONÁRIO"
+            android:padding="30dp"
+            android:fontFamily="@font/brandon_grotesque_black"
+            android:onClick="onClickFuncionario"
+            />
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="CLIENTE"
+            android:padding="30dp"
+            android:fontFamily="@font/brandon_grotesque_black"
+            android:layout_marginTop="50dp"
+            android:onClick="onClickCliente"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>
