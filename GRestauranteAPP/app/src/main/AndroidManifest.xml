@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme">
-        <activity android:name=".views.AdminControlerActivity"></activity>
-        <activity android:name=".views.RegistarActivity" />
-        <activity android:name=".views.MenuClienteActivity" />
-        <activity android:name=".views.MainActivity" />
-        <activity android:name=".views.LoginActivity">
+        <activity android:name=".views.vistas.AdminControlerActivity"></activity>
+        <activity android:name=".views.vistas.RegistarActivity" />
+        <activity android:name=".views.vistas.MenuClienteActivity" />
+        <activity android:name=".views.vistas.MainActivity" />
+        <activity android:name=".views.vistas.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

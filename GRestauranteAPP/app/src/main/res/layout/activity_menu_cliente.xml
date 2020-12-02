@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".views.MenuClienteActivity">
+    tools:context=".views.vistas.MenuClienteActivity">
 
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -19,9 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            app:mbn_backgroundBottomColor="#EE6C4D"
-            app:mbn_countBackgroundColor="#ff6f00"
-            app:mbn_defaultIconColor="@color/fundo"
+            app:mbn_backgroundBottomColor="#3A3A3A"
+            app:mbn_countBackgroundColor="#000000"
+            app:mbn_defaultIconColor="#ff9b71"
             app:mbn_selectedIconColor="#EE6C4D"
             android:background="@color/actionBar"/>
 

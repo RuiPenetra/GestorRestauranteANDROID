@@ -1,4 +1,4 @@
-package amsi.dei.estg.ipleiria.grestauranteapp.views;
+package amsi.dei.estg.ipleiria.grestauranteapp.views.vistas;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;

@@ -1,10 +1,8 @@
-package amsi.dei.estg.ipleiria.grestauranteapp.views;
+package amsi.dei.estg.ipleiria.grestauranteapp.views.vistas;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,11 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 

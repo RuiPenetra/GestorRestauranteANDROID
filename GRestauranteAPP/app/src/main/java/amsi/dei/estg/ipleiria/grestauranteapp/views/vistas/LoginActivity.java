@@ -1,4 +1,4 @@
-package amsi.dei.estg.ipleiria.grestauranteapp.views;
+package amsi.dei.estg.ipleiria.grestauranteapp.views.vistas;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TableLayout;
 
 import com.google.android.material.tabs.TabLayout;
 
