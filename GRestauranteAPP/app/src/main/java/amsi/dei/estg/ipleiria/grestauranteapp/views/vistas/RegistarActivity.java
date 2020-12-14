@@ -70,7 +70,7 @@ public class RegistarActivity extends AppCompatActivity {
 
     public void onClickRegistar(View view) {
 
-        Intent intent = new Intent(this, MenuClienteActivity.class);
+        Intent intent = new Intent(this, AdminControlerActivity.class);
         startActivity(intent);
     }
 }

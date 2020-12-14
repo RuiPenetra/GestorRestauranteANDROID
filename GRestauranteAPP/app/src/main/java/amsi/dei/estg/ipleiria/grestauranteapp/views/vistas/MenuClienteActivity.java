@@ -33,8 +33,8 @@ public class MenuClienteActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottomNavigation);
 
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.perfil));
-        bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.produto));
-        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.pedidos));
+        bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_produto));
+        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_pedidos));
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new BemVindoFragment()).commit();
         setTitle("Bem vindo");

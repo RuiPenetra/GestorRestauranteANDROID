@@ -18,8 +18,8 @@ public class AdminControlerActivity extends AppCompatActivity {
 
     public void onClickFuncionario(View view) {
 
-  /*      *//**//*Intent intent = new Intent(this, Men.class);
-        startActivity(intent);*/
+        Intent intent = new Intent(this, MenuFuncionarioActivity.class);
+        startActivity(intent);
     }
 
     public void onClickCliente(View view) {

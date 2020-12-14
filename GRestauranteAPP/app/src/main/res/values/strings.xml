@@ -2,4 +2,12 @@
     <string name="app_name">GRestauranteAPP</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menuPerfil">Perfil</string>
+    <string name="menuProdutos">Produtos</string>
+    <string name="menuPedidos">Pedidos</string>
+    <string name="menuContactos">Contactos</string>
+    <string name="ndOpen">Abrir</string>
+    <string name="ndClose">Fechar</string>
+    <string name="actBemVindo">Bem Vindo</string>
+    <string name="menuBemvindo">Bem-Vindo</string>
 </resources>

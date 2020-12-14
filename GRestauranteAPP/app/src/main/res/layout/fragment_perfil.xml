@@ -75,7 +75,7 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/pedidos"
+                            android:src="@drawable/ic_pedidos"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="20dp"/>
                         <TextView
@@ -104,7 +104,7 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/pedidos"
+                            android:src="@drawable/ic_pedidos"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="20dp"/>
                         <TextView
@@ -134,7 +134,7 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/pedidos"
+                            android:src="@drawable/ic_pedidos"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="20dp"/>
                         <TextView
@@ -179,7 +179,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Nome"
-                        android:drawableLeft="@drawable/pedidos"
+                        android:drawableLeft="@drawable/ic_pedidos"
                         android:drawablePadding="10dp"
                         />
 
@@ -203,7 +203,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Apelido"
-                        android:drawableLeft="@drawable/pedidos"
+                        android:drawableLeft="@drawable/ic_pedidos"
                         android:drawablePadding="10dp"
                         />
 
@@ -238,7 +238,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Apelido"
-                        android:drawableLeft="@drawable/pedidos"
+                        android:drawableLeft="@drawable/ic_pedidos"
                         android:drawablePadding="10dp"
                         />
                 </LinearLayout>
@@ -272,7 +272,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="2570-523"
-                        android:drawableLeft="@drawable/pedidos"
+                        android:drawableLeft="@drawable/ic_pedidos"
                         android:drawablePadding="10dp"
                         />
 
@@ -296,7 +296,7 @@
                         android:layout_height="wrap_content"
                         android:text="23 / 05 /2000"
                         android:inputType="date"
-                        android:drawableLeft="@drawable/pedidos"
+                        android:drawableLeft="@drawable/ic_pedidos"
                         android:drawablePadding="10dp"/>
 
 
@@ -331,7 +331,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Portugues"
-                        android:drawableLeft="@drawable/pedidos"
+                        android:drawableLeft="@drawable/ic_pedidos"
                         android:drawablePadding="10dp"/>
 
                 </LinearLayout>
@@ -354,7 +354,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="918493829"
-                        android:drawableLeft="@drawable/pedidos"
+                        android:drawableLeft="@drawable/ic_pedidos"
                         android:drawablePadding="10dp"/>
 
 
@@ -419,7 +419,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="ATENDEDOR PEDIDOS"
-                        android:drawableLeft="@drawable/pedidos"
+                        android:drawableLeft="@drawable/ic_pedidos"
                         android:drawablePadding="10dp"/>
 
 
