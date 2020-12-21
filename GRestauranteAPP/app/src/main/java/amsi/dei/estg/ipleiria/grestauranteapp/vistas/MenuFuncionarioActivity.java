@@ -1,14 +1,11 @@
-package amsi.dei.estg.ipleiria.grestauranteapp.views;
+package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,7 +16,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.material.navigation.NavigationView;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
@@ -39,7 +35,7 @@ public class MenuFuncionarioActivity extends AppCompatActivity implements Naviga
         setContentView(R.layout.activity_menu_funcionario);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        getSupportActionBar().setElevation(0);
+        setSupportActionBar(toolbar);
 
         navigationView = findViewById(R.id.nav_view);
         drawer = findViewById(R.id.drawer_layout);

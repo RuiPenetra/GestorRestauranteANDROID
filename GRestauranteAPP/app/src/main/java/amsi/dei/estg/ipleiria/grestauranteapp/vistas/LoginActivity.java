@@ -1,4 +1,4 @@
-package amsi.dei.estg.ipleiria.grestauranteapp.views.vistas;
+package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;

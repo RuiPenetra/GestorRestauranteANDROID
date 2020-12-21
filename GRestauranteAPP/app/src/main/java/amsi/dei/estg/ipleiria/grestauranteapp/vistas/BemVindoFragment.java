@@ -1,10 +1,9 @@
-package amsi.dei.estg.ipleiria.grestauranteapp.views.vistas;
+package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,15 +11,10 @@ import androidx.fragment.app.Fragment;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 
-public class PedidoFragment extends Fragment {
-
-
+public class BemVindoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-
-
-        return inflater.inflate(R.layout.fragment_pedidos,container,false);
+        return inflater.inflate(R.layout.fragment_bemvindo,container,false);
     }
 }

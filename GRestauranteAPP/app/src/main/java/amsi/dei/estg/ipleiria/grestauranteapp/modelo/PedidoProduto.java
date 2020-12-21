@@ -1,4 +1,4 @@
-package amsi.dei.estg.ipleiria.grestauranteapp.views.modelos;
+package amsi.dei.estg.ipleiria.grestauranteapp.modelo;
 
 public class PedidoProduto {
 

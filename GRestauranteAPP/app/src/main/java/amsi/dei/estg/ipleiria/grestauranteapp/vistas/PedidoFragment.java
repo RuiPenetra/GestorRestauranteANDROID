@@ -1,4 +1,4 @@
-package amsi.dei.estg.ipleiria.grestauranteapp.views.vistas;
+package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,16 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 
-public class ProdutoFragment extends Fragment {
-
-    private RecyclerView recyclerView;
-    private RecyclerView drv;
-
-
+public class PedidoFragment extends Fragment {
 
 
     @Nullable
@@ -25,9 +19,7 @@ public class ProdutoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.fragment_produtos, container, false);
 
-
-        return view;
+        return inflater.inflate(R.layout.fragment_pedidos,container,false);
     }
 }

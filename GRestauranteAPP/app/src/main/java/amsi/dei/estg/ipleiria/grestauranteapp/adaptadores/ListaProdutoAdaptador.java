@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
+import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Produto;
 
 public class ListaProdutoAdaptador extends BaseAdapter {
 
@@ -72,7 +73,7 @@ public class ListaProdutoAdaptador extends BaseAdapter {
 
         public void update(Produto produto){
             tvNome.setText(produto.getNome());
-            tvPreco.setText(produto.getPreco());
+            tvPreco.setText(String.valueOf(produto.getPreco()));
 
             switch (produto.getCategoria()){
                 case 1:

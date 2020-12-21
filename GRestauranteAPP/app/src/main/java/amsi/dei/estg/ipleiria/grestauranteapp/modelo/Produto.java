@@ -1,10 +1,9 @@
-package amsi.dei.estg.ipleiria.grestauranteapp.views.modelos;
+package amsi.dei.estg.ipleiria.grestauranteapp.modelo;
 
 public class Produto {
 
-    private int id;
-    private String nome, ingredientes, categoria;
-    private float preco;
+    private int id,categoria;
+    private String nome, ingredientes,preco;
 
     public int getId() {
         return id;
@@ -18,15 +17,15 @@ public class Produto {
         return ingredientes;
     }
 
-    public String getCategoria() {
+    public int getCategoria() {
         return categoria;
     }
 
-    public float getPreco() {
+    public String getPreco() {
         return preco;
     }
 
-    public Produto(int id, String nome, String ingredientes, String categoria, float preco) {
+    public Produto(int id, String nome, String ingredientes, String preco, int categoria) {
         this.id = id;
         this.nome = nome;
         this.ingredientes = ingredientes;
