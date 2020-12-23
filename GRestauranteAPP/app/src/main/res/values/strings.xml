@@ -10,4 +10,5 @@
     <string name="ndClose">Fechar</string>
     <string name="actBemVindo">Bem Vindo</string>
     <string name="menuBemvindo">Bem-Vindo</string>
+    <string name="noInternet">Não existe ligação à internet</string>
 </resources>

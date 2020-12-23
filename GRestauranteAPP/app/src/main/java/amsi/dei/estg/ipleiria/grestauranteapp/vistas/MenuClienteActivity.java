@@ -1,10 +1,12 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -29,29 +31,28 @@ public class MenuClienteActivity extends AppCompatActivity {
 
         getSupportActionBar().setElevation(0);
 
-        btn_login=findViewById(R.id.btn_login);
+        btn_login = findViewById(R.id.btn_login);
         bottomNavigation = findViewById(R.id.bottomNavigation);
 
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.perfil));
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_produto));
         bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_pedidos));
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new BemVindoFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BemVindoFragment()).commit();
         setTitle("Bem vindo");
 
-        
+
         bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
             @Override
             public void onClickItem(MeowBottomNavigation.Model item) {
-
-
-                switch (item.getId()){
+                Fragment fragment = null;
+                switch (item.getId()) {
 
                     case ID_PERFIL:
                         Toast.makeText(MenuClienteActivity.this, "Perfil", Toast.LENGTH_SHORT).show();
                         break;
                     case ID_PRODUTO:
-                        Toast.makeText(MenuClienteActivity.this, "Produtos", Toast.LENGTH_SHORT).show();
+                        fragment = new ProdutoFragment();
                         break;
                     case ID_PEDIDOS:
                         Toast.makeText(MenuClienteActivity.this, "Take-away", Toast.LENGTH_SHORT).show();
@@ -64,28 +65,29 @@ public class MenuClienteActivity extends AppCompatActivity {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
 
-                Fragment fragmento_selecionado=null;
+                Fragment fragmento_selecionado = null;
 
-                switch (item.getId()){
+                switch (item.getId()) {
 
                     case ID_PERFIL:
-                        fragmento_selecionado=new PerfilFragment();
+                        fragmento_selecionado = new PerfilFragment();
                         setTitle("Perfil");
 
                         break;
                     case ID_PRODUTO:
-                        fragmento_selecionado=new ProdutoFragment();
+                        fragmento_selecionado = new ProdutoFragment();
                         setTitle("Produtos");
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBar)));
                         break;
                     case ID_PEDIDOS:
-                        fragmento_selecionado=new PedidoFragment();
+                        fragmento_selecionado = new PedidoFragment();
                         setTitle("Take-away");
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBar)));
 
                         break;
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragmento_selecionado).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragmento_selecionado).commit();
+
             }
         });
 
@@ -93,23 +95,23 @@ public class MenuClienteActivity extends AppCompatActivity {
             @Override
             public void onReselectItem(MeowBottomNavigation.Model item) {
 
-                Fragment fragmento_selecionado=null;
+                Fragment fragmento_selecionado = null;
 
-                switch (item.getId()){
+                switch (item.getId()) {
 
                     case ID_PERFIL:
 
-                        fragmento_selecionado=new PerfilFragment();
+                        fragmento_selecionado = new PerfilFragment();
                         break;
                     case ID_PRODUTO:
-                        fragmento_selecionado=new ProdutoFragment();
+                        fragmento_selecionado = new ProdutoFragment();
                         break;
                     case ID_PEDIDOS:
-                        fragmento_selecionado=new PedidoFragment();
+                        fragmento_selecionado = new PedidoFragment();
                         break;
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragmento_selecionado).commit();
             }
+
         });
     }
 }
