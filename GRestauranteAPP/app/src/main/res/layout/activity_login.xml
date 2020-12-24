@@ -34,8 +34,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -65,14 +64,14 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <CheckBox
+                android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#fff"
-                android:text="Esquecime-me da Password?"
+                android:text="Relembre-me"
                 android:layout_gravity="right"
                 android:layout_marginTop="10dp"
-                android:elevation="0dp"/>
+                android:layout_marginRight="20dp"/>
 
             <Button
                 android:id="@+id/btn_login"
@@ -83,6 +82,15 @@
                 android:textColor="#fff"
                 android:layout_marginTop="30dp"
                 android:onClick="onClickLogin"/>
+            <Button
+                android:id="@+id/btn_registar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Registar"
+                android:background="#AD000000"
+                android:textColor="#fff"
+                android:layout_marginTop="20dp"
+                android:onClick="onClickRegistar"/>
 
         </LinearLayout>
 

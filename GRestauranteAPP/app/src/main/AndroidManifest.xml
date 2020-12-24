@@ -11,17 +11,22 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-
-        <activity android:name=".vistas.AdminControlerActivity"/>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".vistas.SettingsActivity"></activity>
+        <activity android:name=".vistas.LoginActivity"></activity>
+        <activity android:name=".vistas.AdminControlerActivity" />
         <activity android:name=".vistas.RegistarActivity" />
         <activity android:name=".vistas.MenuClienteActivity" />
-        <activity android:name=".vistas.MenuFuncionarioActivity"
+        <activity
+            android:name=".vistas.MenuFuncionarioActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".vistas.LoginActivity">
+        <activity
+            android:name=".vistas.StartActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
