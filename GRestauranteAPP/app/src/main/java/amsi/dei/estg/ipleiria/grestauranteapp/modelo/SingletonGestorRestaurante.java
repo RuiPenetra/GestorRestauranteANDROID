@@ -26,6 +26,7 @@ import amsi.dei.estg.ipleiria.grestauranteapp.listeners.ProdutosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PerfilJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.ProdutoJsonParser;
+import amsi.dei.estg.ipleiria.grestauranteapp.vistas.LoginActivity;
 
 public class SingletonGestorRestaurante {
     private static final int ADICIONAR_BD = 1;
@@ -61,9 +62,37 @@ public class SingletonGestorRestaurante {
         produtosBD = new ProdutoBDHelper(context);
     }
 
-    public Produto getProduto(int id) {
-        for (Produto p : produtos) {
-            if (p.getId() == id)
+    public void loginAPI(final String username, final String password, final Context context) {
+        StringRequest req = new StringRequest(Request.Method.POST, mUrlAPILogin, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String token = ProdutoJsonParser.parserJsonLogin(response);
+                if (loginListener != null)
+                    loginListener.onValidateLogin(token, username);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", username);
+                params.put("password", password);
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+    }
+
+    public void setLoginListener(LoginListener loginListener) { this.loginListener = loginListener; }
+
+
+    public Produto getProduto(int id){
+        for (Produto p : produtos){
+            if(p.getId() == id)
                 return p;
         }
         return null;
@@ -259,6 +288,8 @@ public class SingletonGestorRestaurante {
             }
         };
         volleyQueue.add(req);
+    }
+    public void setLoginListener(LoginActivity loginActivity) {
     }
 }
 
