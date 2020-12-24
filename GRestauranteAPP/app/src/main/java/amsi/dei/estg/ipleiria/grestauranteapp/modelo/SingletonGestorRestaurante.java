@@ -102,9 +102,6 @@ public class SingletonGestorRestaurante {
         this.produtosListener = produtosListener;
     }
 
-    public void setLoginListener(LoginListener loginListener) {
-        this.loginListener = loginListener;
-    }
 
     public void setPerfilListener(PerfilListener perfilListener) {
         this.perfilListener = perfilListener;
