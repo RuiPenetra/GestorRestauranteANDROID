@@ -40,10 +40,10 @@ public class SingletonGestorRestaurante {
     private ArrayList<PedidoProduto> pedidoProdutos;
     private ProdutoBDHelper produtosBD;
     private static RequestQueue volleyQueue = null;
-    private static final String mUrlAPIProdutos = "http://192.168.0.104/GestorRestauranteAPI/API/web/v1/produto";
-    private static final String mUrlAPILogin = "http://gestorrestaurante.epizy.com/API/web/v1/user";
-    private static final String mUrlAPIPerfil = "http://192.168.0.104/GestorRestauranteAPI/API/web/v1/perfil?access-token=evZ5KAZTPTI29WWT62uDdUs5V0qGUhHL";
-    private static final String mUrlAPIupdatePerfil = "http://192.168.0.104/GestorRestauranteAPI/API/web/v1/perfil/";
+    private static final String mUrlAPIProdutos = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/produto";
+    private static final String mUrlAPILogin = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/user";
+    private static final String mUrlAPIPerfil = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/perfil?access-token=evZ5KAZTPTI29WWT62uDdUs5V0qGUhHL";
+    private static final String mUrlAPIupdatePerfil = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/perfil/";
     private ProdutosListener produtosListener;
     private LoginListener loginListener;
     private PerfilListener perfilListener;

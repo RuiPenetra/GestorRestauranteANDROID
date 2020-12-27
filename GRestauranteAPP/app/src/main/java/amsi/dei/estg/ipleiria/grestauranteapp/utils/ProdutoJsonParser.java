@@ -62,11 +62,18 @@ public class ProdutoJsonParser {
         try {
             JSONObject login = new JSONObject(response);
             if (login.getBoolean("success"))
-                token = login.getString("token");
+                token = login.getString("auth_key");
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return token;
 
+    }
+
+    public static boolean isConnectionInternet(Context context) {
+        ConnectivityManager cm=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni=cm.getActiveNetworkInfo();
+
+        return ni !=null &&ni.isConnected();
     }
 }

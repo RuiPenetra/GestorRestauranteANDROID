@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
+import amsi.dei.estg.ipleiria.grestauranteapp.utils.ProdutoJsonParser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -80,6 +81,11 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("password",password);
             editor.commit();
         }
+
+        if(ProdutoJsonParser.isConnectionInternet(getApplicationContext())){
+            SingletonGestorRestaurante.getInstance(getApplicationContext()).loginAPI(username, password, getApplicationContext());
+        } else
+            Toast.makeText(getApplicationContext(),"Não existe ligação a internet",Toast.LENGTH_SHORT).show();
     }
 
 
