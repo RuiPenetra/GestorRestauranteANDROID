@@ -23,7 +23,7 @@ public class AdminControlerActivity extends AppCompatActivity {
     }
 
     public void onClickCliente(View view) {
-        Intent intent = new Intent(this, MenuClienteActivity.class);
+        Intent intent = new Intent(this, DetalhesPedidoActivity.class);
         startActivity(intent);
     }
 }

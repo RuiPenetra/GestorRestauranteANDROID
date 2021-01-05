@@ -17,11 +17,9 @@ import com.google.android.material.tabs.TabLayout;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
-<<<<<<< Updated upstream
+
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.ProdutoJsonParser;
-=======
->>>>>>> Stashed changes
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -46,12 +44,11 @@ public class LoginActivity extends AppCompatActivity {
 
         getSupportActionBar().setElevation(0);
 
-<<<<<<< Updated upstream
         etUsername=findViewById(R.id.etUsername);
         etPassword=findViewById(R.id.etPassword);
         login=findViewById(R.id.btn_login);
 
-        SingletonGestorRestaurante.getInstance(getApplicationContext()).setLoginListener(this);
+        //SingletonGestorRestaurante.getInstance(getApplicationContext()).setLoginListener(this);
 
         sharedPreferences=getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
         RememberMe=findViewById(R.id.Remember);
@@ -90,13 +87,11 @@ public class LoginActivity extends AppCompatActivity {
             SingletonGestorRestaurante.getInstance(getApplicationContext()).loginAPI(username, password, getApplicationContext());
         } else
             Toast.makeText(getApplicationContext(),"Não existe ligação a internet",Toast.LENGTH_SHORT).show();
-=======
     }
 
     public void onClickLogin(View view) {
 
-        SingletonGestorRestaurante.getInstance(this).loginAPI(this);
->>>>>>> Stashed changes
+        //SingletonGestorRestaurante.getInstance(this).loginAPI();
     }
 
 

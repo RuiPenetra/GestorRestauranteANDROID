@@ -310,5 +310,38 @@ public class SingletonGestorRestaurante {
         };
         volleyQueue.add(req);
     }
+
+    public void getPedidosAPI(final Context context) {
+        if (!Generic.isConnectionInternet(context)) {
+            Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
+        } else {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIPedidos, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    pedidos = PedidoJsonParser.parserJsonPedidos(response);
+
+                    for (Pedido p: pedidos) {
+                        if(p.getEstado()==2){
+                            pedidosConcluidos.add(p);
+                        }else{
+                            pedidosAtivos.add(p);
+                        }
+                    }
+
+                    pedidosAtivosListener.onRefreshPedidosAtivos(pedidosAtivos);
+                    pedidosConcluidosListener.onRefreshPedidos(pedidosConcluidos);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("key", error.getMessage());
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            volleyQueue.add(req);
+
+        }
+    }
 }
 
