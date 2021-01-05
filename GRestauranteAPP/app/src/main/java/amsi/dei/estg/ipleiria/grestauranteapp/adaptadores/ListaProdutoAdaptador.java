@@ -82,23 +82,23 @@ public class ListaProdutoAdaptador extends BaseAdapter {
                     break;
                 case 2:
                     tvCategoria.setText("Sopa");
-                    imgCapa.setImageResource(R.drawable.soup);
+                    imgCapa.setImageResource(R.drawable.sopa);
                     break;
                 case 3:
                     tvCategoria.setText("Carne");
-                    imgCapa.setImageResource(R.drawable.plates_meat);
+                    imgCapa.setImageResource(R.drawable.bife);
                     break;
                 case 4:
                     tvCategoria.setText("Peixe");
-                    imgCapa.setImageResource(R.drawable.plates_fish);
+                    imgCapa.setImageResource(R.drawable.peixe);
                     break;
                 case 5:
                     tvCategoria.setText("Sobremesa");
-                    imgCapa.setImageResource(R.drawable.plates_dessert);
+                    imgCapa.setImageResource(R.drawable.sobremesa);
                     break;
                 case 6:
                     tvCategoria.setText("Bebida");
-                    imgCapa.setImageResource(R.drawable.drink);
+                    imgCapa.setImageResource(R.drawable.bebidas);
                     break;
 
                 default:

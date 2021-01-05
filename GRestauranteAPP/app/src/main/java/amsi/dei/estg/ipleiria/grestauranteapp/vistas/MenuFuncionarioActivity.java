@@ -26,7 +26,7 @@ public class MenuFuncionarioActivity extends AppCompatActivity implements Naviga
     private static final String PREF_INFO_USER ="PREF_INFO_USER";
     private NavigationView navigationView;
     private DrawerLayout drawer;
-    private String email="";
+    private String email="hjgkygiyg";
     private FragmentManager fragmentManager;
 
     @Override
@@ -47,7 +47,7 @@ public class MenuFuncionarioActivity extends AppCompatActivity implements Naviga
         fragmentManager = getSupportFragmentManager();
 
         carregarFragmentoInicial();
-        carregarCabecalho();
+        //carregarCabecalho();
     }
 
     private void carregarCabecalho() {

@@ -9,21 +9,23 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.LoginListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosAtivosListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosConcluidosListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PerfilListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.ProdutosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
+import amsi.dei.estg.ipleiria.grestauranteapp.utils.PedidoJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PerfilJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.ProdutoJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.vistas.LoginActivity;
@@ -35,18 +37,26 @@ public class SingletonGestorRestaurante {
     private static SingletonGestorRestaurante instance = null;
     private ArrayList<Produto> produtos;
     private ArrayList<Produto> auxProdutos;
+    private ArrayList<Pedido> auxPedidosAtivos;
+    private ArrayList<Pedido> auxPedidosConcluidos;
+    private ArrayList<Pedido> pedidosAtivos;
+    private ArrayList<Pedido> pedidosConcluidos;
     private ArrayList<Pedido> pedidos;
     private Perfil perfil;
     private ArrayList<PedidoProduto> pedidoProdutos;
     private ProdutoBDHelper produtosBD;
     private static RequestQueue volleyQueue = null;
-    private static final String mUrlAPIProdutos = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/produto";
-    private static final String mUrlAPILogin = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/user";
-    private static final String mUrlAPIPerfil = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/perfil?access-token=evZ5KAZTPTI29WWT62uDdUs5V0qGUhHL";
-    private static final String mUrlAPIupdatePerfil = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/perfil/";
+    private static final String mUrlAPIProdutos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/produto";
+    private static final String mUrlAPILogin = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/auth/login";
+    private static final String mUrlAPIPedidos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido?access-token=evZ5KAZTPTI29WWT62uDdUs5V0qGUhHL";
+    private static final String mUrlAPIPerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil?access-token=evZ5KAZTPTI29WWT62uDdUs5V0qGUhHL";
+    private static final String mUrlAPIupdatePerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil/";
     private ProdutosListener produtosListener;
     private LoginListener loginListener;
     private PerfilListener perfilListener;
+    private PedidosListener pedidosListener;
+    private PedidosConcluidosListener pedidosConcluidosListener;
+    private PedidosAtivosListener pedidosAtivosListener;
 
 
     public static synchronized SingletonGestorRestaurante getInstance(Context context) {
@@ -59,6 +69,9 @@ public class SingletonGestorRestaurante {
 
     private SingletonGestorRestaurante(Context context) {
         produtos = new ArrayList<>();
+        pedidos = new ArrayList<>();
+        pedidosConcluidos = new ArrayList<>();
+        pedidosAtivos = new ArrayList<>();
         produtosBD = new ProdutoBDHelper(context);
     }
 
@@ -119,6 +132,17 @@ public class SingletonGestorRestaurante {
     }
 
     //TODO: setPedidosListener()
+    public void setPedidosListener(PedidosListener pedidosListener) {
+        this.pedidosListener = pedidosListener;
+    }
+
+    public void setPedidosAtivosListener(PedidosAtivosListener pedidosAtivosListener) {
+        this.pedidosAtivosListener = pedidosAtivosListener;
+    }
+
+    public void setPedidosConcluidosListener(PedidosConcluidosListener pedidosConcluidosListener) {
+        this.pedidosConcluidosListener = pedidosConcluidosListener;
+    }
 
     // # PEDIDO PRODUTO
     //TODO: setPedidoProdutosListener()
@@ -285,8 +309,6 @@ public class SingletonGestorRestaurante {
             }
         };
         volleyQueue.add(req);
-    }
-    public void setLoginListener(LoginActivity loginActivity) {
     }
 }
 

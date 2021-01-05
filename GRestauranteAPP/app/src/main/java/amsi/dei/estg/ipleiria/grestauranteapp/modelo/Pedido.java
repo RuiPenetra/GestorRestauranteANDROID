@@ -4,9 +4,8 @@ import java.util.Date;
 
 public class Pedido {
 
-    private int id, id_utilizador, id_mesa;
-    private String nome_pedido, nota, estado, tipo;
-    private Date data;
+    private int id, id_utilizador, id_mesa,estado,tipo;
+    private String nome_pedido, nota, data;
 
     public int getId() {
         return id;
@@ -28,19 +27,19 @@ public class Pedido {
         return nota;
     }
 
-    public String getEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public String getTipo() {
+    public int getTipo() {
         return tipo;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public Pedido(int id, int id_utilizador, int id_mesa, String nome_pedido, String nota, String estado, String tipo, Date data) {
+    public Pedido(int id, int id_utilizador, int id_mesa, String nome_pedido, String nota, int estado, int tipo, String data) {
         this.id = id;
         this.id_utilizador = id_utilizador;
         this.id_mesa = id_mesa;

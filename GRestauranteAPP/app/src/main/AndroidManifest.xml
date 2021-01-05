@@ -13,8 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".vistas.SettingsActivity"></activity>
-        <activity android:name=".vistas.LoginActivity"></activity>
+        <activity android:name=".vistas.DetalhesPedidoActivity"></activity>
+        <activity android:name=".vistas.SettingsActivity" />
+        <activity android:name=".vistas.LoginActivity" />
         <activity android:name=".vistas.AdminControlerActivity" />
         <activity android:name=".vistas.RegistarActivity" />
         <activity android:name=".vistas.MenuClienteActivity" />
@@ -26,7 +27,7 @@
         <activity
             android:name=".vistas.StartActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
