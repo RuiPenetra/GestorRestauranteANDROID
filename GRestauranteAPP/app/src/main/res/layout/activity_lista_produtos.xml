@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".vistas.DetalhesPedidoActivity">
+    tools:context=".vistas.ListaProdutosActivity">
 
     <ImageView
         android:id="@+id/imgPedido"
@@ -22,7 +22,6 @@
         android:id="@+id/constrainLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintWidth_percent=".7"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,13 +29,13 @@
         app:layout_constraintTop_toBottomOf="@id/imgPedido"
         android:elevation="15dp"
         android:translationY="-80dp"
-        android:background="@drawable/bg_item">
+        android:background="@drawable/bg_banner">
 
         <TextView
             android:id="@+id/tv_nome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gestor Restaurante"
+            android:text="Categorias"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintVertical_bias="0"
@@ -46,49 +45,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <androidx.appcompat.widget.AppCompatRatingBar
-            android:id="@+id/review_stars"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tv_nome"
-            app:layout_constraintTop_toBottomOf="@id/tv_nome"/>
-
-        <TextView
-            android:id="@+id/review_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4.6"
-            android:textSize="12sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/review_stars"
-            app:layout_constraintTop_toBottomOf="@id/tv_nome"/>
-
-        <TextView
-            android:id="@+id/num_of_reviews"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="( 260 reviews )"
-            android:textSize="12sp"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="0"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/review_num"
-            app:layout_constraintTop_toBottomOf="@id/tv_nome"/>
-
         <View
             android:id="@+id/line"
             android:layout_width="0dp"
@@ -97,141 +53,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/num_of_reviews"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nome"
             android:layout_marginTop="15dp"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintHorizontal_bias=".5"
             app:layout_constraintWidth_percent=".8"/>
 
-        <ImageView
-            android:id="@+id/icon_calendario"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/data"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintHorizontal_bias="0"
-            android:layout_marginTop="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/line"
-            app:layout_constraintTop_toBottomOf="@+id/line"/>
-
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="09:00-22:00"
-            android:textSize="13sp"
-            android:layout_marginLeft="7dp"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/icon_calendario"
-            app:layout_constraintTop_toTopOf="@id/icon_calendario"
-            />
-
-        <ImageView
-            android:id="@+id/imgVTipo"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_tipo"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="0"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/time"
-            app:layout_constraintTop_toBottomOf="@+id/line"/>
-
-        <TextView
-            android:id="@+id/tvTipo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Restaurante"
-            android:textSize="13sp"
-            android:layout_marginLeft="7dp"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgVTipo"
-            app:layout_constraintTop_toTopOf="@id/icon_calendario"
-            />
-
-        <ImageView
-            android:id="@+id/imgVmesa"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/mesa"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintHorizontal_bias="0"
-            android:layout_marginTop="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/icon_calendario"
-            app:layout_constraintTop_toBottomOf="@+id/icon_calendario"/>
-
-        <TextView
-            android:id="@+id/tvMesa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nº: 2"
-            android:textSize="13sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/icon_calendario"
-            app:layout_constraintTop_toTopOf="@+id/imgVmesa"
-            app:layout_constraintTop_toBottomOf="@id/time"
-            />
-
-        <ImageView
-            android:id="@+id/imgvEstado"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_estado"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintHorizontal_bias="0"
-            android:layout_marginTop="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imgVTipo"
-            app:layout_constraintTop_toBottomOf="@+id/icon_calendario"/>
-
-        <TextView
-            android:id="@+id/parking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Concluido"
-            android:textSize="13sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgvEstado"
-            app:layout_constraintTop_toTopOf="@+id/imgvEstado"
-            app:layout_constraintTop_toBottomOf="@id/imgvEstado"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constrainLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintWidth_percent=".9"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constrainLayout"
-        android:translationY="-60dp">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -240,11 +67,13 @@
             android:measureAllChildren="false"
             android:scrollbars="none"
             app:layout_constraintVertical_bias="0"
-            app:layout_constraintWidth_percent=".9"
+            app:layout_constraintHorizontal_bias="0"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="@+id/line"
+            app:layout_constraintTop_toBottomOf="@+id/line">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -252,10 +81,11 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_entrada"
+                    android:id="@+id/cvEntrada"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:background="@drawable/bg_item"
+                    android:backgroundTint="#EFF1EF"
+                    app:cardCornerRadius="20dp"
                     android:elevation="30dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -274,11 +104,12 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_bebida"
+                    android:id="@+id/cvBebida"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
-                    android:background="@drawable/bg_item"
+                    android:backgroundTint="#EFF1EF"
+                    app:cardCornerRadius="20dp"
                     android:elevation="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -297,11 +128,12 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_sopa"
+                    android:id="@+id/cvSopa"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
-                    android:background="@drawable/bg_item"
+                    android:backgroundTint="#EFF1EF"
+                    app:cardCornerRadius="20dp"
                     android:elevation="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -320,11 +152,12 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_carne"
+                    android:id="@+id/cvCarne"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
-                    android:background="@drawable/bg_item"
+                    android:backgroundTint="#EFF1EF"
+                    app:cardCornerRadius="20dp"
                     android:elevation="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -343,11 +176,12 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_peixe"
+                    android:id="@+id/cvPeixe"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
-                    android:background="@drawable/bg_item"
+                    android:backgroundTint="#EFF1EF"
+                    app:cardCornerRadius="20dp"
                     android:elevation="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -366,11 +200,12 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_sobremesa"
+                    android:id="@+id/cvSobremesa"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
-                    android:background="@drawable/bg_item"
+                    android:backgroundTint="#EFF1EF"
+                    app:cardCornerRadius="20dp"
                     android:elevation="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -391,6 +226,21 @@
 
         </HorizontalScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constrainLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintWidth_percent=".9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constrainLayout"
+        android:translationY="-60dp">
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constrainLayout_lista"
         android:layout_width="0dp"
@@ -401,28 +251,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/constrainLayout3"
-        android:translationY="-50dp">
+        android:translationY="-60dp">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
+        <FrameLayout
+            android:id="@+id/fragment_container_produto"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_width="match_parent">
 
-            <ListView
-                android:id="@+id/lvl_pedidoProdutos"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintTop_toTopOf="parent" >
-
-
-            </ListView>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_criarPedidoProduto"
+        android:id="@+id/fab_adicionarProduto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

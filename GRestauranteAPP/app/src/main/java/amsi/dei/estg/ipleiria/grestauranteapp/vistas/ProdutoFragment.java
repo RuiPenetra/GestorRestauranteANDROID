@@ -47,44 +47,11 @@ public class ProdutoFragment extends Fragment {
             public void onClick(View v) {
                 Fragment fragment= null;
                 Bundle b = new Bundle();
-                switch (v.getId()) {
-                    case R.id.card_Entrada:
-                        b.putInt("id_categoria", 1);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_sopa:
-                        b.putInt("id_categoria", 2);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);;
-                        break;
-                    case R.id.card_Carne:
-                        b.putInt("id_categoria", 3);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Peixe:
-                        b.putInt("id_categoria", 4);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Sobremesa:
-                        b.putInt("id_categoria", 5);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Bebida:
-                        b.putInt("id_categoria", 6);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
 
-                    default:
-                        b.putInt("id_categoria", 0);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                }
+                b.putInt("id_categoria", 1);
+                fragment= new ListaProdutosFragment();
+                fragment.setArguments(b);
+
                 if (fragment != null)
                     transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container_produto, fragment).commit();
@@ -96,140 +63,43 @@ public class ProdutoFragment extends Fragment {
            public void onClick(View v) {
                Fragment fragment= null;
                Bundle b = new Bundle();
-               switch (v.getId()) {
-                   case R.id.card_Entrada:
-                       b.putInt("id_categoria", 1);
-                       fragment= new ListaProdutosFragment();
-                       fragment.setArguments(b);
-                       break;
-                   case R.id.card_sopa:
-                       b.putInt("id_categoria", 2);
-                       fragment= new ListaProdutosFragment();
-                       fragment.setArguments(b);;
-                       break;
-                   case R.id.card_Carne:
-                       b.putInt("id_categoria", 3);
-                       fragment= new ListaProdutosFragment();
-                       fragment.setArguments(b);
-                       break;
-                   case R.id.card_Peixe:
-                       b.putInt("id_categoria", 4);
-                       fragment= new ListaProdutosFragment();
-                       fragment.setArguments(b);
-                       break;
-                   case R.id.card_Sobremesa:
-                       b.putInt("id_categoria", 5);
-                       fragment= new ListaProdutosFragment();
-                       fragment.setArguments(b);
-                       break;
-                   case R.id.card_Bebida:
-                       b.putInt("id_categoria", 6);
-                       fragment= new ListaProdutosFragment();
-                       fragment.setArguments(b);
-                       break;
 
-                   default:
-                       b.putInt("id_categoria", 0);
-                       fragment= new ListaProdutosFragment();
-                       fragment.setArguments(b);
-                       break;
-               }
+               b.putInt("id_categoria", 2);
+               fragment= new ListaProdutosFragment();
+               fragment.setArguments(b);
+
                if (fragment != null)
                    transaction = getChildFragmentManager().beginTransaction();
                transaction.replace(R.id.fragment_container_produto, fragment).commit();
            }
        });
+
         card_carne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment= null;
                 Bundle b = new Bundle();
-                switch (v.getId()) {
-                    case R.id.card_Entrada:
-                        b.putInt("id_categoria", 1);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_sopa:
-                        b.putInt("id_categoria", 2);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);;
-                        break;
-                    case R.id.card_Carne:
-                        b.putInt("id_categoria", 3);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Peixe:
-                        b.putInt("id_categoria", 4);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Sobremesa:
-                        b.putInt("id_categoria", 5);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Bebida:
-                        b.putInt("id_categoria", 6);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
 
-                    default:
-                        b.putInt("id_categoria", 0);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                }
+                b.putInt("id_categoria", 3);
+                fragment= new ListaProdutosFragment();
+                fragment.setArguments(b);
+
                 if (fragment != null)
                     transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container_produto, fragment).commit();
             }
         });
+
         card_peixe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment= null;
                 Bundle b = new Bundle();
-                switch (v.getId()) {
-                    case R.id.card_Entrada:
-                        b.putInt("id_categoria", 1);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_sopa:
-                        b.putInt("id_categoria", 2);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);;
-                        break;
-                    case R.id.card_Carne:
-                        b.putInt("id_categoria", 3);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Peixe:
-                        b.putInt("id_categoria", 4);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Sobremesa:
-                        b.putInt("id_categoria", 5);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Bebida:
-                        b.putInt("id_categoria", 6);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
 
-                    default:
-                        b.putInt("id_categoria", 0);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                }
+                b.putInt("id_categoria", 4);
+                fragment= new ListaProdutosFragment();
+                fragment.setArguments(b);
+
                 if (fragment != null)
                     transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container_produto, fragment).commit();
@@ -240,92 +110,27 @@ public class ProdutoFragment extends Fragment {
             public void onClick(View v) {
                 Fragment fragment= null;
                 Bundle b = new Bundle();
-                switch (v.getId()) {
-                    case R.id.card_Entrada:
-                        b.putInt("id_categoria", 1);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_sopa:
-                        b.putInt("id_categoria", 2);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);;
-                        break;
-                    case R.id.card_Carne:
-                        b.putInt("id_categoria", 3);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Peixe:
-                        b.putInt("id_categoria", 4);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Sobremesa:
-                        b.putInt("id_categoria", 5);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Bebida:
-                        b.putInt("id_categoria", 6);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
 
-                    default:
-                        b.putInt("id_categoria", 0);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                }
+                b.putInt("id_categoria", 5);
+                fragment= new ListaProdutosFragment();
+                fragment.setArguments(b);
+
                 if (fragment != null)
                     transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container_produto, fragment).commit();
             }
         });
+
         card_bebida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment= null;
                 Bundle b = new Bundle();
-                switch (v.getId()) {
-                    case R.id.card_Entrada:
-                        b.putInt("id_categoria", 1);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_sopa:
-                        b.putInt("id_categoria", 2);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);;
-                        break;
-                    case R.id.card_Carne:
-                        b.putInt("id_categoria", 3);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Peixe:
-                        b.putInt("id_categoria", 4);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Sobremesa:
-                        b.putInt("id_categoria", 5);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                    case R.id.card_Bebida:
-                        b.putInt("id_categoria", 6);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
 
-                    default:
-                        b.putInt("id_categoria", 0);
-                        fragment= new ListaProdutosFragment();
-                        fragment.setArguments(b);
-                        break;
-                }
+                b.putInt("id_categoria", 5);
+                fragment= new ListaProdutosFragment();
+                fragment.setArguments(b);
+
                 if (fragment != null)
                     transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container_produto, fragment).commit();

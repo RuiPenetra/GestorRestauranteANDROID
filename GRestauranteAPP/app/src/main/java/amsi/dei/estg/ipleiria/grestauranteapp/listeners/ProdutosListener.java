@@ -6,5 +6,6 @@ import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Produto;
 
 public interface ProdutosListener {
     void onRefreshListaPordutos(ArrayList<Produto> listaProdutos);
+    void onRefreshDetalhes();
 
 }

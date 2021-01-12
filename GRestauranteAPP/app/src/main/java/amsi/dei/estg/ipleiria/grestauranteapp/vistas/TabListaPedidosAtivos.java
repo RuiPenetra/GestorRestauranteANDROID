@@ -9,18 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
-import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaPedidoAdaptador;
-import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosAtivosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Pedido;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 
-public class TabListaPedidosAtivos extends Fragment implements SwipeRefreshLayout.OnRefreshListener, PedidosAtivosListener {
+public class TabListaPedidosAtivos extends Fragment implements SwipeRefreshLayout.OnRefreshListener, PedidosListener {
 
     private ListView lvListaPedidos;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -41,7 +38,7 @@ public class TabListaPedidosAtivos extends Fragment implements SwipeRefreshLayou
         swipeRefreshLayout=view.findViewById(R.id.swipeRefreshLayoutPedidosAtivos);
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        SingletonGestorRestaurante.getInstance(getContext()).setPedidosAtivosListener(this);
+        SingletonGestorRestaurante.getInstance(getContext()).setPedidosListener(this);
         SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(getContext());
 
         return view;
@@ -49,22 +46,19 @@ public class TabListaPedidosAtivos extends Fragment implements SwipeRefreshLayou
 
 
     @Override
-    public void onRefreshPedidosAtivos(ArrayList<Pedido> pedidosAtivos) {
-        if(pedidosAtivos != null){
-            lvListaPedidos.setAdapter(new ListaPedidoAdaptador(getContext(),pedidosAtivos));
-        }else{
-            Toast.makeText(getContext(), "vsddddddddddddddd", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onRefreshPedidosUpdate() {
-        //empty
-    }
-
-    @Override
     public void onRefresh() {
         SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(getContext());
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefreshListaPedidos(ArrayList<Pedido> pedidos) {
+        SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(getContext());
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefreshCriar() {
+
     }
 }

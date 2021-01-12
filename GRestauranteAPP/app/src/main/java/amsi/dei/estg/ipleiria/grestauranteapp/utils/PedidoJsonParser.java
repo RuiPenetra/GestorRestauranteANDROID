@@ -69,4 +69,25 @@ public class PedidoJsonParser {
         }
         return auxPerfil;
     }
+
+    public static Pedido parserJsonPedido(String response) {
+        Pedido auxPedido= null;
+
+        try {
+            JSONObject pedido = new JSONObject(response);
+            int id = pedido.getInt("id");
+            int tipo = pedido.getInt("tipo");
+            int estado = pedido.getInt("estado");
+            int id_mesa = pedido.getInt("id_mesa");
+            int id_user = pedido.getInt("id_perfil");
+            String data=pedido.getString("data");
+
+            auxPedido = new Pedido(id,id_user,id_mesa,null,null,estado,tipo,data);
+            Log.i("--->", "" + auxPedido);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return auxPedido;
+    }
 }

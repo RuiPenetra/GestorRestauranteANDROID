@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".vistas.DetalhesPedidoActivity"></activity>
+        <activity android:name=".vistas.DetalhesProdutoActivity"></activity>
+        <activity android:name=".vistas.ListaProdutosActivity" />
+        <activity android:name=".vistas.CriarPedidoActivity" />
+        <activity android:name=".vistas.DetalhesPedidoActivity" />
         <activity android:name=".vistas.SettingsActivity" />
         <activity android:name=".vistas.LoginActivity" />
         <activity android:name=".vistas.AdminControlerActivity" />

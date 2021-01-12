@@ -5,6 +5,6 @@ import java.util.ArrayList;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Pedido;
 
 public interface PedidosListener {
-    void onRefreshPedidos(ArrayList<Pedido> pedidos);
-    void onRefreshPedidosUpdate();
+    void onRefreshListaPedidos(ArrayList<Pedido> pedidos);
+    void onRefreshCriar();
 }

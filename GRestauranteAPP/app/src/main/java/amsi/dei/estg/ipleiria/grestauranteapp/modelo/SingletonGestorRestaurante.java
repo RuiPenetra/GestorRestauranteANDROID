@@ -19,16 +19,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.LoginListener;
-import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosAtivosListener;
-import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosConcluidosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosProdutoListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PerfilListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.ProdutosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PedidoJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PerfilJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.ProdutoJsonParser;
-import amsi.dei.estg.ipleiria.grestauranteapp.vistas.LoginActivity;
 
 public class SingletonGestorRestaurante {
     private static final int ADICIONAR_BD = 1;
@@ -39,8 +37,6 @@ public class SingletonGestorRestaurante {
     private ArrayList<Produto> auxProdutos;
     private ArrayList<Pedido> auxPedidosAtivos;
     private ArrayList<Pedido> auxPedidosConcluidos;
-    private ArrayList<Pedido> pedidosAtivos;
-    private ArrayList<Pedido> pedidosConcluidos;
     private ArrayList<Pedido> pedidos;
     private Perfil perfil;
     private ArrayList<PedidoProduto> pedidoProdutos;
@@ -49,15 +45,14 @@ public class SingletonGestorRestaurante {
     private static final String mUrlAPIProdutos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/produto";
     private static final String mUrlAPILogin = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/auth/login";
     private static final String mUrlAPIPedidos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIadicionarPedido = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
     private static final String mUrlAPIPerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
     private static final String mUrlAPIupdatePerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
     private ProdutosListener produtosListener;
     private LoginListener loginListener;
     private PerfilListener perfilListener;
     private PedidosListener pedidosListener;
-    private PedidosConcluidosListener pedidosConcluidosListener;
-    private PedidosAtivosListener pedidosAtivosListener;
-
+    private PedidosProdutoListener pedidosProdutoListener;
 
     public static synchronized SingletonGestorRestaurante getInstance(Context context) {
         if (instance == null) {
@@ -70,8 +65,6 @@ public class SingletonGestorRestaurante {
     private SingletonGestorRestaurante(Context context) {
         produtos = new ArrayList<>();
         pedidos = new ArrayList<>();
-        pedidosConcluidos = new ArrayList<>();
-        pedidosAtivos = new ArrayList<>();
         produtosBD = new ProdutoBDHelper(context);
     }
 
@@ -100,9 +93,6 @@ public class SingletonGestorRestaurante {
         volleyQueue.add(req);
     }
 
-    public void setLoginListener(LoginListener loginListener) { this.loginListener = loginListener; }
-
-
     public Produto getProduto(int id){
         for (Produto p : produtos){
             if(p.getId() == id)
@@ -111,14 +101,6 @@ public class SingletonGestorRestaurante {
         return null;
     }
 
-    public void setProdutosListener(ProdutosListener produtosListener) {
-        this.produtosListener = produtosListener;
-    }
-
-
-    public void setPerfilListener(PerfilListener perfilListener) {
-        this.perfilListener = perfilListener;
-    }
     // # PEDIDOS
 
     public Pedido getPedido(int id) {
@@ -136,16 +118,19 @@ public class SingletonGestorRestaurante {
         this.pedidosListener = pedidosListener;
     }
 
-    public void setPedidosAtivosListener(PedidosAtivosListener pedidosAtivosListener) {
-        this.pedidosAtivosListener = pedidosAtivosListener;
+    public void setProdutosListener(ProdutosListener produtosListener) {
+        this.produtosListener = produtosListener;
     }
 
-    public void setPedidosConcluidosListener(PedidosConcluidosListener pedidosConcluidosListener) {
-        this.pedidosConcluidosListener = pedidosConcluidosListener;
+    public void setLoginListener(LoginListener loginListener) { this.loginListener = loginListener; }
+
+    public void setPerfilListener(PerfilListener perfilListener){
+        this.perfilListener = perfilListener;
     }
 
-    // # PEDIDO PRODUTO
-    //TODO: setPedidoProdutosListener()
+    public void setPedidoProdutosListener(PedidosProdutoListener pedidoProdutosListener){
+        this.pedidosProdutoListener = pedidoProdutosListener;
+    }
 
 
     /************** Métodos de acesso à BD ******************************/
@@ -320,16 +305,9 @@ public class SingletonGestorRestaurante {
                 public void onResponse(JSONArray response) {
                     pedidos = PedidoJsonParser.parserJsonPedidos(response);
 
-                    for (Pedido p: pedidos) {
-                        if(p.getEstado()==2){
-                            pedidosConcluidos.add(p);
-                        }else{
-                            pedidosAtivos.add(p);
-                        }
-                    }
-
-                    pedidosAtivosListener.onRefreshPedidosAtivos(pedidosAtivos);
-                    pedidosConcluidosListener.onRefreshPedidos(pedidosConcluidos);
+                    if(pedidosListener!=null)
+                        pedidosListener.onRefreshListaPedidos(pedidos);
+                    //pedidosConcluidosListener.onRefreshPedidos(pedidosConcluidos);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -343,5 +321,41 @@ public class SingletonGestorRestaurante {
 
         }
     }
+
+    public void adicionarPedidoAPI(final Pedido pedido, final Context context) {
+
+        StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIadicionarPedido, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Pedido l=PedidoJsonParser.parserJsonPedido(response);
+
+                if(l!=null){
+                    if(pedidosListener!=null)
+                        pedidosListener.onRefreshCriar();
+                }else{
+                    Toast.makeText(context, "Erro impossivel criar o pedido", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String,String> params=new HashMap<>();
+                params.put("data",pedido.getData());
+                params.put("id_mesa",pedido.getId_mesa()+"");
+                params.put("id_perfil",pedido.getId_utilizador()+"");
+                params.put("estado", pedido.getEstado()+"");
+                params.put("tipo",pedido.getTipo()+"");
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+        }
+
 }
 

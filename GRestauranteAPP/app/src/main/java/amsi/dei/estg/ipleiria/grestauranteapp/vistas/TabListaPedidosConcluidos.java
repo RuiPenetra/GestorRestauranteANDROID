@@ -15,14 +15,11 @@ import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaPedidoAdaptador;
-import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosAtivosListener;
-import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosConcluidosListener;
-import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Pedido;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 
 
-public class TabListaPedidosConcluidos extends Fragment implements SwipeRefreshLayout.OnRefreshListener, PedidosConcluidosListener {
+public class TabListaPedidosConcluidos extends Fragment{
 
     private ListView lvListaPedidosConcluidos;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -41,7 +38,9 @@ public class TabListaPedidosConcluidos extends Fragment implements SwipeRefreshL
         lvListaPedidosConcluidos = view.findViewById(R.id.lvListaPedidosConcluidos);
         swipeRefreshLayout=view.findViewById(R.id.swipeRefreshLayoutPedidosConcluidos);
 
+/*
         SingletonGestorRestaurante.getInstance(getContext()).setPedidosConcluidosListener(this);
+*/
         SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(getContext());
 
 
@@ -49,23 +48,5 @@ public class TabListaPedidosConcluidos extends Fragment implements SwipeRefreshL
     }
 
 
-    @Override
-    public void onRefreshPedidos(ArrayList<Pedido> pedidos) {
-        if(pedidos != null){
-            lvListaPedidosConcluidos.setAdapter(new ListaPedidoAdaptador(getContext(),pedidos));
-        }else{
-            Toast.makeText(getContext(), "vsddddddddddddddd", Toast.LENGTH_SHORT).show();
-        }
-    }
 
-    @Override
-    public void onRefreshPedidosUpdate() {
-
-    }
-
-    @Override
-    public void onRefresh() {
-        SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(getContext());
-        swipeRefreshLayout.setRefreshing(false);
-    }
 }

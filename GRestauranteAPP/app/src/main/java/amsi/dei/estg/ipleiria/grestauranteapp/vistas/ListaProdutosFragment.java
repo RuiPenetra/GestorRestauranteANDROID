@@ -1,5 +1,6 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -44,6 +46,19 @@ public class ListaProdutosFragment extends Fragment implements SwipeRefreshLayou
         id_categoria=bundle.getInt("id_categoria");
         SingletonGestorRestaurante.getInstance(getContext()).setProdutosListener(this);
         SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),id_categoria);
+
+
+        lvListaProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(),DetalhesProdutoActivity.class);
+                intent.putExtra(DetalhesProdutoActivity.ID, (int) id);
+                startActivity(intent);
+                //startActivityForResult(intent,EDITAR);
+            }
+        });
+
+
         return view;
     }
 
@@ -57,5 +72,10 @@ public class ListaProdutosFragment extends Fragment implements SwipeRefreshLayou
     public void onRefreshListaPordutos(ArrayList<Produto> listaProdutos) {
         if(listaProdutos != null)
             lvListaProdutos.setAdapter(new ListaProdutoAdaptador(getContext(),listaProdutos));
+    }
+
+    @Override
+    public void onRefreshDetalhes() {
+
     }
 }
