@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 import java.util.Calendar;
 
@@ -19,6 +20,17 @@ import amsi.dei.estg.ipleiria.grestauranteapp.R;
 public class RegistarActivity extends AppCompatActivity {
 
     public EditText editText_data_nascimento;
+    public EditText nome;
+    public EditText apelido;
+    public EditText morada;
+    public EditText codPostal;
+    public EditText telemovel;
+    public EditText nacionalidade;
+    public RadioButton masculino;
+    public RadioButton feminino;
+    public EditText username;
+    public EditText email;
+    public EditText password;
     private Button btn_dataNascimento;
 
     private int year;
@@ -36,6 +48,18 @@ public class RegistarActivity extends AppCompatActivity {
         setTitle("Registar");
 
         getSupportActionBar().setElevation(0);
+
+        nome=findViewById(R.id.et_nome);
+        apelido=findViewById(R.id.et_apelido);
+        morada=findViewById(R.id.et_morada);
+        codPostal=findViewById(R.id.et_codpostal);
+        telemovel=findViewById(R.id.et_telemovel);
+        nacionalidade=findViewById(R.id.et_nacionalidade);
+        masculino=findViewById(R.id.radio_pirates);
+        feminino=findViewById(R.id.radio_ninjas);
+        username=findViewById(R.id.et_username);
+        email=findViewById(R.id.et_email);
+        password=findViewById(R.id.et_password);
 
         editText_data_nascimento = findViewById(R.id.edt_dataNascimento);
 

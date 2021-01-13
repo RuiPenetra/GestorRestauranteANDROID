@@ -23,6 +23,7 @@ import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosProdutoListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PerfilListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.ProdutosListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.utils.AutenticacaoJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PedidoJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PerfilJsonParser;
@@ -42,12 +43,12 @@ public class SingletonGestorRestaurante {
     private ArrayList<PedidoProduto> pedidoProdutos;
     private ProdutoBDHelper produtosBD;
     private static RequestQueue volleyQueue = null;
-    private static final String mUrlAPIProdutos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/produto";
-    private static final String mUrlAPILogin = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/auth/login";
-    private static final String mUrlAPIPedidos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIadicionarPedido = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIPerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIupdatePerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIProdutos = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/produto";
+    private static final String mUrlAPILogin = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/auth/login";
+    private static final String mUrlAPIPedidos = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/pedido?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIadicionarPedido="http://192.168.1.84/GestorRestauranteAPI/API/web/v1/pedido/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIPerfil = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIupdatePerfil = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
     private ProdutosListener produtosListener;
     private LoginListener loginListener;
     private PerfilListener perfilListener;
@@ -72,9 +73,10 @@ public class SingletonGestorRestaurante {
         StringRequest req = new StringRequest(Request.Method.POST, mUrlAPILogin, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                String token = ProdutoJsonParser.parserJsonLogin(response);
+                String token = AutenticacaoJsonParser.parserJsonLogin(response);
+
                 if (loginListener != null)
-                    loginListener.onValidateLogin(token, username);
+                    loginListener.onValidateLogin(token,username,password);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -312,8 +314,7 @@ public class SingletonGestorRestaurante {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.d("key", error.getMessage());
-                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Não Existe Pedidos", Toast.LENGTH_SHORT).show();
                 }
             });
 
