@@ -103,8 +103,6 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
 
     @Override
     public void onRefreshCriar() {
-        Toast.makeText(this, "Pedido criado com sucersso", Toast.LENGTH_SHORT).show();
-
         setResult(RESULT_OK);
         finish();
     }

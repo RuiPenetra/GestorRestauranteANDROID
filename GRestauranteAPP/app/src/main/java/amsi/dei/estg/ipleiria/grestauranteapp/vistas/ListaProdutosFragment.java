@@ -1,5 +1,6 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -52,7 +53,7 @@ public class ListaProdutosFragment extends Fragment implements SwipeRefreshLayou
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(),DetalhesProdutoActivity.class);
-                intent.putExtra(DetalhesProdutoActivity.ID, (int) id);
+                intent.putExtra(DetalhesProdutoActivity.ID_PRODUTO, (int) id);
                 startActivity(intent);
                 //startActivityForResult(intent,EDITAR);
             }
@@ -61,6 +62,8 @@ public class ListaProdutosFragment extends Fragment implements SwipeRefreshLayou
 
         return view;
     }
+
+
 
     @Override
     public void onRefresh() {

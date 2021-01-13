@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,30 +21,38 @@ import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaProdutoAdaptador;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosProdutoListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.ProdutosListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.modelo.PedidoProduto;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Produto;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 
-public class ListaProdutosActivity extends AppCompatActivity  {
+public class ListaProdutosActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, ProdutosListener {
 
-    private static final int EDITAR = 1 ;
-    private static final int CRIAR =2 ;
+    public static final String ID_PEDIDO ="ID_PEDIDO" ;
+    private static final int DETALHES = 1 ;
+    private static final int ADICIONAR =2 ;
     private static final int APAGAR =3 ;
-    private static int ID_CATEGORIA ;
-    private CardView cvEntrada;
-    private CardView cvSopa;
-    private CardView cvCarne;
-    private CardView cvPeixe;
-    private CardView cvBedida;
-    private CardView cvSobremesa;
+    private static final int TODAS_CATEGORIAS =0 ;
+    private static final int CATEG_ENTRADA =1 ;
+    private static final int CATEG_SOPA =2 ;
+    private static final int CATEG_CARNE=3 ;
+    private static final int CATEG_PEIXE =4 ;
+    private static final int CATEG_SOBREMESA =5 ;
+    private static final int CATEG_BEBIDA =6 ;
+    private static final int CATEG_OUTRAS =-1 ;
+    private CardView cvEntrada,cvSopa,cvCarne,cvPeixe,cvBedida,cvSobremesa,cvOutras;
     private ListView lvlProdutos;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private FragmentManager fragmentManager;
+    private int id_pedido;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_produtos);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         cvEntrada=findViewById(R.id.cvEntrada);
         cvSopa=findViewById(R.id.cvSopa);
@@ -51,98 +60,109 @@ public class ListaProdutosActivity extends AppCompatActivity  {
         cvPeixe=findViewById(R.id.cvPeixe);
         cvBedida=findViewById(R.id.cvBebida);
         cvSobremesa=findViewById(R.id.cvSobremesa);
+        cvOutras=findViewById(R.id.cvOutro);
 
-        fragmentManager = getSupportFragmentManager();
+        lvlProdutos=findViewById(R.id.lvlListaProdutos);
 
-        Fragment fragment= new ListaProdutosFragment();
-        Bundle b = new Bundle();
-        b.putInt("id_categoria",0);
-        fragment.setArguments(b);
+        swipeRefreshLayout=findViewById(R.id.swipeRefreshLayout_ListaProdutos);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
-        fragmentManager.beginTransaction().replace(R.id.fragment_container_produto, fragment).commit();
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).setProdutosListener(this);
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),TODAS_CATEGORIAS);
+
+        id_pedido = getIntent().getIntExtra(ID_PEDIDO, -1);
+
+        lvlProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),DetalhesProdutoActivity.class);
+                intent.putExtra(DetalhesProdutoActivity.ID_PRODUTO, (int) id);
+                intent.putExtra(DetalhesProdutoActivity.ID_PEDIDO, id_pedido);
+                startActivityForResult(intent,ADICIONAR);
+            }
+        });
 
         cvEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment= null;
-                Bundle b = new Bundle();
-                b.putInt("id_categoria", 1);
-                fragment= new ListaProdutosFragment();
-                fragment.setArguments(b);
-                if (fragment != null)
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container_produto, fragment).commit();
-
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_ENTRADA);
             }
         });
         cvSopa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment= null;
-                Bundle b = new Bundle();
-                b.putInt("id_categoria", 2);
-                fragment= new ListaProdutosFragment();
-                fragment.setArguments(b);
-                if (fragment != null)
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container_produto, fragment).commit();
-
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_SOPA);
             }
         });
 
         cvCarne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment= null;
-                Bundle b = new Bundle();
-                b.putInt("id_categoria", 3);
-                fragment= new ListaProdutosFragment();
-                fragment.setArguments(b);
-                if (fragment != null)
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container_produto, fragment).commit();
-
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_CARNE);
             }
         });
 
         cvPeixe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment= null;
-                Bundle b = new Bundle();
-                b.putInt("id_categoria",4);
-                fragment= new ListaProdutosFragment();
-                fragment.setArguments(b);
-                if (fragment != null)
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container_produto, fragment).commit();
-
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_PEIXE);
             }
         });
 
         cvSobremesa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment= null;
-                Bundle b = new Bundle();
-                b.putInt("id_categoria",5);
-                fragment= new ListaProdutosFragment();
-                fragment.setArguments(b);
-                if (fragment != null)
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container_produto, fragment).commit();
-
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_SOBREMESA);
             }
         });
 
         cvBedida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment= null;
-                Bundle b = new Bundle();
-                b.putInt("id_categoria",6);
-                fragment= new ListaProdutosFragment();
-                fragment.setArguments(b);
-                if (fragment != null)
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container_produto, fragment).commit();
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_BEBIDA);
 
             }
         });
+
+        cvOutras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_OUTRAS);
+
+            }
+        });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(resultCode == Activity.RESULT_OK){
+            switch (requestCode){
+                case ADICIONAR:
+                    setResult(RESULT_OK);
+                    finish();
+                    break;
+                case DETALHES:
+                    SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosAPI(getApplicationContext());
+                    break;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRefreshListaPordutos(ArrayList<Produto> listaProdutos) {
+        if(listaProdutos != null)
+            lvlProdutos.setAdapter(new ListaProdutoAdaptador(getApplicationContext(),listaProdutos));
+    }
+
+    @Override
+    public void onRefreshDetalhes() {
+
+    }
+
+    @Override
+    public void onRefresh() {
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),TODAS_CATEGORIAS);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
 }
