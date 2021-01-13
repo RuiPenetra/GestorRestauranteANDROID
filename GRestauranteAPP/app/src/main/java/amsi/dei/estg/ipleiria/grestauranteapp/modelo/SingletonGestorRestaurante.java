@@ -25,6 +25,7 @@ import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PerfilListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.ProdutosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PedidoJsonParser;
+import amsi.dei.estg.ipleiria.grestauranteapp.utils.PedidosProdutoJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PerfilJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.ProdutoJsonParser;
 
@@ -38,13 +39,15 @@ public class SingletonGestorRestaurante {
     private ArrayList<Pedido> auxPedidosAtivos;
     private ArrayList<Pedido> auxPedidosConcluidos;
     private ArrayList<Pedido> pedidos;
-    private Perfil perfil;
     private ArrayList<PedidoProduto> pedidoProdutos;
+    private Perfil perfil;
     private ProdutoBDHelper produtosBD;
     private static RequestQueue volleyQueue = null;
     private static final String mUrlAPIProdutos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/produto";
     private static final String mUrlAPILogin = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/auth/login";
     private static final String mUrlAPIPedidos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIPedidosProduto = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedidoproduto/all/";
+    private static final String mUrlAPIadicionarPedidoProduto = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedidoproduto/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
     private static final String mUrlAPIadicionarPedido = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
     private static final String mUrlAPIPerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
     private static final String mUrlAPIupdatePerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
@@ -65,6 +68,7 @@ public class SingletonGestorRestaurante {
     private SingletonGestorRestaurante(Context context) {
         produtos = new ArrayList<>();
         pedidos = new ArrayList<>();
+        pedidoProdutos = new ArrayList<>();
         produtosBD = new ProdutoBDHelper(context);
     }
 
@@ -191,7 +195,13 @@ public class SingletonGestorRestaurante {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
 
             if (produtosListener != null) {
-                produtosListener.onRefreshListaPordutos(produtosBD.getProdutosCategoriaBD(id_categoria));
+
+                if(id_categoria==0){
+                    produtosListener.onRefreshListaPordutos(produtosBD.getAllProdutosBD());
+                }else {
+                    produtosListener.onRefreshListaPordutos(produtosBD.getProdutosCategoriaBD(id_categoria));
+                }
+
             }
         } else {
             JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIProdutos, null, new Response.Listener<JSONArray>() {
@@ -200,14 +210,22 @@ public class SingletonGestorRestaurante {
                     produtos = ProdutoJsonParser.parserJsonProdutos(response);
                     adicionarProdutosBD(produtos);
 
-                    if (produtos != null)
-                        auxProdutos = new ArrayList<Produto>();
-                    for (Produto p : produtos) {
-                        if (p.getCategoria() == id_categoria)
-                            auxProdutos.add(p);
+                    if (produtos != null){
+                        if(id_categoria!=0){
+                            auxProdutos = new ArrayList<Produto>();
 
+                            for (Produto p : produtos) {
+                                if (p.getCategoria() == id_categoria)
+                                    auxProdutos.add(p);
+
+                            }
+                            produtosListener.onRefreshListaPordutos(auxProdutos);
+
+                        }else{
+                            produtosListener.onRefreshListaPordutos(produtos);
+
+                        }
                     }
-                    produtosListener.onRefreshListaPordutos(auxProdutos);
 
                 }
             }, new Response.ErrorListener() {
@@ -307,13 +325,11 @@ public class SingletonGestorRestaurante {
 
                     if(pedidosListener!=null)
                         pedidosListener.onRefreshListaPedidos(pedidos);
-                    //pedidosConcluidosListener.onRefreshPedidos(pedidosConcluidos);
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.d("key", error.getMessage());
-                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Pedidos", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -357,5 +373,70 @@ public class SingletonGestorRestaurante {
         volleyQueue.add(req);
         }
 
-}
+    public void getPedidosProdutoAPI(final Context context, final int id_pedido) {
+        if (!Generic.isConnectionInternet(context)) {
+            Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
 
+        } else {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIPedidosProduto+id_pedido+"?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu", null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    pedidoProdutos = PedidosProdutoJsonParser.parserJsonPedidosProduto(response);
+
+                    if (pedidosProdutoListener != null){
+
+                        pedidosProdutoListener.onRefreshListaPedidosProduto(pedidoProdutos);
+
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "TESTE", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            volleyQueue.add(req);
+
+        }
+    }
+
+    public void adicionarPedidoProdutoAPI(final PedidoProduto pedidoProduto, final Context context) {
+
+        StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIadicionarPedidoProduto, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String teste=response;
+                Toast.makeText(context, ""+teste, Toast.LENGTH_SHORT).show();
+                PedidoProduto pedidoProduto=PedidosProdutoJsonParser.parserJsonPedidoProduto(response);
+
+                if(pedidoProduto!=null){
+                    if(pedidosProdutoListener!=null)
+                        pedidosProdutoListener.onRefreshCriar();
+                }else{
+                    Toast.makeText(context, "Erro impossivel adicionar o produto", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "testee", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String,String> params=new HashMap<>();
+                params.put("id_pedido",pedidoProduto.getId_pedido()+"");
+                params.put("id_produto",pedidoProduto.getId_produto()+"");
+                params.put("quant_Pedida",pedidoProduto.getQuantidade()+"");
+                params.put("estado", pedidoProduto.getEstado()+"");
+                params.put("preco",pedidoProduto.getPreco()+"");
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+    }
+
+}

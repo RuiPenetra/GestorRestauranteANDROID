@@ -222,6 +222,30 @@
 
 
                 </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvOutro"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="20dp"
+                    android:backgroundTint="#EFF1EF"
+                    app:cardCornerRadius="20dp"
+                    android:elevation="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toEndOf="@+id/cv_bebida"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/food" />
+
+
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
         </HorizontalScrollView>
@@ -252,13 +276,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/constrainLayout3"
         android:translationY="-60dp">
-
-        <FrameLayout
-            android:id="@+id/fragment_container_produto"
-            android:layout_width="match_parent"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout_ListaProdutos"
             android:layout_height="match_parent"
+            android:layout_width="match_parent">
+        <ListView
+            android:id="@+id/lvlListaProdutos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-            />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -85,7 +85,7 @@ public class ProdutoBDHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Produto auxProduto = new Produto(cursor.getInt(0), cursor.getString(4), cursor.getString(5), cursor.getString(1), cursor.getInt(2));
+                Produto auxProduto = new Produto(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4));
 
                 produtos.add(auxProduto);
 
@@ -105,15 +105,11 @@ public class ProdutoBDHelper extends SQLiteOpenHelper {
             do {
                 Produto auxProduto = new Produto(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4));
 
-                if (auxProduto.getCategoria() == id) {
+                if (auxProduto.getCategoria() ==id) {
 
-                    if (id<=6) {
-                        produtos.add(auxProduto);
-                    }else{
-                        produtos.add(auxProduto);
-                    }
-
+                    produtos.add(auxProduto);
                 }
+
             } while (cursor.moveToNext());
         }
         cursor.close();

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <ImageView
+        android:id="@+id/imgProduto"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/sobremesa"
+        android:elevation="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout4"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout4"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:background="@drawable/bg_item"
+        android:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <TextView
+            android:id="@+id/tvProdutoNome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Burguer"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias=".2"
+            app:layout_constraintVertical_bias=".15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <TextView
+            android:id="@+id/tvQuant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="Quant:"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvProdutoNome"
+            app:layout_constraintTop_toBottomOf="@id/tvProdutoNome"
+            />
+        <TextView
+            android:id="@+id/tvQuantidade"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textSize="14sp"
+            android:text="89"
+            android:elevation="20dp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvQuant"
+            app:layout_constraintTop_toBottomOf="@id/tvProdutoNome"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/tvEstado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="64dp"
+            android:text="Processo"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.478" />
+
+        <TextView
+            android:id="@+id/tvtotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="Total:"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvQuant"
+            app:layout_constraintTop_toBottomOf="@id/tvQuant"
+            />
+        <TextView
+            android:id="@+id/tvPrecoTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:elevation="20dp"
+            android:textSize="14sp"
+            android:text="20,00"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvtotal"
+            app:layout_constraintTop_toBottomOf="@id/tvQuantidade"
+            android:layout_marginLeft="5dp"/>
+
+        <ImageView
+            android:id="@+id/imgPreco"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/euro"
+            android:elevation="20dp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPrecoTotal"
+            app:layout_constraintTop_toBottomOf="@id/tvQuantidade"
+            android:layout_marginLeft="5dp"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
