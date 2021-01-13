@@ -28,6 +28,7 @@ public class MenuFuncionarioActivity extends AppCompatActivity implements Naviga
     private DrawerLayout drawer;
     private String email="hjgkygiyg";
     private FragmentManager fragmentManager;
+    private TextView tvNome,tvApelido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +67,10 @@ public class MenuFuncionarioActivity extends AppCompatActivity implements Naviga
         }
 
         View hView=navigationView.getHeaderView(0);
-        TextView tvEmail=hView.findViewById(R.id.textView6);
-        tvEmail.setText(email);
+
+        tvNome=hView.findViewById(R.id.tvNome);
+        tvApelido=hView.findViewById(R.id.tvApelido);
+        //tvEmail.setText(email);
         setTitle(R.string.actBemVindo);
     }
 

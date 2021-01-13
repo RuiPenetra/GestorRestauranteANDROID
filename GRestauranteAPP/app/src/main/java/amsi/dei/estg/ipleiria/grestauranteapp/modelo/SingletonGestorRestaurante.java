@@ -231,8 +231,7 @@ public class SingletonGestorRestaurante {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.d("key", error.getMessage());
-                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Não foi possivel aceder aos produtos porfavor tente mais tarde", Toast.LENGTH_SHORT).show();
                 }
             });
 

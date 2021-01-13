@@ -72,6 +72,15 @@ public class ListaProdutosActivity extends AppCompatActivity implements SwipeRef
 
         id_pedido = getIntent().getIntExtra(ID_PEDIDO, -1);
 
+        if(id_pedido>0){
+            setTitle("Selecione o Produto");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        }else{
+            setTitle("Lista Produtos");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         lvlProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -156,7 +165,7 @@ public class ListaProdutosActivity extends AppCompatActivity implements SwipeRef
 
     @Override
     public void onRefreshDetalhes() {
-
+        //empty
     }
 
     @Override

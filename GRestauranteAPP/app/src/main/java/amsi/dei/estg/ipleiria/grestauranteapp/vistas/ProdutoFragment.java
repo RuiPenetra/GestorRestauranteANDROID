@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,19 +14,37 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
+import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaProdutoAdaptador;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.ProdutosListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Produto;
+import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 
-public class ProdutoFragment extends Fragment {
+public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ProdutosListener {
 
-   private CardView btn_categoria;
-   private FragmentTransaction transaction;
-   private CardView card_entrada;
-   private CardView card_sopa;
-   private CardView card_carne;
-   private CardView card_peixe;
-   private CardView card_sobremesa;
-   private CardView card_bebida;
+    private static final int TODAS_CATEGORIAS =0 ;
+    private static final int CATEG_ENTRADA =1 ;
+    private static final int CATEG_SOPA =2 ;
+    private static final int CATEG_CARNE=3 ;
+    private static final int CATEG_PEIXE =4 ;
+    private static final int CATEG_SOBREMESA =5 ;
+    private static final int CATEG_BEBIDA =6 ;
+    private static final int CATEG_OUTRAS =-1 ;
+    private CardView btn_categoria;
+    private FragmentTransaction transaction;
+    private CardView card_entrada;
+    private CardView card_sopa;
+    private CardView card_carne;
+    private CardView card_peixe;
+    private CardView card_sobremesa;
+    private CardView card_bebida;
+    private ListView lvlProdutos;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
 
     @Nullable
@@ -35,108 +54,84 @@ public class ProdutoFragment extends Fragment {
 
        View view = inflater.inflate(R.layout.fragment_produtos, container, false);
 
-       card_entrada=view.findViewById(R.id.card_Entrada);
-       card_sopa=view.findViewById(R.id.card_sopa);
-       card_carne=view.findViewById(R.id.card_Carne);
-       card_peixe=view.findViewById(R.id.card_Peixe);
-       card_sobremesa=view.findViewById(R.id.card_Sobremesa);
-       card_bebida=view.findViewById(R.id.card_Bebida);
+       card_entrada=view.findViewById(R.id.cv_entrada);
+       card_sopa=view.findViewById(R.id.cv_sopa);
+       card_carne=view.findViewById(R.id.cv_carne);
+       card_peixe=view.findViewById(R.id.cv_peixe);
+       card_sobremesa=view.findViewById(R.id.cv_sobremesa);
+       card_bebida=view.findViewById(R.id.cv_bebida);
+
+       lvlProdutos=view.findViewById(R.id.lvl_ListaProdutos);
+
+        swipeRefreshLayout=view.findViewById(R.id.swipeRefreshLayout_ListaProdutosFragmento);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        SingletonGestorRestaurante.getInstance(getContext()).setProdutosListener(this);
+        SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),TODAS_CATEGORIAS);
 
         card_entrada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment= null;
-                Bundle b = new Bundle();
+                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),CATEG_ENTRADA);
 
-                b.putInt("id_categoria", 1);
-                fragment= new ListaProdutosFragment();
-                fragment.setArguments(b);
-
-                if (fragment != null)
-                    transaction = getChildFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container_produto, fragment).commit();
             }
         });
 
        card_sopa.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Fragment fragment= null;
-               Bundle b = new Bundle();
+               SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),CATEG_SOPA);
 
-               b.putInt("id_categoria", 2);
-               fragment= new ListaProdutosFragment();
-               fragment.setArguments(b);
-
-               if (fragment != null)
-                   transaction = getChildFragmentManager().beginTransaction();
-               transaction.replace(R.id.fragment_container_produto, fragment).commit();
            }
        });
 
         card_carne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment= null;
-                Bundle b = new Bundle();
+                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),CATEG_CARNE);
 
-                b.putInt("id_categoria", 3);
-                fragment= new ListaProdutosFragment();
-                fragment.setArguments(b);
-
-                if (fragment != null)
-                    transaction = getChildFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container_produto, fragment).commit();
             }
         });
 
         card_peixe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment= null;
-                Bundle b = new Bundle();
-
-                b.putInt("id_categoria", 4);
-                fragment= new ListaProdutosFragment();
-                fragment.setArguments(b);
-
-                if (fragment != null)
-                    transaction = getChildFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container_produto, fragment).commit();
+                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),CATEG_PEIXE);
             }
         });
         card_sobremesa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment= null;
-                Bundle b = new Bundle();
+                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),CATEG_SOBREMESA);
 
-                b.putInt("id_categoria", 5);
-                fragment= new ListaProdutosFragment();
-                fragment.setArguments(b);
-
-                if (fragment != null)
-                    transaction = getChildFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container_produto, fragment).commit();
             }
         });
 
         card_bebida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment= null;
-                Bundle b = new Bundle();
+                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),CATEG_BEBIDA);
 
-                b.putInt("id_categoria", 5);
-                fragment= new ListaProdutosFragment();
-                fragment.setArguments(b);
-
-                if (fragment != null)
-                    transaction = getChildFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container_produto, fragment).commit();
             }
         });
         return view;
     }
 
+    @Override
+    public void onRefreshListaPordutos(ArrayList<Produto> listaProdutos) {
+        if(listaProdutos != null)
+            lvlProdutos.setAdapter(new ListaProdutoAdaptador(getContext(),listaProdutos));
+
+    }
+
+    @Override
+    public void onRefreshDetalhes() {
+        //empty
+    }
+
+    @Override
+    public void onRefresh() {
+        SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),TODAS_CATEGORIAS);
+        swipeRefreshLayout.setRefreshing(false);
+    }
 }
