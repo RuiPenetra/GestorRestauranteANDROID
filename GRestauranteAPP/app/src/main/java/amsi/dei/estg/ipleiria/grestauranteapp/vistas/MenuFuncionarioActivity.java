@@ -23,9 +23,11 @@ import amsi.dei.estg.ipleiria.grestauranteapp.R;
 public class MenuFuncionarioActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String EMAIL = "EMAIL";
-    private static final String PREF_INFO_USER ="PREF_INFO_USER";
+    public static final String USERNAME="USERNAME";
+    public static final String PREF_INFO_USER ="PREF_INFO_USER";
     private NavigationView navigationView;
     private DrawerLayout drawer;
+    private String username="";
     private String email="hjgkygiyg";
     private FragmentManager fragmentManager;
     private TextView tvNome,tvApelido;
@@ -52,10 +54,10 @@ public class MenuFuncionarioActivity extends AppCompatActivity implements Naviga
     }
 
     private void carregarCabecalho() {
-        email=getIntent().getStringExtra(EMAIL);
+       // email=getIntent().getStringExtra(EMAIL);
 
         SharedPreferences sharedPrefInfoUser=getSharedPreferences(PREF_INFO_USER, Context.MODE_PRIVATE);
-
+        username=sharedPrefInfoUser.getString(USERNAME,"Sem username");
         if(email==null)
             //GUARDAR SHARED
             email=sharedPrefInfoUser.getString(EMAIL,"Sem email");

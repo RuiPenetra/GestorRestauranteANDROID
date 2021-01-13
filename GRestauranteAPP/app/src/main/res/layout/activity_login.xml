@@ -79,11 +79,11 @@
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Login"
-                android:background="#000"
-                android:textColor="#fff"
                 android:layout_marginTop="30dp"
-                android:onClick="onClickLogin"/>
+                android:background="#000"
+                android:onClick="onClickLogin"
+                android:text="Login"
+                android:textColor="#fff" />
             <Button
                 android:id="@+id/btn_registar"
                 android:layout_width="match_parent"
