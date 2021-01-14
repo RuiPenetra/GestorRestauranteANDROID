@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -172,6 +173,15 @@ public class ListaProdutosActivity extends AppCompatActivity implements SwipeRef
     public void onRefresh() {
         SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),TODAS_CATEGORIAS);
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+
+    @Override
+    protected void onPause() {
+        int pedido_ID=id_pedido;
+        Log.i("--->","Resume-->"+id_pedido);
+        super.onPause();
+
     }
 
 }

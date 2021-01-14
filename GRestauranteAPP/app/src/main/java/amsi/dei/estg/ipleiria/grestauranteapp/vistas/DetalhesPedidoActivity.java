@@ -110,4 +110,11 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
         SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(getApplicationContext(),id_pedido);
         swipeRefreshLayoutPedidosProduto.setRefreshing(false);
     }
+
+    @Override
+    protected void onResume() {
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidoProdutosListener(this);
+
+        super.onResume();
+    }
 }

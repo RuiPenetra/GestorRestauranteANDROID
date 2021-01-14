@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +30,8 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
     private CardView cvSomar,cvSubtrair,cvCriarPedidoProduto;
     private ImageView imgvCategoriaProduto;
     private int id_produto;
+    private int id_pedido;
+    private int id;
     private PedidoProduto pedidoProduto;
 
     @Override
@@ -38,10 +41,12 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
         setContentView(R.layout.activity_detalhes_produto);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         id_produto = getIntent().getIntExtra(ID_PRODUTO, -1);
+        id_pedido = getIntent().getIntExtra(ID_PEDIDO, -1);
 
         produto = SingletonGestorRestaurante.getInstance(this).getProduto(id_produto);
 
-
+        Intent intent = new Intent(getApplicationContext(),ListaProdutosActivity.class);
+        intent.putExtra(DetalhesProdutoActivity.ID_PEDIDO, (int) id_pedido);
         //TODO: Duvida se é preciso ou para que servira
         // SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         // sharedPrefInfoUser.getString(MenuMainActivity.TOKEN,null);
@@ -106,7 +111,6 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
             @Override
             public void onClick(View v) {
 
-                int id_pedido=getIntent().getIntExtra(ID_PEDIDO, -1);
                 int produto_id=produto.getId();
                 int quantidade=Integer.parseInt(tvQuantida.getText().toString());
                 int estado=0;
@@ -179,4 +183,5 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
         setResult(RESULT_OK);
         finish();
     }
+
 }
