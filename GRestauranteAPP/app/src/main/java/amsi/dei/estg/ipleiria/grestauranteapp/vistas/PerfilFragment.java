@@ -175,6 +175,13 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     @Override
+    public void onRefreshRegistar() {
+        //empty
+    }
+
+
+
+    @Override
     public void onRefresh() {
         SingletonGestorRestaurante.getInstance(getContext()).getPerfilAPI(getContext());
         swipeRefreshLayout.setRefreshing(false);

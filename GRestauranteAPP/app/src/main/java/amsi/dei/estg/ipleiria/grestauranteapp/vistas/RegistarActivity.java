@@ -16,8 +16,11 @@ import android.widget.RadioButton;
 import java.util.Calendar;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PerfilListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Perfil;
+import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 
-public class RegistarActivity extends AppCompatActivity {
+public class RegistarActivity extends AppCompatActivity implements PerfilListener {
 
     public EditText editText_data_nascimento;
     public EditText nome;
@@ -28,10 +31,11 @@ public class RegistarActivity extends AppCompatActivity {
     public EditText nacionalidade;
     public RadioButton masculino;
     public RadioButton feminino;
-    public EditText username;
-    public EditText email;
-    public EditText password;
+    public EditText edt_username;
+    public EditText edt_email;
+    public EditText edt_password;
     private Button btn_dataNascimento;
+    private Perfil perfil;
 
     private int year;
     private int month;
@@ -49,6 +53,7 @@ public class RegistarActivity extends AppCompatActivity {
 
         getSupportActionBar().setElevation(0);
 
+
         nome=findViewById(R.id.et_nome);
         apelido=findViewById(R.id.et_apelido);
         morada=findViewById(R.id.et_morada);
@@ -57,9 +62,9 @@ public class RegistarActivity extends AppCompatActivity {
         nacionalidade=findViewById(R.id.et_nacionalidade);
         masculino=findViewById(R.id.radio_pirates);
         feminino=findViewById(R.id.radio_ninjas);
-        username=findViewById(R.id.et_username);
-        email=findViewById(R.id.et_email);
-        password=findViewById(R.id.et_password);
+        edt_username=findViewById(R.id.et_username);
+        edt_email=findViewById(R.id.et_email);
+        edt_password=findViewById(R.id.et_password);
 
         editText_data_nascimento = findViewById(R.id.edt_dataNascimento);
 
@@ -94,7 +99,51 @@ public class RegistarActivity extends AppCompatActivity {
 
     public void onClickRegistar(View view) {
 
-        Intent intent = new Intent(this, AdminControlerActivity.class);
-        startActivity(intent);
+            if(validarRegisto()==true){
+
+
+                    perfil.setUsername(edt_username.getText().toString());
+                    perfil.setEmail(edt_email.getText().toString());
+                    perfil.setNova_password(edt_password.getText().toString());
+                    SingletonGestorRestaurante.getInstance(getApplicationContext()).adicionarUserAPI(perfil, getApplicationContext());
+
+
+            }
+    }
+
+    private boolean validarRegisto(){
+        String username=edt_username.getText().toString();
+        String email=edt_email.getText().toString();
+        String password=edt_password.getText().toString();
+
+        if(username.length()<3){
+            edt_username.setError("Username invalido");
+            return false;
+        }
+
+        if(email.length()<3){
+            edt_email.setError("Email invalido");
+        }
+
+        if(password.length()<3){
+            edt_password.setError("Password invalida");
+        }
+        return true;
+    }
+
+    @Override
+    public void onRefreshPerfil(Perfil perfil) {
+        //EMPTY
+    }
+
+    @Override
+    public void onRefreshPerfilUpdate() {
+        //EMPTY
+    }
+
+    @Override
+    public void onRefreshRegistar() {
+    setResult(RESULT_OK);
+    finish();
     }
 }
