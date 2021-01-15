@@ -96,17 +96,18 @@ public class ListaPedidosProdutoAdaptador extends BaseAdapter {
 
 
             switch (pedidoProduto.getEstado()){
-
                 case 0:
-                    tvEstado.setText("Processo");
+                    tvEstado.setText(" Em Processo ");
+                    tvEstado.setBackgroundResource(R.drawable.badge_processo);
                     break;
                 case 1:
-                    tvEstado.setText("Preparação");
+                    tvEstado.setText(" Em Progresso ");
+                    tvEstado.setBackgroundResource(R.drawable.badge_progresso);
                     break;
                 case 2:
-                    tvEstado.setText("Concluido");
+                    tvEstado.setText(" Concluido ");
+                    tvEstado.setBackgroundResource(R.drawable.badge_concluido);
                     break;
-
             }
 
             switch (auxProduto.getCategoria()){

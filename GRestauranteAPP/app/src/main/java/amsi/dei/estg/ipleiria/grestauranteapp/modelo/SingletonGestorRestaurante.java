@@ -2,7 +2,6 @@ package amsi.dei.estg.ipleiria.grestauranteapp.modelo;
 
 import android.app.DownloadManager;
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -119,6 +118,14 @@ public class SingletonGestorRestaurante {
                 return p;
         return null;
     }
+
+    public PedidoProduto getPedidoProduto(int id) {
+        for (PedidoProduto pedProd: pedidoProdutos)
+            if (pedProd.getId() == id)
+                return pedProd;
+        return null;
+    }
+
     public Perfil getPerfil() {
         return perfil;
     }
@@ -352,11 +359,11 @@ public class SingletonGestorRestaurante {
         StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIadicionarPedido, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Pedido l=PedidoJsonParser.parserJsonPedido(response);
+                Pedido pedido =PedidoJsonParser.parserJsonPedido(response);
 
-                if(l!=null){
+                if(pedido!=null){
                     if(pedidosListener!=null)
-                        pedidosListener.onRefreshCriar();
+                        pedidosListener.onCreatePedido();
                 }else{
                     Toast.makeText(context, "Erro impossivel criar o pedido", Toast.LENGTH_SHORT).show();
 
@@ -416,13 +423,14 @@ public class SingletonGestorRestaurante {
         StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIadicionarPedidoProduto, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                //TODO:REVER CODIGO
                 String teste=response;
                 Toast.makeText(context, ""+teste, Toast.LENGTH_SHORT).show();
                 PedidoProduto pedidoProduto=PedidosProdutoJsonParser.parserJsonPedidoProduto(response);
 
                 if(pedidoProduto!=null){
                     if(pedidosProdutoListener!=null)
-                        pedidosProdutoListener.onRefreshCriar();
+                        pedidosProdutoListener.onCriar();
                 }else{
                     Toast.makeText(context, "Erro impossivel adicionar o produto", Toast.LENGTH_SHORT).show();
 
@@ -475,8 +483,5 @@ public class SingletonGestorRestaurante {
             }
         };
         volleyQueue.add(req);
-
-    }
-
 
 }

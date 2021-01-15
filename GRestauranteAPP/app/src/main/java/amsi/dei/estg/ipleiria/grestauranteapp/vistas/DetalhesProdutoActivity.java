@@ -45,11 +45,11 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
 
         produto = SingletonGestorRestaurante.getInstance(this).getProduto(id_produto);
 
-        Intent intent = new Intent(getApplicationContext(),ListaProdutosActivity.class);
-        intent.putExtra(DetalhesProdutoActivity.ID_PEDIDO, (int) id_pedido);
         //TODO: Duvida se é preciso ou para que servira
         // SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         // sharedPrefInfoUser.getString(MenuMainActivity.TOKEN,null);
+
+
 
         SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidoProdutosListener(this);
 
@@ -179,9 +179,17 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
     }
 
     @Override
-    public void onRefreshCriar() {
+    public void onCriar() {
         setResult(RESULT_OK);
         finish();
+
     }
+
+    @Override
+    public void onDetalhes() {
+        //empty
+
+    }
+
 
 }

@@ -13,28 +13,32 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".vistas.DetalhesProdutoActivity"
-            android:parentActivityName=".vistas.ListaProdutosActivity"/>
-
-        <activity android:name=".vistas.ListaProdutosActivity"
-            android:parentActivityName=".vistas.StartActivity"/>
-
-        <activity android:name=".vistas.CriarPedidoActivity"
-            android:parentActivityName=".vistas.MenuFuncionarioActivity"/>
-
-        <activity android:name=".vistas.DetalhesPedidoActivity"
-            android:parentActivityName=".vistas.MenuFuncionarioActivity"/>
-
-        <activity android:name=".vistas.SettingsActivity"
-            android:parentActivityName=".vistas.StartActivity"/>
-
-        <activity android:name=".vistas.LoginActivity"
-            android:parentActivityName=".vistas.StartActivity"/>
-
+        <activity android:name=".vistas.DetalhesPedidoProdutoActivity"
+            android:parentActivityName=".vistas.DetalhesPedidoActivity"/>
+        <activity
+            android:name=".vistas.DetalhesProdutoActivity"
+            android:parentActivityName=".vistas.ListaProdutosActivity" />
+        <activity
+            android:name=".vistas.ListaProdutosActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".vistas.StartActivity" />
+        <activity
+            android:name=".vistas.CriarPedidoActivity"
+            android:parentActivityName=".vistas.MenuFuncionarioActivity" />
+        <activity
+            android:name=".vistas.DetalhesPedidoActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".vistas.MenuFuncionarioActivity" />
+        <activity
+            android:name=".vistas.SettingsActivity"
+            android:parentActivityName=".vistas.StartActivity" />
+        <activity
+            android:name=".vistas.LoginActivity"
+            android:parentActivityName=".vistas.StartActivity" />
         <activity android:name=".vistas.AdminControlerActivity" />
-        <activity android:name=".vistas.RegistarActivity"
-            android:parentActivityName=".vistas.LoginActivity"/>
-
+        <activity
+            android:name=".vistas.RegistarActivity"
+            android:parentActivityName=".vistas.LoginActivity" />
         <activity android:name=".vistas.MenuClienteActivity" />
         <activity
             android:name=".vistas.MenuFuncionarioActivity"
