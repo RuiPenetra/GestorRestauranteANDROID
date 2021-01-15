@@ -6,4 +6,6 @@ public interface PerfilListener {
     void onRefreshPerfil(Perfil perfil);
 
     void onRefreshPerfilUpdate();
+
+    void onRefreshRegistar();
 }

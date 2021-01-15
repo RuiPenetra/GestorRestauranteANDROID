@@ -1,5 +1,6 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.modelo;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -43,15 +44,15 @@ public class SingletonGestorRestaurante {
     private Perfil perfil;
     private ProdutoBDHelper produtosBD;
     private static RequestQueue volleyQueue = null;
-    private static final String mUrlAPIProdutos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/produto";
-    private static final String mUrlAPILogin = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/auth/login";
-    private static final String mUrlAPIPedidos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIapagarPedido = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido/apagar/";
-    private static final String mUrlAPIPedidosProduto = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedidoproduto/all/";
-    private static final String mUrlAPIadicionarPedidoProduto = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedidoproduto/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIadicionarPedido = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIPerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIupdatePerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIProdutos = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/produto";
+    private static final String mUrlAPILogin = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/auth/login";
+    private static final String mUrlAPIPedidos = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/pedido?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIPedidosProduto = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/pedidoproduto/all/";
+    private static final String mUrlAPIadicionarPedidoProduto = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/pedidoproduto/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIadicionarPedido = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/pedido/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIPerfil = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIupdatePerfil = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIcriarRegisto="http://192.168.1.84/GestorRestauranteAPI/API/web/v1/perfil/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
     private ProdutosListener produtosListener;
     private LoginListener loginListener;
     private PerfilListener perfilListener;
@@ -258,10 +259,10 @@ public class SingletonGestorRestaurante {
                 produtosListener.onRefreshListaPordutos(produtosBD.getProdutosCategoriaBD(id_categoria));
             }*/
         } else {
-            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIPerfil,null,new Response.Listener<JSONArray>() {
+            StringRequest req = new StringRequest (Request.Method.GET, mUrlAPIPerfil,new Response.Listener<String>() {
 
                 @Override
-                public void onResponse(JSONArray response) {
+                public void onResponse(String response) {
 
                     perfil = PerfilJsonParser.parserJsonPerfil(response);
 
@@ -285,7 +286,7 @@ public class SingletonGestorRestaurante {
             @Override
             public void onResponse(String response) {
 
-                PerfilJsonParser.parserJsonPerfilUpdate(response);
+                PerfilJsonParser.parserJsonPerfil(response);
 
                 if(perfilListener!=null){
                     perfilListener.onRefreshPerfilUpdate();
@@ -448,26 +449,33 @@ public class SingletonGestorRestaurante {
         };
         volleyQueue.add(req);
     }
-
-    public void removerPedidoAPI( final Pedido pedido, final Context context) {
-
-        StringRequest req = new StringRequest(Request.Method.DELETE, mUrlAPIapagarPedido+pedido.getId(), new Response.Listener<String>() {
+    public void adicionarUserAPI(final Perfil perfil, final Context context){
+        StringRequest req= new StringRequest(Request.Method.POST, mUrlAPIcriarRegisto, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-                Pedido l=PedidoJsonParser.parserJsonPedido(response);
-
-                if(pedidosListener!=null)
-                    pedidosListener.onDeletePedido();
-
+                Perfil p = PerfilJsonParser.parserJsonPerfil(response);
+                if (p != null) {
+                    if (perfilListener != null)
+                        perfilListener.onRefreshRegistar();
+                }
+                else{
+                    Toast.makeText(context, "Utilizador já existe", Toast.LENGTH_SHORT).show();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, error.getMessage(),Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            protected Map<String, String> getParams(){
+                Map<String,String> params=new HashMap<>();
+                params.put("username",perfil.getUsername());
+                params.put("email",perfil.getEmail());
+                params.put("password",perfil.getNovaPassword());
+                return params;
+            }
+        };
         volleyQueue.add(req);
-        
-    }
+
 }
