@@ -33,6 +33,7 @@ public class StartActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void onClickSettings(View view) {

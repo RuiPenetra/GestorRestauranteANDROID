@@ -77,32 +77,6 @@ public class SingletonGestorRestaurante {
         produtosBD = new ProdutoBDHelper(context);
     }
 
-    public void loginAPI(final String username, final String password, final Context context) {
-        StringRequest req = new StringRequest(Request.Method.POST, mUrlAPILogin, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                String token = AutenticacaoJsonParser.parserJsonLogin(response);
-
-                if (loginListener != null)
-                    loginListener.onValidateLogin(token,username,password);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", username);
-                params.put("password", password);
-                return params;
-            }
-        };
-        volleyQueue.add(req);
-    }
-
     public Produto getProduto(int id){
         for (Produto p : produtos){
             if(p.getId() == id)
@@ -131,7 +105,6 @@ public class SingletonGestorRestaurante {
         return perfil;
     }
 
-    //TODO: setPedidosListener()
     public void setPedidosListener(PedidosListener pedidosListener) {
         this.pedidosListener = pedidosListener;
     }
@@ -208,6 +181,33 @@ public class SingletonGestorRestaurante {
         }
     }
 */
+
+    public void loginAPI(final String ip,final String username,final String password,final Context context) {
+        StringRequest req = new StringRequest(Request.Method.POST, mUrlAPILogin, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String token = AutenticacaoJsonParser.parserJsonLogin(response);
+
+                if (loginListener != null)
+                    loginListener.onValidateLogin(username,password,token);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", username);
+                params.put("password", password);
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+    }
+
     public void getProdutosCategoriaAPI(final Context context, final int id_categoria) {
         if (!Generic.isConnectionInternet(context)) {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
@@ -484,7 +484,7 @@ public class SingletonGestorRestaurante {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("username", perfil.getUsername());
-                params.put("email", p erfil.getEmail());
+                params.put("email", perfil.getEmail());
                 params.put("password", perfil.getNovaPassword());
                 params.put("nome", perfil.getNome());
                 params.put("apelido", perfil.getApelido());

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -27,21 +28,13 @@ import amsi.dei.estg.ipleiria.grestauranteapp.utils.ProdutoJsonParser;
 
 public class LoginActivity extends AppCompatActivity implements LoginListener {
 
-    TabLayout tabLayout;
-    ViewPager viewPager;
-    public static final String USERNAME = "USERNAME";
-    public static final String TOKEN = "TOKEN";
-    public static final String PASSWORD = "PASSWORD";
-    private static final String PREF_INFO_USER = "PREF_INFO_USER";
+    public static final String PREF_INFO_USER = "PREF_INFO_USER";
+    public static final String IP = "IP";
     private static final int CRIAR=1;
-    private String username = "";
-    private String password = "";
-    private EditText etUsername, etPassword;
-    private CheckBox RememberMe;
-    private Button login;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-    Boolean savelogin;
+    private EditText edtUsername, edtPassword;
+    private CheckBox cbRememberMe;
+    private Button btn_login;
+    private String ip;
 
 
     @Override
@@ -54,43 +47,34 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
         getSupportActionBar().setElevation(0);
 
-        etUsername = findViewById(R.id.edtUsername);
-        etPassword = findViewById(R.id.edtPassword);
-        RememberMe = findViewById(R.id.Remember);
-        login = findViewById(R.id.btn_login);
-        sharedPreferences=getSharedPreferences(PREF_INFO_USER,MODE_PRIVATE);
-        editor=sharedPreferences.edit();
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            login();
+        edtUsername = findViewById(R.id.edtUsername);
+        edtPassword = findViewById(R.id.edtPassword);
+        cbRememberMe = findViewById(R.id.Remember);
+        btn_login = findViewById(R.id.btn_login);
 
-            }
-        });
-            savelogin=sharedPreferences.getBoolean("savelogin",true);
-            if (savelogin==true){
-                etUsername.setText(sharedPreferences.getString("username",null));
-                etPassword.setText(sharedPreferences.getString("password",null));
-
-                RememberMe.setChecked(true);
-            }
-            else
-                {
-
-                }
+        lerShared();
 
         SingletonGestorRestaurante.getInstance(getApplicationContext()).setLoginListener(this);
+    }
+
+    private void lerShared() {
+        SharedPreferences sharedPrefInfoUser = getSharedPreferences(PREF_INFO_USER, Context.MODE_PRIVATE);
+
+        ip=sharedPrefInfoUser.getString("IP",null);
+
+        Toast.makeText(this, ""+ip, Toast.LENGTH_SHORT).show();
+        boolean relembrar=sharedPrefInfoUser.getBoolean(MenuActivity.RELEMBRAR,false);
+
+        if(relembrar==true){
+
+            cbRememberMe.setChecked(true);
+            edtUsername.setText(sharedPrefInfoUser.getString(MenuActivity.USERNAME,null));
+            edtPassword.setText(sharedPrefInfoUser.getString(MenuActivity.PASSWORD,null));
+        }
 
     }
 
-    private boolean isPasswordValida(String password) {
-        if (password == null)
-            return false;
-
-        return password.length() >= 4;
-    }
-
-    public void login() {
+ /*   public void login() {
         String username= etUsername.getText().toString();
         String password=etPassword.getText().toString();
 
@@ -114,23 +98,47 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
             SingletonGestorRestaurante.getInstance(getApplicationContext()).loginAPI(username, password, getApplicationContext());
         } else
             Toast.makeText(getApplicationContext(), "Não existe ligação a internet", Toast.LENGTH_SHORT).show();
-    }
+    }*/
 
     public void onClickLogin(View view) {
-        if (ProdutoJsonParser.isConnectionInternet(getApplicationContext())) {
-            SharedPreferences preferences = getSharedPreferences(PREF_INFO_USER, MODE_PRIVATE);
-            if(TOKEN!=null)
-            {
-                onValidateLogin(TOKEN,username,password);
+        if (Generic.isConnectionInternet(getApplicationContext())) {
+
+            String username=edtUsername.getText().toString();
+            String password=edtPassword.getText().toString();
+
+            if(!isUsernameValido(username)){
+                edtUsername.setError("Username inválido");
             }
-            String username = etUsername.getText().toString();
-            String password = etPassword.getText().toString();
 
+            if(!isPasswordValida(password)){
+                edtUsername.setError("Password inválida");
+            }
 
-            SingletonGestorRestaurante.getInstance(getApplicationContext()).loginAPI(username, password, getApplicationContext());
+            if(ip==null){
+
+                Toast.makeText(this, "Tem de defenir o endereço de ip", Toast.LENGTH_SHORT).show();
+            }else{
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).loginAPI(ip,username,password,getApplicationContext());
+            }
+        }else{
+            Toast.makeText(getApplicationContext(), R.string.noInternet, Toast.LENGTH_SHORT).show();
+
         }
     }
 
+    private boolean isUsernameValido(String username){
+        if(username==null)
+            return false;
+
+        return username.length()>3;
+    }
+
+    private boolean isPasswordValida(String password){
+        if(password==null)
+            return false;
+
+        return password.length()>=4;
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(resultCode== Activity.RESULT_OK && requestCode==CRIAR)
@@ -144,19 +152,38 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     public void onClickRegistar(View view) {
             Intent intent = new Intent(this, RegistarActivity.class);
             startActivityForResult(intent,CRIAR);
-
-
     }
 
     @Override
-    public void onValidateLogin(String token, String username, String password) {
+    public void onValidateLogin(String username,String password,String token) {
+
         if (token != null) {
-            Intent intent= new Intent(this,MenuFuncionarioActivity.class);
+            guardarInfoShared(username,password,token);
+            Intent intent= new Intent(this, MenuActivity.class);
             startActivity(intent);
+            finish();
+
         } else {
 
             Toast.makeText(this, "Erro ao ir buscar token", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void guardarInfoShared(String username,String password, String token){
+
+        SharedPreferences sharedPrefUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefUser.edit();
+        editor.putString(MenuActivity.TOKEN,token);
+
+        if(cbRememberMe.isChecked()){
+            editor.putBoolean(MenuActivity.RELEMBRAR,true);
+            editor.putString(MenuActivity.USERNAME,username);
+            editor.putString(MenuActivity.PASSWORD,password);
+        }else{
+            editor.putBoolean(MenuActivity.RELEMBRAR,false);
+        }
+
+        editor.apply();
     }
 
 }

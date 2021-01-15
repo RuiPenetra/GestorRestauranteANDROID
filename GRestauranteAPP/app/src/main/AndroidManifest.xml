@@ -24,11 +24,11 @@
             android:parentActivityName=".vistas.StartActivity" />
         <activity
             android:name=".vistas.CriarPedidoActivity"
-            android:parentActivityName=".vistas.MenuFuncionarioActivity" />
+            android:parentActivityName=".vistas.MenuActivity" />
         <activity
             android:name=".vistas.DetalhesPedidoActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".vistas.MenuFuncionarioActivity" />
+            android:parentActivityName=".vistas.MenuActivity" />
         <activity
             android:name=".vistas.SettingsActivity"
             android:parentActivityName=".vistas.StartActivity" />
@@ -41,7 +41,7 @@
             android:parentActivityName=".vistas.LoginActivity" />
         <activity android:name=".vistas.MenuClienteActivity" />
         <activity
-            android:name=".vistas.MenuFuncionarioActivity"
+            android:name=".vistas.MenuActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

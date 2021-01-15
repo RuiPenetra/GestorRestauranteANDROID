@@ -20,13 +20,15 @@ import com.google.android.material.navigation.NavigationView;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 
-public class MenuFuncionarioActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String PREF_INFO_USER ="PREF_INFO_USER";
+    public static final String IP="IP";
     public static final String EMAIL = "EMAIL";
     public static final String USERNAME="USERNAME";
-    public static final String PREF_INFO_USER ="PREF_INFO_USER";
+    public static final String PASSWORD ="PASSWORD";
     public static final String TOKEN="TOKEN";
-    public static final String IP="IP";
+    public static final String RELEMBRAR = "RELEMBRAR";
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private String username="";
