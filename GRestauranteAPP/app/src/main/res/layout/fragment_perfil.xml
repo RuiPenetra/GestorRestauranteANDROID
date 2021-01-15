@@ -111,7 +111,7 @@
                         android:hint="Nome">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edt_nome"
+                            android:id="@+id/edtNome"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -126,7 +126,7 @@
                         android:hint="Apelido">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edt_apelido"
+                            android:id="@+id/edtApelido"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
@@ -150,7 +150,7 @@
                         android:hint="Morada">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edt_morada"
+                            android:id="@+id/edtMorada"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -189,7 +189,7 @@
                         android:hint="Telemóvel">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edt_telemovel"
+                            android:id="@+id/edtTelemovel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -213,7 +213,7 @@
                         android:hint="Data nascimento">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edt_dataNascimento"
+                            android:id="@+id/edtDataNascimento"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="date" />
@@ -221,7 +221,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <Button
-                        android:id="@+id/btn_dataNascimento"
+                        android:id="@+id/btnDataNascimento"
                         android:layout_width="100dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
@@ -253,7 +253,7 @@
                         android:hint="Nacionalidade">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edt_nacionalidade"
+                            android:id="@+id/edtNacionalidade"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -341,7 +341,7 @@
                         android:hint="Username">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edt_username"
+                            android:id="@+id/edtUsername"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -365,7 +365,7 @@
                         android:hint="Email">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edt_email"
+                            android:id="@+id/edtEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textEmailAddress"/>
@@ -389,7 +389,7 @@
                         app:passwordToggleEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edt_password"
+                            android:id="@+id/edtPassword"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword" />

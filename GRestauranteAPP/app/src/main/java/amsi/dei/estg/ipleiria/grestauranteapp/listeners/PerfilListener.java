@@ -7,5 +7,5 @@ public interface PerfilListener {
 
     void onRefreshPerfilUpdate();
 
-    void onRefreshRegistar();
+
 }

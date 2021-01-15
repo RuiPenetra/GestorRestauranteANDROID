@@ -83,7 +83,6 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/edt_nome"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -92,14 +91,13 @@
                         android:hint="Nome">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_nome"
+                            android:id="@+id/edt_nome"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/edt_apelido"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -108,10 +106,9 @@
                         android:hint="Apelido">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_apelido"
+                            android:id="@+id/edt_apelido"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPassword" />
+                            android:layout_height="wrap_content" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,7 +122,6 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/edt_morada"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -134,7 +130,7 @@
                         android:hint="Morada">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_morada"
+                            android:id="@+id/edt_morada"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -159,14 +155,13 @@
                         android:hint="Codigo-Postal">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_codpostal"
+                            android:id="@+id/edt_codpostal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/edt_telemovel"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -175,7 +170,7 @@
                         android:hint="Telemóvel">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_telemovel"
+                            android:id="@+id/edt_telemovel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -232,7 +227,6 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/edt_nacionalidade"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -241,7 +235,7 @@
                         android:hint="Nacionalidade">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_nacionalidade"
+                            android:id="@+id/edt_nacionalidade"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -271,14 +265,14 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/radio_pirates"
+                            android:id="@+id/radio_masculino"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Masculino"
                             android:textColor="@color/gray"/>
 
                         <RadioButton
-                            android:id="@+id/radio_ninjas"
+                            android:id="@+id/radio_femenino"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="30dp"
@@ -307,7 +301,7 @@
                        android:textAllCaps="true" />
 
                    <View
-                       android:id="@+id/divider"
+                       android:id="@+id/v_divider2"
                        android:layout_width="match_parent"
                        android:layout_height="2dp"
                        android:background="?android:attr/listDivider" />
@@ -321,7 +315,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/edt_username"
+
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -330,7 +324,7 @@
                         android:hint="Username">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_username"
+                            android:id="@+id/edt_username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -346,7 +340,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/edt_email"
+
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -355,7 +349,7 @@
                         android:hint="Email">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_email"
+                            android:id="@+id/edt_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textEmailAddress" />
@@ -372,7 +366,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/edt_password"
+
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -380,7 +374,7 @@
                         app:passwordToggleEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_password"
+                            android:id="@+id/edt_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword" />
@@ -391,7 +385,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/btn_login"
+                    android:id="@+id/btn_registar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"

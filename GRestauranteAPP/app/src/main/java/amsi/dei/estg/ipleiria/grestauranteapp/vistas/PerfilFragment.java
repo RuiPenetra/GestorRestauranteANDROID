@@ -174,10 +174,7 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
     }
 
-    @Override
-    public void onRefreshRegistar() {
-        //empty
-    }
+
 
 
 

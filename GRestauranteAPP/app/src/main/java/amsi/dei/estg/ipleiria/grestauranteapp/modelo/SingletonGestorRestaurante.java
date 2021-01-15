@@ -24,6 +24,7 @@ import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosProdutoListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PerfilListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.ProdutosListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.RegistoListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.AutenticacaoJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PedidoJsonParser;
@@ -58,6 +59,7 @@ public class SingletonGestorRestaurante {
     private LoginListener loginListener;
     private PerfilListener perfilListener;
     private PedidosListener pedidosListener;
+    private RegistoListener registoListener;
     private PedidosProdutoListener pedidosProdutoListener;
 
     public static synchronized SingletonGestorRestaurante getInstance(Context context) {
@@ -140,6 +142,10 @@ public class SingletonGestorRestaurante {
         this.pedidosProdutoListener = pedidoProdutosListener;
     }
 
+    public void setRegistoListener(RegistoListener registoListener) {
+        this.registoListener = registoListener;
+
+    }
 
     /************** Métodos de acesso à BD ******************************/
     // # PRODUTOS
@@ -447,8 +453,8 @@ public class SingletonGestorRestaurante {
             public void onResponse(String response) {
                 Perfil p = PerfilJsonParser.parserJsonPerfil(response);
                 if (p != null) {
-                    if (perfilListener != null)
-                        perfilListener.onRefreshRegistar();
+                    if (registoListener != null)
+                        registoListener.onRegistar();
                 }
                 else{
                     Toast.makeText(context, "Utilizador já existe", Toast.LENGTH_SHORT).show();
@@ -471,4 +477,6 @@ public class SingletonGestorRestaurante {
         volleyQueue.add(req);
 
     }
+
+
 }

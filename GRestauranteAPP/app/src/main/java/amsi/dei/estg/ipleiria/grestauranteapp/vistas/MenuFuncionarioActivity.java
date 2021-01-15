@@ -25,6 +25,8 @@ public class MenuFuncionarioActivity extends AppCompatActivity implements Naviga
     public static final String EMAIL = "EMAIL";
     public static final String USERNAME="USERNAME";
     public static final String PREF_INFO_USER ="PREF_INFO_USER";
+    public static final String TOKEN="TOKEN";
+    public static final String IP="IP";
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private String username="";

@@ -1,8 +1,10 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +33,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     public static final String TOKEN = "TOKEN";
     public static final String PASSWORD = "PASSWORD";
     private static final String PREF_INFO_USER = "PREF_INFO_USER";
+    private static final int CRIAR=1;
     private String username = "";
     private String password = "";
     private EditText etUsername, etPassword;
@@ -51,8 +54,8 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
         getSupportActionBar().setElevation(0);
 
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
+        etUsername = findViewById(R.id.edtUsername);
+        etPassword = findViewById(R.id.edtPassword);
         RememberMe = findViewById(R.id.Remember);
         login = findViewById(R.id.btn_login);
         sharedPreferences=getSharedPreferences(PREF_INFO_USER,MODE_PRIVATE);
@@ -128,26 +131,21 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(resultCode== Activity.RESULT_OK && requestCode==CRIAR)
+        {
+            Toast.makeText(this, "Utilizador Registado com sucesso!", Toast.LENGTH_SHORT).show();
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     public void onClickRegistar(View view) {
-        Intent intent = new Intent(this, RegistarActivity.class);
-        startActivity(intent);
-        if (Generic.isConnectionInternet(getApplicationContext())) {
+            Intent intent = new Intent(this, RegistarActivity.class);
+            startActivityForResult(intent,CRIAR);
 
-            String username = etUsername.getText().toString();
-            String password = etPassword.getText().toString();
-            //VERICA SE A PASSWORD TEM 4 CARACTERES
-            /** if(!isPasswordValida(password)){
-             etPassword.setError("Password Invalida");
-             return;
-             }**/
-            SingletonGestorRestaurante.getInstance(getApplicationContext()).loginAPI(username, password, getApplicationContext());
 
-        } else
-            Toast.makeText(getApplicationContext(), "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
-
-        /**Intent intent = new Intent(this, RegistarActivity.class);
-         startActivity(intent);**/
     }
 
     @Override
