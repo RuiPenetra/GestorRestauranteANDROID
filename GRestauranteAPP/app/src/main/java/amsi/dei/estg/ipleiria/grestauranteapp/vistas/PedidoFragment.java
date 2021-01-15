@@ -149,8 +149,13 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     @Override
-    public void onRefreshCriar() {
+    public void onCreatePedido() {
         //EMPTY
+    }
+
+    @Override
+    public void onDeletePedido() {
+        //empty
     }
 
     @Override

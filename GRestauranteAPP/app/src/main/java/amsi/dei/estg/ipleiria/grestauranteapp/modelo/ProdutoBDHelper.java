@@ -99,16 +99,16 @@ public class ProdutoBDHelper extends SQLiteOpenHelper {
     public ArrayList<Produto> getProdutosCategoriaBD(int id) {
         ArrayList<Produto> produtos = new ArrayList<>();
         Cursor cursor = this.db.query(TABLE_NAME, new String[]{ID_PRODUTO, NOME_PRODUTO, INGREDIENTES_PRODUTO, PRECO_PRODUTO, CATEGORIA_PRODUTO},
-                null, null, null, null, null);
+                CATEGORIA_PRODUTO+"=?", new String[] {id+""}, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
                 Produto auxProduto = new Produto(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4));
 
-                if (auxProduto.getCategoria() ==id) {
+                //if (auxProduto.getCategoria() ==id) {
 
                     produtos.add(auxProduto);
-                }
+                //}
 
             } while (cursor.moveToNext());
         }

@@ -58,7 +58,13 @@ public class TabListaPedidosAtivos extends Fragment implements SwipeRefreshLayou
     }
 
     @Override
-    public void onRefreshCriar() {
+    public void onCreatePedido() {
+
+    }
+
+    @Override
+    public void onDeletePedido() {
+        //empty
 
     }
 }

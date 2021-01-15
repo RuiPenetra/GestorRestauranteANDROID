@@ -89,8 +89,7 @@
         android:background="@drawable/bg_item"
         android:padding="30dp"
         android:layout_gravity="center"
-        android:layout_marginTop="70dp"
-        android:visibility="gone">
+        android:layout_marginTop="70dp">
 
         <LinearLayout
             android:id="@+id/lilNomePedidoTakeaway"

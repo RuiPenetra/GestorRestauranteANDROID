@@ -102,8 +102,13 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
     }
 
     @Override
-    public void onRefreshCriar() {
+    public void onCreatePedido() {
         setResult(RESULT_OK);
         finish();
+    }
+
+    @Override
+    public void onDeletePedido() {
+        //EMPTY
     }
 }

@@ -9,5 +9,8 @@ public interface PedidosProdutoListener {
 
     void onRefreshListaPedidosProduto(ArrayList<PedidoProduto> pedidoProdutos);
 
-    void onRefreshCriar();
+    void onCriar();
+
+    void onDetalhes();
+
 }

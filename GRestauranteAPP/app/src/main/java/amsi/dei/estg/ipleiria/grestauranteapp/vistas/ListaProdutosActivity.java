@@ -1,5 +1,6 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -11,6 +12,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -156,6 +160,29 @@ public class ListaProdutosActivity extends AppCompatActivity implements SwipeRef
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        if(id_pedido>0){
+            MenuInflater menuInflater=getMenuInflater();
+            menuInflater.inflate(R.menu.menu_lista_produtos,menu);
+            return super.onCreateOptionsMenu(menu);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.itemFechar:
+              finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

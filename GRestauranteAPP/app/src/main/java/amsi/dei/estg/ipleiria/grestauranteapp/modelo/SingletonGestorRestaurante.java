@@ -1,7 +1,6 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.modelo;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -47,6 +46,7 @@ public class SingletonGestorRestaurante {
     private static final String mUrlAPIProdutos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/produto";
     private static final String mUrlAPILogin = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/auth/login";
     private static final String mUrlAPIPedidos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIapagarPedido = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido/apagar/";
     private static final String mUrlAPIPedidosProduto = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedidoproduto/all/";
     private static final String mUrlAPIadicionarPedidoProduto = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedidoproduto/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
     private static final String mUrlAPIadicionarPedido = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
@@ -115,6 +115,14 @@ public class SingletonGestorRestaurante {
                 return p;
         return null;
     }
+
+    public PedidoProduto getPedidoProduto(int id) {
+        for (PedidoProduto pedProd: pedidoProdutos)
+            if (pedProd.getId() == id)
+                return pedProd;
+        return null;
+    }
+
     public Perfil getPerfil() {
         return perfil;
     }
@@ -344,11 +352,11 @@ public class SingletonGestorRestaurante {
         StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIadicionarPedido, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Pedido l=PedidoJsonParser.parserJsonPedido(response);
+                Pedido pedido =PedidoJsonParser.parserJsonPedido(response);
 
-                if(l!=null){
+                if(pedido!=null){
                     if(pedidosListener!=null)
-                        pedidosListener.onRefreshCriar();
+                        pedidosListener.onCreatePedido();
                 }else{
                     Toast.makeText(context, "Erro impossivel criar o pedido", Toast.LENGTH_SHORT).show();
 
@@ -408,13 +416,14 @@ public class SingletonGestorRestaurante {
         StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIadicionarPedidoProduto, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                //TODO:REVER CODIGO
                 String teste=response;
                 Toast.makeText(context, ""+teste, Toast.LENGTH_SHORT).show();
                 PedidoProduto pedidoProduto=PedidosProdutoJsonParser.parserJsonPedidoProduto(response);
 
                 if(pedidoProduto!=null){
                     if(pedidosProdutoListener!=null)
-                        pedidosProdutoListener.onRefreshCriar();
+                        pedidosProdutoListener.onCriar();
                 }else{
                     Toast.makeText(context, "Erro impossivel adicionar o produto", Toast.LENGTH_SHORT).show();
 
@@ -440,4 +449,25 @@ public class SingletonGestorRestaurante {
         volleyQueue.add(req);
     }
 
+    public void removerPedidoAPI( final Pedido pedido, final Context context) {
+
+        StringRequest req = new StringRequest(Request.Method.DELETE, mUrlAPIapagarPedido+pedido.getId(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Pedido l=PedidoJsonParser.parserJsonPedido(response);
+
+                if(pedidosListener!=null)
+                    pedidosListener.onDeletePedido();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        volleyQueue.add(req);
+        
+    }
 }
