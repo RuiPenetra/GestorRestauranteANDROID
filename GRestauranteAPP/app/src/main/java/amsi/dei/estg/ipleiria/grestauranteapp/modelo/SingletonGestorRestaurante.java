@@ -2,6 +2,7 @@ package amsi.dei.estg.ipleiria.grestauranteapp.modelo;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -45,15 +46,15 @@ public class SingletonGestorRestaurante {
     private Perfil perfil;
     private ProdutoBDHelper produtosBD;
     private static RequestQueue volleyQueue = null;
-    private static final String mUrlAPIProdutos = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/produto";
-    private static final String mUrlAPILogin = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/auth/login";
-    private static final String mUrlAPIPedidos = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/pedido?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIPedidosProduto = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/pedidoproduto/all/";
-    private static final String mUrlAPIadicionarPedidoProduto = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/pedidoproduto/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIadicionarPedido = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/pedido/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIPerfil = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIupdatePerfil = "http://192.168.1.84/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIcriarRegisto="http://192.168.1.84/GestorRestauranteAPI/API/web/v1/perfil/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIProdutos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/produto";
+    private static final String mUrlAPILogin = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/auth/login";
+    private static final String mUrlAPIPedidos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIPedidosProduto = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedidoproduto/all/";
+    private static final String mUrlAPIadicionarPedidoProduto = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedidoproduto/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIadicionarPedido = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIPerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIupdatePerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
+    private static final String mUrlAPIcriarRegisto="http://192.168.0.105/GestorRestauranteAPI/API/web/v1/auth/registar";
     private ProdutosListener produtosListener;
     private LoginListener loginListener;
     private PerfilListener perfilListener;
@@ -265,12 +266,12 @@ public class SingletonGestorRestaurante {
                 produtosListener.onRefreshListaPordutos(produtosBD.getProdutosCategoriaBD(id_categoria));
             }*/
         } else {
-            StringRequest req = new StringRequest (Request.Method.GET, mUrlAPIPerfil,new Response.Listener<String>() {
+            JsonArrayRequest req = new JsonArrayRequest (Request.Method.GET, mUrlAPIPerfil,null,new Response.Listener<JSONArray>() {
 
                 @Override
-                public void onResponse(String response) {
+                public void onResponse(JSONArray response) {
 
-                    perfil = PerfilJsonParser.parserJsonPerfil(response);
+                    //perfil = PerfilJsonParser.parserJsonPerfil(response);
 
 //                    adicionarProdutosBD(produtos);
 
@@ -288,11 +289,11 @@ public class SingletonGestorRestaurante {
     }
 
     public void updatePerfilAPI(final Perfil perfil, final Context context) {
-        StringRequest req = new StringRequest(Request.Method.PUT, mUrlAPIupdatePerfil + perfil.getId() + "/update?access-token=evZ5KAZTPTI29WWT62uDdUs5V0qGUhHL", new Response.Listener<String>() {
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.PUT, mUrlAPIupdatePerfil + perfil.getId() + "/update?access-token=evZ5KAZTPTI29WWT62uDdUs5V0qGUhHL",null, new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(JSONArray response) {
 
-                PerfilJsonParser.parserJsonPerfil(response);
+                //PerfilJsonParser.parserJsonPerfil(response);
 
                 if(perfilListener!=null){
                     perfilListener.onRefreshPerfilUpdate();
@@ -317,7 +318,7 @@ public class SingletonGestorRestaurante {
                 params.put("codigopostal", perfil.getCodigo_postal());
                 params.put("nacionalidade", perfil.getNacionalidade());
                 params.put("telemovel", perfil.getTelemovel());
-                params.put("genero", perfil.getGenero());
+                params.put("genero", perfil.getGenero()+"");
                 params.put("username", perfil.getUsername());
                 params.put("email", perfil.getEmail());
 
@@ -359,6 +360,8 @@ public class SingletonGestorRestaurante {
         StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIadicionarPedido, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.i("#->",""+response);
+
                 Pedido pedido =PedidoJsonParser.parserJsonPedido(response);
 
                 if(pedido!=null){
@@ -455,33 +458,46 @@ public class SingletonGestorRestaurante {
         };
         volleyQueue.add(req);
     }
-    public void adicionarUserAPI(final Perfil perfil, final Context context){
-        StringRequest req= new StringRequest(Request.Method.POST, mUrlAPIcriarRegisto, new Response.Listener<String>() {
+
+    public void adicionarUserAPI(final Perfil perfil, final Context context) {
+        StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIcriarRegisto, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Perfil p = PerfilJsonParser.parserJsonPerfil(response);
-                if (p != null) {
-                    if (registoListener != null)
+
+                Perfil perfil = PerfilJsonParser.parserJsonPerfil(response);
+
+                if(perfil!=null){
+                    if(registoListener!=null)
                         registoListener.onRegistar();
+                }else{
+                    Toast.makeText(context, "Erro impossivel criar o pedido", Toast.LENGTH_SHORT).show();
+
                 }
-                else{
-                    Toast.makeText(context, "Utilizador já existe", Toast.LENGTH_SHORT).show();
-                }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }){
-            protected Map<String, String> getParams(){
-                Map<String,String> params=new HashMap<>();
-                params.put("username",perfil.getUsername());
-                params.put("email",perfil.getEmail());
-                params.put("password",perfil.getNovaPassword());
+        }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", perfil.getUsername());
+                params.put("email", p erfil.getEmail());
+                params.put("password", perfil.getNovaPassword());
+                params.put("nome", perfil.getNome());
+                params.put("apelido", perfil.getApelido());
+                params.put("morada", perfil.getMorada());
+                params.put("datanascimento", perfil.getDatanascimento());
+                params.put("codigopostal", perfil.getCodigo_postal());
+                params.put("nacionalidade",perfil.getNacionalidade());
+                params.put("telemovel", perfil.getTelemovel());
+                params.put("genero", perfil.getGenero()+"");
+
                 return params;
             }
         };
         volleyQueue.add(req);
-
+    }
 }

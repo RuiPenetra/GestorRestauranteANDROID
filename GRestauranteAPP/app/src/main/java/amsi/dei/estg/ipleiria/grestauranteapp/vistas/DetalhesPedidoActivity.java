@@ -202,7 +202,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SingletonGestorRestaurante.getInstance(getApplicationContext()).removerPedidoAPI(pedido,getApplicationContext());
+                      //  SingletonGestorRestaurante.getInstance(getApplicationContext()).removerPedidoAPI(pedido,getApplicationContext());
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
