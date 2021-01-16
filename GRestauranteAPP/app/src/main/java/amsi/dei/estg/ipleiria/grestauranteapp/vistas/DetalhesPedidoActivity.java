@@ -39,14 +39,14 @@ import amsi.dei.estg.ipleiria.grestauranteapp.utils.PedidosProdutoJsonParser;
 
 public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, PedidosProdutoListener {
 
-    public static final String ID ="ID" ;
-    private static final int EDITAR_PEDIDOPRODUTO = 1 ;
-    private static final int ADICIONAR_PEDIDOPRODUTO =2 ;
-    private static final int APAGAR_PEDIDOPRODUTO =3 ;
+    public static final String ID = "ID";
+    private static final int EDITAR_PEDIDOPRODUTO = 1;
+    private static final int ADICIONAR_PEDIDOPRODUTO = 2;
+    private static final int APAGAR_PEDIDOPRODUTO = 3;
     private FloatingActionButton fab_criarPedidoProduto;
     private SwipeRefreshLayout swipeRefreshLayoutPedidosProduto;
     private ListView lvlPedidosProduto;
-    private TextView tvNPedido,tvDataHora,tvNmesa,tvEstado;
+    private TextView tvNPedido, tvDataHora, tvNmesa, tvEstado;
     private int id_pedido;
     private ArrayList<Produto> produtos;
     private Pedido pedido;
@@ -57,39 +57,47 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_pedido);
 
-        tvNmesa=findViewById(R.id.tv_Mesa);
-        tvDataHora=findViewById(R.id.tv_DataHora);
-        tvEstado=findViewById(R.id.tv_estado);
-        tvNPedido=findViewById(R.id.tv_NPedido);
-        swipeRefreshLayoutPedidosProduto=findViewById(R.id.swipeRefreshLayoutPedidoProdutos);
-        lvlPedidosProduto=findViewById(R.id.lvl_pedidoProdutos);
+        tvNmesa = findViewById(R.id.tv_Mesa);
+        tvDataHora = findViewById(R.id.tv_DataHora);
+        tvEstado = findViewById(R.id.tv_estado);
+        tvNPedido = findViewById(R.id.tv_NPedido);
+        swipeRefreshLayoutPedidosProduto = findViewById(R.id.swipeRefreshLayoutPedidoProdutos);
+        lvlPedidosProduto = findViewById(R.id.lvl_pedidoProdutos);
 
 
         id_pedido = getIntent().getIntExtra(ID, -1);
-        setTitle("Detalhes Pedido: "+id_pedido);
+        setTitle("Detalhes Pedido: " + id_pedido);
         swipeRefreshLayoutPedidosProduto.setOnRefreshListener(this);
 
+<<<<<<< HEAD
         SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
         token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
 
         produtos=SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosBD();
+=======
+        produtos = SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosBD();
+>>>>>>> master
 
-        pedido=SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedido(id_pedido);
+        pedido = SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedido(id_pedido);
 
         SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidoProdutosListener(this);
+<<<<<<< HEAD
         SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(ip,token,getApplicationContext(),id_pedido);
+=======
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(getApplicationContext(), id_pedido);
+>>>>>>> master
 
         FloatingActionButton fab_criarPedidoProduto = (FloatingActionButton) findViewById(R.id.fab_criarPedidoProduto);
 
         fab_criarPedidoProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Generic.isConnectionInternet(getApplicationContext())){
-                    Intent intent=new Intent(getApplicationContext(), ListaProdutosActivity.class);
+                if (Generic.isConnectionInternet(getApplicationContext())) {
+                    Intent intent = new Intent(getApplicationContext(), ListaProdutosActivity.class);
                     intent.putExtra(DetalhesProdutoActivity.ID_PEDIDO, id_pedido);
-                    startActivityForResult(intent,ADICIONAR_PEDIDOPRODUTO);
-                }else{
+                    startActivityForResult(intent, ADICIONAR_PEDIDOPRODUTO);
+                } else {
                     Toast.makeText(getApplicationContext(), R.string.noInternet, Toast.LENGTH_SHORT).show();
 
                 }
@@ -99,9 +107,9 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
         lvlPedidosProduto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),DetalhesPedidoProdutoActivity.class);
+                Intent intent = new Intent(getApplicationContext(), DetalhesPedidoProdutoActivity.class);
                 intent.putExtra(DetalhesPedidoProdutoActivity.ID_PEDIDO_PRODUTO, (int) id);
-                startActivityForResult(intent,EDITAR_PEDIDOPRODUTO);
+                startActivityForResult(intent, EDITAR_PEDIDOPRODUTO);
             }
         });
 
@@ -114,7 +122,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
         tvNmesa.setText(String.valueOf(pedido.getId_mesa()));
         tvDataHora.setText(pedido.getData());
 
-        switch (pedido.getEstado()){
+        switch (pedido.getEstado()) {
             case 0:
                 tvEstado.setText(" Em Processo ");
                 tvEstado.setBackgroundResource(R.drawable.badge_processo);
@@ -130,20 +138,19 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
         }
 
 
-
     }
 
     /**
-     *
      * @param requestCode código enviado para a atividade
-     * @param resultCode o código recebido pela atividade
+     * @param resultCode  o código recebido pela atividade
      * @param data
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode == Activity.RESULT_OK){
-            switch (requestCode){
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
                 case ADICIONAR_PEDIDOPRODUTO:
+<<<<<<< HEAD
                     SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(ip,token,getApplicationContext(),id_pedido);
                     Toast.makeText(getApplicationContext(),"Produto adicionado com sucesso", Toast.LENGTH_LONG).show();
                     break;
@@ -154,6 +161,18 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
                 case APAGAR_PEDIDOPRODUTO:
                     SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(ip,token,getApplicationContext(),id_pedido);
                     Toast.makeText(getApplicationContext(),"Pedido Produto apagado com sucesso",Toast.LENGTH_LONG).show();
+=======
+                    SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(getApplicationContext(), id_pedido);
+                    Toast.makeText(getApplicationContext(), "Produto adicionado com sucesso", Toast.LENGTH_LONG).show();
+                    break;
+                case EDITAR_PEDIDOPRODUTO:
+                    SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(getApplicationContext(), id_pedido);
+                    Toast.makeText(getApplicationContext(), "Pedido Produto editado com sucesso", Toast.LENGTH_LONG).show();
+                    break;
+                case APAGAR_PEDIDOPRODUTO:
+                    SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(getApplicationContext(), id_pedido);
+                    Toast.makeText(getApplicationContext(), "Pedido Produto apagado com sucesso", Toast.LENGTH_LONG).show();
+>>>>>>> master
                     break;
             }
         }
@@ -163,9 +182,9 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        if(pedido!=null){
-            MenuInflater menuInflater=getMenuInflater();
-            menuInflater.inflate(R.menu.menu_detalhes_pedido,menu);
+        if (pedido != null) {
+            MenuInflater menuInflater = getMenuInflater();
+            menuInflater.inflate(R.menu.menu_detalhes_pedido, menu);
             return super.onCreateOptionsMenu(menu);
         }
         return false;
@@ -174,11 +193,11 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.itemRemover:
-                if(Generic.isConnectionInternet(getApplicationContext())){
+                if (Generic.isConnectionInternet(getApplicationContext())) {
                     //TODO: função abrir dialog
-                }else{
+                } else {
                     Toast.makeText(this, R.string.noInternet, Toast.LENGTH_SHORT).show();
                 }
         }
@@ -187,8 +206,8 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
 
     @Override
     public void onRefreshListaPedidosProduto(ArrayList<PedidoProduto> pedidoProdutos) {
-        if(pedidoProdutos != null)
-            lvlPedidosProduto.setAdapter(new ListaPedidosProdutoAdaptador(getApplicationContext(),pedidoProdutos,produtos));
+        if (pedidoProdutos != null)
+            lvlPedidosProduto.setAdapter(new ListaPedidosProdutoAdaptador(getApplicationContext(), pedidoProdutos, produtos));
     }
 
     @Override
@@ -203,7 +222,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
 
     private void dialogRemover() {
         AlertDialog.Builder builder;
-        builder= new AlertDialog.Builder(this);
+        builder = new AlertDialog.Builder(this);
         builder.setTitle("Apagar Pedido")
                 .setMessage("Pretende mesmo apagar o pedido?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -224,7 +243,11 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
 
     @Override
     public void onRefresh() {
+<<<<<<< HEAD
         SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(ip,token,getApplicationContext(),id_pedido);
+=======
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(getApplicationContext(), id_pedido);
+>>>>>>> master
         swipeRefreshLayoutPedidosProduto.setRefreshing(false);
     }
 

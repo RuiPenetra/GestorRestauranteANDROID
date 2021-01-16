@@ -4,12 +4,13 @@ import java.util.Date;
 
 public class Perfil {
 
-    private int id, genero;
-    private String username, nova_password, email, nome,apelido,morada, nacionalidade, cargo, codigo_postal, telemovel, datanascimento;
+    private int id,genero;
+    private String username, nova_password, email, nome,apelido,morada, nacionalidade, cargo, codigo_postal,  telemovel, datanascimento;
 
     public int getId() {
         return id;
     }
+
 
     public String getUsername() {
         return username;

@@ -3,6 +3,8 @@ package amsi.dei.estg.ipleiria.grestauranteapp.utils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.JsonArrayRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,5 +40,5 @@ public class PerfilJsonParser {
             e.printStackTrace();
         }
         return auxPerfil;
-    }
+    }*/
 }

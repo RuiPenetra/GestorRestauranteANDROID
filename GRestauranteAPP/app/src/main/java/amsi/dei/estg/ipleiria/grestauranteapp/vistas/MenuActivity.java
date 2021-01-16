@@ -1,6 +1,7 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -104,6 +105,11 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_pedidos:
                 fragment = new PedidoFragment();
+                setTitle(item.getTitle());
+                break;
+            case R.id.nav_contactos:
+                Intent intent = new Intent(MenuFuncionarioActivity.this, ContactoActivity.class);
+                startActivity(intent);
                 setTitle(item.getTitle());
                 break;
         }

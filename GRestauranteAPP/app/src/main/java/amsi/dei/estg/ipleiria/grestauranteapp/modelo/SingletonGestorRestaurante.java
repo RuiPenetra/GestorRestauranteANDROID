@@ -93,7 +93,7 @@ public class SingletonGestorRestaurante {
     }
 
     public PedidoProduto getPedidoProduto(int id) {
-        for (PedidoProduto pedProd: pedidoProdutos)
+        for (PedidoProduto pedProd : pedidoProdutos)
             if (pedProd.getId() == id)
                 return pedProd;
         return null;
@@ -111,13 +111,15 @@ public class SingletonGestorRestaurante {
         this.produtosListener = produtosListener;
     }
 
-    public void setLoginListener(LoginListener loginListener) { this.loginListener = loginListener; }
+    public void setLoginListener(LoginListener loginListener) {
+        this.loginListener = loginListener;
+    }
 
-    public void setPerfilListener(PerfilListener perfilListener){
+    public void setPerfilListener(PerfilListener perfilListener) {
         this.perfilListener = perfilListener;
     }
 
-    public void setPedidoProdutosListener(PedidosProdutoListener pedidoProdutosListener){
+    public void setPedidoProdutosListener(PedidosProdutoListener pedidoProdutosListener) {
         this.pedidosProdutoListener = pedidoProdutosListener;
     }
 
@@ -212,9 +214,9 @@ public class SingletonGestorRestaurante {
 
             if (produtosListener != null) {
 
-                if(id_categoria==0){
+                if (id_categoria == 0) {
                     produtosListener.onRefreshListaPordutos(produtosBD.getAllProdutosBD());
-                }else {
+                } else {
                     produtosListener.onRefreshListaPordutos(produtosBD.getProdutosCategoriaBD(id_categoria));
                 }
 
@@ -224,12 +226,26 @@ public class SingletonGestorRestaurante {
             JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, BaseUrl + ip + (id_categoria==0 ? mUrlAPIProdutos : mUrlAPIProdutos + "/categoria/" + id_categoria), null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
+<<<<<<< HEAD
                     Log.i("#-->",""+response);
+=======
+                    produtos = ProdutoJsonParser.parserJsonProdutos(response);
+                    adicionarProdutosBD(produtos);
+
+                    if (produtos != null) {
+                        if (id_categoria != 0) {
+                            auxProdutos = new ArrayList<Produto>();
+>>>>>>> master
 
                     produtos = ProdutoJsonParser.parserJsonProdutos(response);
                     Log.i("#-->",""+produtos);
 
+<<<<<<< HEAD
                     adicionarProdutosBD(produtos);
+=======
+                        } else {
+                            produtosListener.onRefreshListaPordutos(produtos);
+>>>>>>> master
 
                     produtosListener.onRefreshListaPordutos(auxProdutos);
 
@@ -261,7 +277,7 @@ public class SingletonGestorRestaurante {
 
 //                    adicionarProdutosBD(produtos);
 
-                        perfilListener.onRefreshPerfil(perfil);
+                    perfilListener.onRefreshPerfil(perfil);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -281,10 +297,11 @@ public class SingletonGestorRestaurante {
 
                 //PerfilJsonParser.parserJsonPerfil(response);
 
-                if(perfilListener!=null){
+                if (perfilListener != null) {
                     perfilListener.onRefreshPerfilUpdate();
-                }else{
-                    Toast.makeText(context, "ERRRRROOOO", Toast.LENGTH_SHORT).show();;
+                } else {
+                    Toast.makeText(context, "ERRRRROOOO", Toast.LENGTH_SHORT).show();
+                    ;
                 }
 
             }
@@ -308,7 +325,7 @@ public class SingletonGestorRestaurante {
                 params.put("username", perfil.getUsername());
                 params.put("email", perfil.getEmail());
 
-                if(perfil.getNovaPassword()!="")
+                if (perfil.getNovaPassword() != "")
                     params.put("nova_password", perfil.getNovaPassword());
 
                 return params;
@@ -326,7 +343,7 @@ public class SingletonGestorRestaurante {
                 public void onResponse(JSONArray response) {
                     pedidos = PedidoJsonParser.parserJsonPedidos(response);
 
-                    if(pedidosListener!=null)
+                    if (pedidosListener != null)
                         pedidosListener.onRefreshListaPedidos(pedidos);
                 }
             }, new Response.ErrorListener() {
@@ -348,10 +365,10 @@ public class SingletonGestorRestaurante {
             public void onResponse(String response) {
                 Pedido pedido =PedidoJsonParser.parserJsonPedido(response);
 
-                if(pedido!=null){
-                    if(pedidosListener!=null)
+                if (pedido != null) {
+                    if (pedidosListener != null)
                         pedidosListener.onCreatePedido();
-                }else{
+                } else {
                     Toast.makeText(context, "Erro impossivel criar o pedido", Toast.LENGTH_SHORT).show();
 
                 }
@@ -364,28 +381,32 @@ public class SingletonGestorRestaurante {
         }) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String,String> params=new HashMap<>();
-                params.put("data",pedido.getData());
-                params.put("id_mesa",pedido.getId_mesa()+"");
-                params.put("id_perfil",pedido.getId_utilizador()+"");
-                params.put("estado", pedido.getEstado()+"");
-                params.put("tipo",pedido.getTipo()+"");
+                Map<String, String> params = new HashMap<>();
+                params.put("data", pedido.getData());
+                params.put("id_mesa", pedido.getId_mesa() + "");
+                params.put("id_perfil", pedido.getId_utilizador() + "");
+                params.put("estado", pedido.getEstado() + "");
+                params.put("tipo", pedido.getTipo() + "");
                 return params;
             }
         };
         volleyQueue.add(req);
-        }
+    }
 
     public void getPedidosProdutoAPI(final String ip,final String token, final Context context, final int id_pedido) {
         if (!Generic.isConnectionInternet(context)) {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
         } else {
+<<<<<<< HEAD
             JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, BaseUrl + ip + mUrlAPIPedidosProduto + "/all/" + id_pedido + "?access-token=" + token, null, new Response.Listener<JSONArray>() {
+=======
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIPedidosProduto + id_pedido + "?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu", null, new Response.Listener<JSONArray>() {
+>>>>>>> master
                 @Override
                 public void onResponse(JSONArray response) {
                     pedidoProdutos = PedidosProdutoJsonParser.parserJsonPedidosProduto(response);
 
-                    if (pedidosProdutoListener != null){
+                    if (pedidosProdutoListener != null) {
 
                         pedidosProdutoListener.onRefreshListaPedidosProduto(pedidoProdutos);
 
@@ -410,14 +431,14 @@ public class SingletonGestorRestaurante {
             @Override
             public void onResponse(String response) {
                 //TODO:REVER CODIGO
-                String teste=response;
-                Toast.makeText(context, ""+teste, Toast.LENGTH_SHORT).show();
-                PedidoProduto pedidoProduto=PedidosProdutoJsonParser.parserJsonPedidoProduto(response);
+                String teste = response;
+                Toast.makeText(context, "" + teste, Toast.LENGTH_SHORT).show();
+                PedidoProduto pedidoProduto = PedidosProdutoJsonParser.parserJsonPedidoProduto(response);
 
-                if(pedidoProduto!=null){
-                    if(pedidosProdutoListener!=null)
+                if (pedidoProduto != null) {
+                    if (pedidosProdutoListener != null)
                         pedidosProdutoListener.onCriar();
-                }else{
+                } else {
                     Toast.makeText(context, "Erro impossivel adicionar o produto", Toast.LENGTH_SHORT).show();
 
                 }
@@ -430,12 +451,12 @@ public class SingletonGestorRestaurante {
         }) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String,String> params=new HashMap<>();
-                params.put("id_pedido",pedidoProduto.getId_pedido()+"");
-                params.put("id_produto",pedidoProduto.getId_produto()+"");
-                params.put("quant_Pedida",pedidoProduto.getQuantidade()+"");
-                params.put("estado", pedidoProduto.getEstado()+"");
-                params.put("preco",pedidoProduto.getPreco()+"");
+                Map<String, String> params = new HashMap<>();
+                params.put("id_pedido", pedidoProduto.getId_pedido() + "");
+                params.put("id_produto", pedidoProduto.getId_produto() + "");
+                params.put("quant_Pedida", pedidoProduto.getQuantidade() + "");
+                params.put("estado", pedidoProduto.getEstado() + "");
+                params.put("preco", pedidoProduto.getPreco() + "");
                 return params;
             }
         };
