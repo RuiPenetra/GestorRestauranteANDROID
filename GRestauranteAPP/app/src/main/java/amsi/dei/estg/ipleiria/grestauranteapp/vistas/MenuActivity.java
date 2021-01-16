@@ -108,7 +108,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 setTitle(item.getTitle());
                 break;
             case R.id.nav_contactos:
-                Intent intent = new Intent(MenuFuncionarioActivity.this, ContactoActivity.class);
+                Intent intent = new Intent(MenuActivity.this, ContactoActivity.class);
                 startActivity(intent);
                 setTitle(item.getTitle());
                 break;

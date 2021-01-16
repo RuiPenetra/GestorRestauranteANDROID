@@ -231,7 +231,8 @@ public class SingletonGestorRestaurante {
 
                     adicionarProdutosBD(produtos);
 
-                    produtosListener.onRefreshListaPordutos(auxProdutos);
+
+                    produtosListener.onRefreshListaPordutos(produtos);
 
                 }
             }, new Response.ErrorListener() {
@@ -386,7 +387,7 @@ public class SingletonGestorRestaurante {
                     pedidoProdutos = PedidosProdutoJsonParser.parserJsonPedidosProduto(response);
 
                     if (pedidosProdutoListener != null){
-
+                         pedidosListener.onCreatePedido();
                         pedidosProdutoListener.onRefreshListaPedidosProduto(pedidoProdutos);
 
                     }
