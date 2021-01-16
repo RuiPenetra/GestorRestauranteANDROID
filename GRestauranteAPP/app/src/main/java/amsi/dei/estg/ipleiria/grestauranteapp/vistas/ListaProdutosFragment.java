@@ -1,12 +1,15 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,7 @@ public class ListaProdutosFragment extends Fragment implements SwipeRefreshLayou
     private int id_categoria;
     private ArrayList<Produto> listaProdutos;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private String ip;
 
     public ListaProdutosFragment() {
         // Required empty public constructor
@@ -45,8 +49,12 @@ public class ListaProdutosFragment extends Fragment implements SwipeRefreshLayou
         Bundle bundle = this.getArguments();
 
         id_categoria=bundle.getInt("id_categoria");
+
+        SharedPreferences sharedPrefInfoUser = getActivity().getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
+
         SingletonGestorRestaurante.getInstance(getContext()).setProdutosListener(this);
-        SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),id_categoria);
+        SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(ip,id_categoria,getContext());
 
 
         lvListaProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,7 +75,7 @@ public class ListaProdutosFragment extends Fragment implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-        SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),id_categoria);
+        SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(ip,id_categoria,getContext());
         swipeRefreshLayout.setRefreshing(false);
     }
 

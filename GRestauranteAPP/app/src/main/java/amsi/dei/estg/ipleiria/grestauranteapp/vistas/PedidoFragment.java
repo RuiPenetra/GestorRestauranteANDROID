@@ -1,7 +1,9 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,16 +17,11 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewpager.widget.ViewPager;
-
-import com.google.android.material.tabs.TabItem;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaPedidoAdaptador;
-import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.PageAdapter;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Pedido;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
@@ -35,13 +32,14 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private ViewPager viewPager;
     private TabItem tabAtivos,tabConcluidos;
     private PageAdapter pagerAdapter;*/
-    private static final int EDITAR = 1 ;
-    private static final int CRIAR =2 ;
+    private static final int CRIAR = 1 ;
+    private static final int DETALHES =2 ;
     private static final int APAGAR =3 ;
     private static final int ID_UTILIZADOR =1 ;
     private ListView lvlPedidos;
     private CardView cvNovoPedido;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private String ip,token;
 
 
     public PedidoFragment() {
@@ -60,20 +58,19 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
         swipeRefreshLayout=view.findViewById(R.id.swipeRefreshLayoutPedidos);
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        SingletonGestorRestaurante.getInstance(getContext()).setPedidosListener(this);
-        SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(getContext());
+        SharedPreferences sharedPrefInfoUser = getActivity().getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
+        token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
 
-/*        tabPedidos=view.findViewById(R.id.tabPedidos);
-        tabAtivos=view.findViewById(R.id.tab_item_ativo);
-        tabConcluidos=view.findViewById(R.id.tab_item_concluido);
-        viewPager=view.findViewById(R.id.viewpager);*/
+        SingletonGestorRestaurante.getInstance(getContext()).setPedidosListener(this);
+        SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
 
         lvlPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(),DetalhesPedidoActivity.class);
                 intent.putExtra(DetalhesPedidoActivity.ID, (int) id);
-                startActivityForResult(intent,EDITAR);
+                startActivityForResult(intent,DETALHES);
             }
         });
 
@@ -86,31 +83,7 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
                 startActivityForResult(intent,CRIAR);
             }
         });
-/*        pagerAdapter= new PageAdapter(getChildFragmentManager(),tabPedidos.getTabCount());
-        viewPager.setAdapter(pagerAdapter);*/
 
-       /* tabPedidos.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-                if(tab.getPosition() == 0){
-                    pagerAdapter.notifyDataSetChanged();
-                }else{
-                    pagerAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });*/
-        //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabPedidos));
         return view;
     }
 
@@ -125,16 +98,11 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
         if(resultCode == Activity.RESULT_OK){
             switch (requestCode){
                 case CRIAR:
-                    SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(getContext());
+                    SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
                     Toast.makeText(getContext(),"Pedido criado com sucesso", Toast.LENGTH_LONG).show();
                     break;
-                case EDITAR:
-                    SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(getContext());
-                    Toast.makeText(getContext(),"Livro editado com sucesso",Toast.LENGTH_LONG).show();
-                    break;
-                case APAGAR:
-                    SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(getContext());
-                    Toast.makeText(getContext(),"Livro apagado com sucesso",Toast.LENGTH_LONG).show();
+                case DETALHES:
+                    SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
                     break;
             }
         }
@@ -160,7 +128,7 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
     @Override
     public void onRefresh() {
-        SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(getContext());
+        SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
         swipeRefreshLayout.setRefreshing(false);
     }
 

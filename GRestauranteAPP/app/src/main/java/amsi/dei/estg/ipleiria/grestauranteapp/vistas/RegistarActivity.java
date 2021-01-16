@@ -3,7 +3,9 @@ package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -34,6 +36,7 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
     private int day;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
     private Perfil perfil;
+    private String ip;
 
 
     @Override
@@ -63,6 +66,9 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
         btn_registar=findViewById(R.id.btn_Registar);
 
         btn_dataNascimento = findViewById(R.id.btn_dataNascimento);
+
+        SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
 
         SingletonGestorRestaurante.getInstance(RegistarActivity.this).setRegistoListener(this);
 
@@ -122,7 +128,7 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
 
                     perfil = new Perfil(0,username,password,email,nome,apelido,morada,nacionalidade,null,codigoPostal,genero,telemovel,dataNascimento);
 
-                    SingletonGestorRestaurante.getInstance(getApplicationContext()).adicionarUserAPI(perfil, getApplicationContext());
+                    SingletonGestorRestaurante.getInstance(getApplicationContext()).adicionarUserAPI(ip,perfil, getApplicationContext());
 
                 //}
 

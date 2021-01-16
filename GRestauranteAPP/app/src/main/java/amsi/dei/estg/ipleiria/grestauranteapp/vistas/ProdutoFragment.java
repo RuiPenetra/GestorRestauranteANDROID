@@ -1,5 +1,7 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +46,7 @@ public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private CardView card_bebida;
     private ListView lvlProdutos;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private String ip;
 
 
 
@@ -64,15 +67,19 @@ public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRe
        lvlProdutos=view.findViewById(R.id.lvl_ListaProdutos);
 
         swipeRefreshLayout=view.findViewById(R.id.swipeRefreshLayout_ListaProdutosFragmento);
+
+        SharedPreferences sharedPrefInfoUser = getActivity().getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
+
         swipeRefreshLayout.setOnRefreshListener(this);
 
         SingletonGestorRestaurante.getInstance(getContext()).setProdutosListener(this);
-        SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),TODAS_CATEGORIAS);
+        SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(ip,TODAS_CATEGORIAS,getContext());
 
         card_entrada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),CATEG_ENTRADA);
+                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(ip,CATEG_ENTRADA,getContext());
 
             }
         });
@@ -80,7 +87,7 @@ public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRe
        card_sopa.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),CATEG_SOPA);
+               SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(ip,CATEG_SOPA,getContext());
 
            }
        });
@@ -88,7 +95,7 @@ public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRe
         card_carne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),CATEG_CARNE);
+                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(ip,CATEG_CARNE,getContext());
 
             }
         });
@@ -96,13 +103,14 @@ public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRe
         card_peixe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),CATEG_PEIXE);
+                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(ip,CATEG_PEIXE,getContext());
             }
         });
+
         card_sobremesa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),CATEG_SOBREMESA);
+                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(ip,CATEG_SOBREMESA,getContext());
 
             }
         });
@@ -110,7 +118,7 @@ public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRe
         card_bebida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),CATEG_BEBIDA);
+                SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(ip,CATEG_BEBIDA,getContext());
 
             }
         });
@@ -131,7 +139,7 @@ public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onRefresh() {
-        SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(getContext(),TODAS_CATEGORIAS);
+        SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(ip,TODAS_CATEGORIAS,getContext());
         swipeRefreshLayout.setRefreshing(false);
     }
 }

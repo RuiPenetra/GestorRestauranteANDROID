@@ -9,7 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -51,6 +53,7 @@ public class ListaProdutosActivity extends AppCompatActivity implements SwipeRef
     private ListView lvlProdutos;
     private SwipeRefreshLayout swipeRefreshLayout;
     private int id_pedido;
+    private String ip,token;
 
 
     @Override
@@ -72,8 +75,12 @@ public class ListaProdutosActivity extends AppCompatActivity implements SwipeRef
         swipeRefreshLayout=findViewById(R.id.swipeRefreshLayout_ListaProdutos);
         swipeRefreshLayout.setOnRefreshListener(this);
 
+        SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
+        token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
+
         SingletonGestorRestaurante.getInstance(getApplicationContext()).setProdutosListener(this);
-        SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),TODAS_CATEGORIAS);
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(ip,TODAS_CATEGORIAS,getApplicationContext());
 
         id_pedido = getIntent().getIntExtra(ID_PEDIDO, -1);
 
@@ -99,41 +106,41 @@ public class ListaProdutosActivity extends AppCompatActivity implements SwipeRef
         cvEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_ENTRADA);
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(ip,CATEG_ENTRADA,getApplicationContext());
             }
         });
         cvSopa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_SOPA);
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(ip,CATEG_SOPA,getApplicationContext());
             }
         });
 
         cvCarne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_CARNE);
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(ip,CATEG_CARNE,getApplicationContext());
             }
         });
 
         cvPeixe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_PEIXE);
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(ip,CATEG_PEIXE,getApplicationContext());
             }
         });
 
         cvSobremesa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_SOBREMESA);
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(ip,CATEG_SOBREMESA,getApplicationContext());
             }
         });
 
         cvBedida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_BEBIDA);
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(ip,CATEG_BEBIDA,getApplicationContext());
 
             }
         });
@@ -141,23 +148,16 @@ public class ListaProdutosActivity extends AppCompatActivity implements SwipeRef
         cvOutras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),CATEG_OUTRAS);
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(ip,CATEG_OUTRAS,getApplicationContext());
 
             }
         });
     }
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode == Activity.RESULT_OK){
-            switch (requestCode){
-                case ADICIONAR:
-                    setResult(RESULT_OK);
-                    finish();
-                    break;
-                case DETALHES:
-                    SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosAPI(getApplicationContext());
-                    break;
-            }
+        if(resultCode == Activity.RESULT_OK && requestCode== ADICIONAR){
+            setResult(RESULT_OK);
+            finish();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -198,17 +198,8 @@ public class ListaProdutosActivity extends AppCompatActivity implements SwipeRef
 
     @Override
     public void onRefresh() {
-        SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(getApplicationContext(),TODAS_CATEGORIAS);
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(ip,TODAS_CATEGORIAS,getApplicationContext());
         swipeRefreshLayout.setRefreshing(false);
-    }
-
-
-    @Override
-    protected void onPause() {
-        int pedido_ID=id_pedido;
-        Log.i("--->","Resume-->"+id_pedido);
-        super.onPause();
-
     }
 
 }

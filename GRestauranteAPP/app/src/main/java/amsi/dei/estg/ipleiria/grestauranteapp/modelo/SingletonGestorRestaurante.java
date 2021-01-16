@@ -31,6 +31,7 @@ import amsi.dei.estg.ipleiria.grestauranteapp.utils.PedidoJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PedidosProdutoJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PerfilJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.ProdutoJsonParser;
+import amsi.dei.estg.ipleiria.grestauranteapp.vistas.LoginActivity;
 
 public class SingletonGestorRestaurante {
     private static final int ADICIONAR_BD = 1;
@@ -46,15 +47,12 @@ public class SingletonGestorRestaurante {
     private Perfil perfil;
     private ProdutoBDHelper produtosBD;
     private static RequestQueue volleyQueue = null;
-    private static final String mUrlAPIProdutos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/produto";
-    private static final String mUrlAPILogin = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/auth/login";
-    private static final String mUrlAPIPedidos = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIPedidosProduto = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedidoproduto/all/";
-    private static final String mUrlAPIadicionarPedidoProduto = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedidoproduto/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIadicionarPedido = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/pedido/criar?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIPerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIupdatePerfil = "http://192.168.0.105/GestorRestauranteAPI/API/web/v1/perfil?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu";
-    private static final String mUrlAPIcriarRegisto="http://192.168.0.105/GestorRestauranteAPI/API/web/v1/auth/registar";
+    private static final String BaseUrl = "http://";
+    private static final String mUrlAPIAuth = "/GestorRestauranteAPI/API/web/v1/auth";
+    private static final String mUrlAPIProdutos = "/GestorRestauranteAPI/API/web/v1/produto";
+    private static final String mUrlAPIPedidos = "/GestorRestauranteAPI/API/web/v1/pedido";
+    private static final String mUrlAPIPedidosProduto = "/GestorRestauranteAPI/API/web/v1/pedidoproduto";
+    private static final String mUrlAPIPerfil = "/GestorRestauranteAPI/API/web/v1/perfil";
     private ProdutosListener produtosListener;
     private LoginListener loginListener;
     private PerfilListener perfilListener;
@@ -182,8 +180,8 @@ public class SingletonGestorRestaurante {
     }
 */
 
-    public void loginAPI(final String ip,final String username,final String password,final Context context) {
-        StringRequest req = new StringRequest(Request.Method.POST, mUrlAPILogin, new Response.Listener<String>() {
+    public void loginAPI(final String ip, final String username,final String password,final Context context) {
+        StringRequest req = new StringRequest(Request.Method.POST,BaseUrl + ip + mUrlAPIAuth + "/login", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String token = AutenticacaoJsonParser.parserJsonLogin(response);
@@ -208,7 +206,7 @@ public class SingletonGestorRestaurante {
         volleyQueue.add(req);
     }
 
-    public void getProdutosCategoriaAPI(final Context context, final int id_categoria) {
+    public void getProdutosCategoriaAPI(final String ip, final int id_categoria,final Context context) {
         if (!Generic.isConnectionInternet(context)) {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
 
@@ -222,28 +220,18 @@ public class SingletonGestorRestaurante {
 
             }
         } else {
-            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIProdutos, null, new Response.Listener<JSONArray>() {
+            Log.i("#-->",""+BaseUrl + ip + (id_categoria==0 ? mUrlAPIProdutos : mUrlAPIProdutos + "/categoria/" + id_categoria));
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, BaseUrl + ip + (id_categoria==0 ? mUrlAPIProdutos : mUrlAPIProdutos + "/categoria/" + id_categoria), null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
+                    Log.i("#-->",""+response);
+
                     produtos = ProdutoJsonParser.parserJsonProdutos(response);
+                    Log.i("#-->",""+produtos);
+
                     adicionarProdutosBD(produtos);
 
-                    if (produtos != null){
-                        if(id_categoria!=0){
-                            auxProdutos = new ArrayList<Produto>();
-
-                            for (Produto p : produtos) {
-                                if (p.getCategoria() == id_categoria)
-                                    auxProdutos.add(p);
-
-                            }
-                            produtosListener.onRefreshListaPordutos(auxProdutos);
-
-                        }else{
-                            produtosListener.onRefreshListaPordutos(produtos);
-
-                        }
-                    }
+                    produtosListener.onRefreshListaPordutos(auxProdutos);
 
                 }
             }, new Response.ErrorListener() {
@@ -258,15 +246,13 @@ public class SingletonGestorRestaurante {
         }
     }
 
-    public void getPerfilAPI(final Context context) {
+    public void getPerfilAPI(final String ip,final String token,final Context context) {
         if (!Generic.isConnectionInternet(context)) {
+
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
 
-         /*   if(perfilListener!=null) {
-                produtosListener.onRefreshListaPordutos(produtosBD.getProdutosCategoriaBD(id_categoria));
-            }*/
         } else {
-            JsonArrayRequest req = new JsonArrayRequest (Request.Method.GET, mUrlAPIPerfil,null,new Response.Listener<JSONArray>() {
+            JsonArrayRequest req = new JsonArrayRequest (Request.Method.GET, BaseUrl + ip + mUrlAPIPerfil + "?access-token=" + token,null,new Response.Listener<JSONArray>() {
 
                 @Override
                 public void onResponse(JSONArray response) {
@@ -288,8 +274,8 @@ public class SingletonGestorRestaurante {
         }
     }
 
-    public void updatePerfilAPI(final Perfil perfil, final Context context) {
-        JsonArrayRequest req = new JsonArrayRequest(Request.Method.PUT, mUrlAPIupdatePerfil + perfil.getId() + "/update?access-token=evZ5KAZTPTI29WWT62uDdUs5V0qGUhHL",null, new Response.Listener<JSONArray>() {
+    public void updatePerfilAPI(final String ip, final String token,final Perfil perfil, final Context context) {
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.PUT, BaseUrl + ip + mUrlAPIPerfil + "/update?access-token=" + token,null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
@@ -331,11 +317,11 @@ public class SingletonGestorRestaurante {
         volleyQueue.add(req);
     }
 
-    public void getPedidosAPI(final Context context) {
+    public void getPedidosAPI(final String ip,final String token,final Context context) {
         if (!Generic.isConnectionInternet(context)) {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
         } else {
-            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIPedidos, null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET,BaseUrl + ip + mUrlAPIPedidos +"?access-token=" + token, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     pedidos = PedidoJsonParser.parserJsonPedidos(response);
@@ -355,13 +341,11 @@ public class SingletonGestorRestaurante {
         }
     }
 
-    public void adicionarPedidoAPI(final Pedido pedido, final Context context) {
+    public void adicionarPedidoAPI(final String ip,final String token, final Pedido pedido, final Context context) {
 
-        StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIadicionarPedido, new Response.Listener<String>() {
+        StringRequest req = new StringRequest(Request.Method.POST,BaseUrl + ip + mUrlAPIPedidos + "/criar?access-token=" + token, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("#->",""+response);
-
                 Pedido pedido =PedidoJsonParser.parserJsonPedido(response);
 
                 if(pedido!=null){
@@ -392,12 +376,11 @@ public class SingletonGestorRestaurante {
         volleyQueue.add(req);
         }
 
-    public void getPedidosProdutoAPI(final Context context, final int id_pedido) {
+    public void getPedidosProdutoAPI(final String ip,final String token, final Context context, final int id_pedido) {
         if (!Generic.isConnectionInternet(context)) {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
-
         } else {
-            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIPedidosProduto+id_pedido+"?access-token=Y8DQTQWyZ2euhwRysit5OaVBs0ITBsdu", null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, BaseUrl + ip + mUrlAPIPedidosProduto + "/all/" + id_pedido + "?access-token=" + token, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     pedidoProdutos = PedidosProdutoJsonParser.parserJsonPedidosProduto(response);
@@ -421,9 +404,9 @@ public class SingletonGestorRestaurante {
         }
     }
 
-    public void adicionarPedidoProdutoAPI(final PedidoProduto pedidoProduto, final Context context) {
+    public void adicionarPedidoProdutoAPI(final String ip , final String token ,final PedidoProduto pedidoProduto, final Context context) {
 
-        StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIadicionarPedidoProduto, new Response.Listener<String>() {
+        StringRequest req = new StringRequest(Request.Method.POST, BaseUrl + ip + mUrlAPIPedidosProduto + "/criar?access-token=" + token,new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 //TODO:REVER CODIGO
@@ -459,8 +442,8 @@ public class SingletonGestorRestaurante {
         volleyQueue.add(req);
     }
 
-    public void adicionarUserAPI(final Perfil perfil, final Context context) {
-        StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIcriarRegisto, new Response.Listener<String>() {
+    public void adicionarUserAPI(final String ip , final Perfil perfil, final Context context) {
+        StringRequest req = new StringRequest(Request.Method.POST, BaseUrl + ip + mUrlAPIAuth + "/registar", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 

@@ -32,6 +32,7 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
     private int id_produto;
     private int id_pedido;
     private int id;
+    private String ip,token;
     private PedidoProduto pedidoProduto;
 
     @Override
@@ -64,6 +65,10 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
         imgvCategoriaProduto=findViewById(R.id.imgvCategoriaProduto);
 
         cvCriarPedidoProduto=findViewById(R.id.cvCriarPedidoProduto);
+
+        SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
+        token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
 
         carregarDetalhesProduto();
 
@@ -118,7 +123,7 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
 
                 pedidoProduto = new PedidoProduto(0,produto_id,id_pedido,quantidade,preco,estado);
 
-                SingletonGestorRestaurante.getInstance(getApplicationContext()).adicionarPedidoProdutoAPI(pedidoProduto, getApplicationContext());
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).adicionarPedidoProdutoAPI(ip,token,pedidoProduto, getApplicationContext());
             }
         });
 

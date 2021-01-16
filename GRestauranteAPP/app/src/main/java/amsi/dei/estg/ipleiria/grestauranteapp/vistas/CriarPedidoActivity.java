@@ -2,6 +2,8 @@ package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -29,6 +31,7 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
     private Button btnCriarPedido;
     private EditText edtMesa;
     private Pedido pedido;
+    private String ip, token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,10 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
 
         SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidosListener(this);
 
+        SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
+        token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
+
         btnCriarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +70,7 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
 
                         pedido = new Pedido(0, 1, Integer.parseInt(edtMesa.getText().toString()), null, null, 0, 0, strDate);
 
-                        SingletonGestorRestaurante.getInstance(getApplicationContext()).adicionarPedidoAPI(pedido, getApplicationContext());
+                        SingletonGestorRestaurante.getInstance(getApplicationContext()).adicionarPedidoAPI(ip,token,pedido, getApplicationContext());
 
                     }
                 }else{
