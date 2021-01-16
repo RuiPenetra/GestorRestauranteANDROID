@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,27 +21,32 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.navigation.NavigationView;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PerfilListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Perfil;
 
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String PREF_INFO_USER ="PREF_INFO_USER";
     public static final String IP="IP";
-    public static final String EMAIL = "EMAIL";
     public static final String USERNAME="USERNAME";
     public static final String PASSWORD ="PASSWORD";
     public static final String TOKEN="TOKEN";
     public static final String RELEMBRAR = "RELEMBRAR";
+    public static final String NOMECOMPLETO = "NOMECOMPLETO";
+    public static final String GENERO = "GENERO";
+    public static final String CARGO ="CARGO";
     private NavigationView navigationView;
     private DrawerLayout drawer;
-    private String username="";
-    private String email="hjgkygiyg";
+    private String nome_completo;
+    private int genero;
     private FragmentManager fragmentManager;
-    private TextView tvNome,tvApelido;
+    private TextView tvNomeCompleto;
+    private ImageView imgPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_funcionario);
+        setContentView(R.layout.activity_menu);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -55,30 +61,30 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager = getSupportFragmentManager();
 
         carregarFragmentoInicial();
-        //carregarCabecalho();
+        carregarCabecalho();
     }
 
     private void carregarCabecalho() {
-       // email=getIntent().getStringExtra(EMAIL);
 
         SharedPreferences sharedPrefInfoUser=getSharedPreferences(PREF_INFO_USER, Context.MODE_PRIVATE);
-        username=sharedPrefInfoUser.getString(USERNAME,"Sem username");
-        if(email==null)
-            //GUARDAR SHARED
-            email=sharedPrefInfoUser.getString(EMAIL,"Sem email");
-        else {
-            //LER DA SHARED
-            SharedPreferences.Editor editor = sharedPrefInfoUser.edit();
-            editor.putString(EMAIL,email);
-            editor.apply();
-        }
+        nome_completo=sharedPrefInfoUser.getString(NOMECOMPLETO,null);
+        genero=sharedPrefInfoUser.getInt(GENERO,-1);
 
         View hView=navigationView.getHeaderView(0);
 
-        tvNome=hView.findViewById(R.id.tvNome);
-        tvApelido=hView.findViewById(R.id.tvApelido);
-        //tvEmail.setText(email);
+        tvNomeCompleto=hView.findViewById(R.id.tvNomeCompleto);
+        imgPerfil=hView.findViewById(R.id.imgUser);
+
+        tvNomeCompleto.setText(nome_completo);
+
+        if(genero==0){
+            imgPerfil.setImageResource(R.drawable.female);
+
+        }else{
+            imgPerfil.setImageResource(R.drawable.male);
+        }
         setTitle(R.string.actBemVindo);
+
     }
 
 
@@ -108,7 +114,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 setTitle(item.getTitle());
                 break;
             case R.id.nav_contactos:
-                Intent intent = new Intent(MenuFuncionarioActivity.this, ContactoActivity.class);
+                Intent intent = new Intent(MenuActivity.this, ContactoActivity.class);
                 startActivity(intent);
                 setTitle(item.getTitle());
                 break;
@@ -119,4 +125,5 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

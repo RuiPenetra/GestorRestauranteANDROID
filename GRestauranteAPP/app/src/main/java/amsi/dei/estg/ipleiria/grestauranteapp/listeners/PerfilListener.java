@@ -4,8 +4,6 @@ import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Perfil;
 
 public interface PerfilListener {
     void onRefreshPerfil(Perfil perfil);
-
-    void onRefreshPerfilUpdate();
-
+    void onUpdatePerfil();
 
 }

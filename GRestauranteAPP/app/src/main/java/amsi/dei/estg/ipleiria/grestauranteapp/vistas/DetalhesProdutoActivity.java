@@ -46,12 +46,6 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
 
         produto = SingletonGestorRestaurante.getInstance(this).getProduto(id_produto);
 
-        //TODO: Duvida se é preciso ou para que servira
-        // SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuMainActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
-        // sharedPrefInfoUser.getString(MenuMainActivity.TOKEN,null);
-
-
-
         SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidoProdutosListener(this);
 
         tvCategoria=findViewById(R.id.tvCategoria);

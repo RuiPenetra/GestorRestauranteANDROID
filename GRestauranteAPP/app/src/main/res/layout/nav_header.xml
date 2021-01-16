@@ -20,7 +20,7 @@
         android:translationX="95dp"/>
 
     <ImageView
-        android:id="@+id/imgPerfil"
+        android:id="@+id/imgUser"
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:srcCompat="@drawable/perfil"
@@ -35,13 +35,13 @@
         android:layout_height="35dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
-        app:layout_constraintBottom_toTopOf="@id/imgPerfil"
+        app:layout_constraintBottom_toTopOf="@id/imgUser"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="20dp"
         android:src="@drawable/ic_logout"/>
 
     <TextView
-        android:id="@+id/tvNome"
+        android:id="@+id/tvNomeCompleto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nome"
@@ -51,21 +51,7 @@
         android:textStyle="bold"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/imgPerfil"
+        app:layout_constraintTop_toBottomOf="@id/imgUser"
         app:layout_constraintStart_toStartOf="parent"/>
-
-    <TextView
-        android:id="@+id/tvApelido"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Apelido"
-        android:textColor="@android:color/white"
-        android:fontFamily="@font/brandon_grotesque_black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/imgPerfil"
-        app:layout_constraintStart_toEndOf="@id/tvNome"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

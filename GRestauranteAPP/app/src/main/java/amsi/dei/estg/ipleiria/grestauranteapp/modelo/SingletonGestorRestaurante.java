@@ -231,7 +231,7 @@ public class SingletonGestorRestaurante {
 
                     adicionarProdutosBD(produtos);
 
-                    produtosListener.onRefreshListaPordutos(auxProdutos);
+                    produtosListener.onRefreshListaPordutos(produtos);
 
                 }
             }, new Response.ErrorListener() {
@@ -252,16 +252,17 @@ public class SingletonGestorRestaurante {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
 
         } else {
-            JsonArrayRequest req = new JsonArrayRequest (Request.Method.GET, BaseUrl + ip + mUrlAPIPerfil + "?access-token=" + token,null,new Response.Listener<JSONArray>() {
+            StringRequest req = new StringRequest (Request.Method.GET, BaseUrl + ip + mUrlAPIPerfil + "?access-token=" + token,new Response.Listener<String>() {
 
                 @Override
-                public void onResponse(JSONArray response) {
+                public void onResponse(String response) {
+                    perfil = PerfilJsonParser.parserJsonPerfil(response);
 
-                    //perfil = PerfilJsonParser.parserJsonPerfil(response);
-
-//                    adicionarProdutosBD(produtos);
-
+                    if(perfilListener!=null ){
                         perfilListener.onRefreshPerfil(perfil);
+                    }else{
+                        Toast.makeText(context, "Erro ao carregar o Perfil", Toast.LENGTH_SHORT).show();;
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -275,16 +276,17 @@ public class SingletonGestorRestaurante {
     }
 
     public void updatePerfilAPI(final String ip, final String token,final Perfil perfil, final Context context) {
-        JsonArrayRequest req = new JsonArrayRequest(Request.Method.PUT, BaseUrl + ip + mUrlAPIPerfil + "/update?access-token=" + token,null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
 
-                //PerfilJsonParser.parserJsonPerfil(response);
+        StringRequest req = new StringRequest(Request.Method.PUT, BaseUrl + ip + mUrlAPIPerfil + "/" + perfil.getId() + "/atualizar?access-token=" + token, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+Log.i("#--->",""+response);
+                Perfil p= PerfilJsonParser.parserJsonPerfil(response);
 
                 if(perfilListener!=null){
-                    perfilListener.onRefreshPerfilUpdate();
+                    perfilListener.onUpdatePerfil();
                 }else{
-                    Toast.makeText(context, "ERRRRROOOO", Toast.LENGTH_SHORT).show();;
+                    Toast.makeText(context, "Impossivel atualizar", Toast.LENGTH_SHORT).show();;
                 }
 
             }

@@ -19,7 +19,7 @@
             android:textColor="#5E5E5E"/>
 
         <ImageView
-            android:id="@+id/im_perfil"
+            android:id="@+id/imgv_perfil"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="30dp"
@@ -27,13 +27,13 @@
             android:src="@drawable/perfil"/>
 
         <TextView
-            android:id="@+id/nom_completo"
+            android:id="@+id/tv_nom_completo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:includeFontPadding="false"
-            android:layout_below="@id/im_perfil"
+            android:layout_below="@id/imgv_perfil"
             android:text="Rui Jorge"
             android:textSize="20sp" />
     </LinearLayout>

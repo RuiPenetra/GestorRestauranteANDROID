@@ -61,7 +61,7 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
         edt_username=findViewById(R.id.edt_username);
         edt_email=findViewById(R.id.edt_email);
         edt_password=findViewById(R.id.edt_password);
-        btnRegistar=findViewById(R.id.btnRegistar);
+        btn_registar=findViewById(R.id.btnRegistar);
 
         edt_datanascimento = findViewById(R.id.edt_dataNascimento);
         btn_registar=findViewById(R.id.btn_Registar);

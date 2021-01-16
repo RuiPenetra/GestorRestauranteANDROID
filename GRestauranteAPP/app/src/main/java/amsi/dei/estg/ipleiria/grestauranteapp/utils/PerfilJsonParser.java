@@ -40,5 +40,5 @@ public class PerfilJsonParser {
             e.printStackTrace();
         }
         return auxPerfil;
-    }*/
+    }
 }
