@@ -106,7 +106,7 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
             @Override
             public void onClick(View v) {
 
-                //if(validarRegisto()==true){
+                if(validarRegisto()==true){
 
                     String nome = edt_nome.getText().toString();
                     String apelido = edt_apelido.getText().toString();
@@ -131,7 +131,7 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
 
                     SingletonGestorRestaurante.getInstance(getApplicationContext()).adicionarUserAPI(ip,perfil, getApplicationContext());
 
-                //}
+                }
 
             }
         });
@@ -145,6 +145,7 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
         String cod_postal=edt_codPostal.getText().toString();
         String telemovel=edt_telemovel.getText().toString();
         String nacionalidade=edt_nacionalidade.getText().toString();
+        String dataNascimento = edt_datanascimento.getText().toString();
         String username=edt_username.getText().toString();
         String email=edt_email.getText().toString();
         String password=edt_password.getText().toString();
@@ -181,7 +182,7 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
             return false;
         }
 
-        if(telemovel.length()>9)
+        if(telemovel.length()!=9)
         {
             edt_telemovel.setError("Numero de telemovel invalido");
             return false;
@@ -190,6 +191,12 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
         if(nacionalidade.length()<3)
         {
             edt_nacionalidade.setError("Nacionalidade Invalido");
+            return false;
+        }
+
+        if(dataNascimento.isEmpty())
+        {
+            edt_datanascimento.setError("Data Nascimento Invalida");
             return false;
         }
 

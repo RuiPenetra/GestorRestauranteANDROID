@@ -233,6 +233,8 @@ public class SingletonGestorRestaurante {
 
                     produtosListener.onRefreshListaPordutos(produtos);
 
+                    produtosListener.onRefreshListaPordutos(produtos);
+
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -388,7 +390,7 @@ Log.i("#--->",""+response);
                     pedidoProdutos = PedidosProdutoJsonParser.parserJsonPedidosProduto(response);
 
                     if (pedidosProdutoListener != null){
-
+                         pedidosListener.onCreatePedido();
                         pedidosProdutoListener.onRefreshListaPedidosProduto(pedidoProdutos);
 
                     }
