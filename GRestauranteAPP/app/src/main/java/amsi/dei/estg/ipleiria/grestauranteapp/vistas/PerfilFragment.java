@@ -69,7 +69,6 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
         swipeRefreshLayout.setOnRefreshListener(this);
 
         //TODO: SharedPreferences get Token user
-        SingletonGestorRestaurante.getInstance(getContext()).getPerfilAPI(getContext());
         Toast.makeText(getContext(), ""+auxPerfil, Toast.LENGTH_SHORT).show();
         SingletonGestorRestaurante.getInstance(getContext()).setPerfilListener(this);
 //        Toast.makeText(getContext(), ""+perfil, Toast.LENGTH_SHORT).show();
@@ -115,9 +114,9 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
                         auxPerfil.setTelemovel(edt_telemovel.getText().toString());
 
                             if(rb_masculino.isChecked()){
-                                auxPerfil.setGenero("1");
+                                auxPerfil.setGenero(1);
                             }else{
-                                auxPerfil.setGenero("0");
+                                auxPerfil.setGenero(0);
 
                             }
                         auxPerfil.setUsername(edt_username.getText().toString());
@@ -125,7 +124,7 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
                             if(edt_nova_password.getText().toString()!=""){
                                 auxPerfil.setNova_password(edt_nova_password.getText().toString());
                             }
-                            SingletonGestorRestaurante.getInstance(getContext()).updatePerfilAPI(auxPerfil, getContext());
+                            //SingletonGestorRestaurante.getInstance(getContext()).updatePerfilAPI(auxPerfil, getContext());
 
                         }else{
                             Toast.makeText(getContext(), "Errrrooo", Toast.LENGTH_SHORT).show();
@@ -157,7 +156,7 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
         edt_username.setText(perfil.getUsername());
         edt_email.setText(perfil.getEmail());
 
-        if(perfil.getGenero().equals("Masculino")){
+        if(perfil.getGenero()==1){
             rb_masculino.setChecked(true);
         }else{
             rb_feminino.setChecked(true);
@@ -180,7 +179,7 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
     @Override
     public void onRefresh() {
-        SingletonGestorRestaurante.getInstance(getContext()).getPerfilAPI(getContext());
+        //SingletonGestorRestaurante.getInstance(getContext()).getPerfilAPI(getContext());
         swipeRefreshLayout.setRefreshing(false);
     }
 }

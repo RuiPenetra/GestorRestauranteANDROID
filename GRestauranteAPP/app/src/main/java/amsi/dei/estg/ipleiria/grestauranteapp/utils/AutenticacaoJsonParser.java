@@ -10,7 +10,8 @@ public class AutenticacaoJsonParser {
 
         try {
             JSONObject login = new JSONObject(response);
-            token = login.getString("token");
+            if (login.getBoolean("success"))
+                token = login.getString("token");
         } catch (JSONException e) {
             e.printStackTrace();
         }

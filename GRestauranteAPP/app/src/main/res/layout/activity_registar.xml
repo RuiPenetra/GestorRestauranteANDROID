@@ -93,7 +93,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edt_nome"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -146,7 +146,6 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/edt_codigopostal"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -255,8 +254,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="Género:"
-                        android:textSize="18sp"
-                        android:layout_marginLeft="10dp"/>
+                        android:textSize="18sp"/>
 
                     <RadioGroup
                         android:layout_width="match_parent"
@@ -269,13 +267,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Masculino"
+                            android:layout_marginLeft="20dp"
                             android:textColor="@color/gray"/>
 
                         <RadioButton
                             android:id="@+id/radio_femenino"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="30dp"
+                            android:layout_marginLeft="20dp"
                             android:text="Feminino"
                             android:textColor="@color/gray"/>
 
@@ -385,12 +384,11 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/btn_registar"
+                    android:id="@+id/btn_Registar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:background="#000"
-                    android:onClick="onClickRegistar"
                     android:text="Registar"
                     android:textColor="#fff" />
 

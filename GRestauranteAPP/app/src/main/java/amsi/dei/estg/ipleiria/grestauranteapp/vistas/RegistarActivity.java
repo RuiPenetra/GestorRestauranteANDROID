@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -24,25 +25,15 @@ import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 
 public class RegistarActivity extends AppCompatActivity implements RegistoListener {
 
-    private EditText editText_data_nascimento;
-    private EditText edt_nome;
-    private EditText edt_apelido;
-    private EditText edt_morada;
-    private EditText edt_codPostal;
-    private EditText edt_telemovel;
-    private EditText edt_nacionalidade;
+    private EditText edt_datanascimento,edt_nome,edt_apelido,edt_morada,edt_codPostal,edt_telemovel,edt_nacionalidade,edt_username,edt_email,edt_password;
     private RadioButton rb_masculino;
     private RadioButton rb_feminino;
-    private EditText edt_username;
-    private EditText edt_email;
-    private EditText edt_password;
-    private Button btn_dataNascimento;
-    private Perfil perfil;
-
+    private Button btn_dataNascimento,btn_registar;
     private int year;
     private int month;
     private int day;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
+    private Perfil perfil;
 
 
     @Override
@@ -67,12 +58,16 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
         edt_username=findViewById(R.id.edt_username);
         edt_email=findViewById(R.id.edt_email);
         edt_password=findViewById(R.id.edt_password);
+        btnRegistar=findViewById(R.id.btnRegistar);
 
-        editText_data_nascimento = findViewById(R.id.edt_dataNascimento);
+        edt_datanascimento = findViewById(R.id.edt_dataNascimento);
+        btn_registar=findViewById(R.id.btn_Registar);
 
         btn_dataNascimento = findViewById(R.id.btn_dataNascimento);
 
-        editText_data_nascimento.setEnabled(false);
+        SingletonGestorRestaurante.getInstance(RegistarActivity.this).setRegistoListener(this);
+
+        edt_datanascimento.setEnabled(false);
 
         btn_dataNascimento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,92 +89,102 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                editText_data_nascimento.setText(dayOfMonth + "/" + month + "/" + year);
+                month=month+1;
+                edt_datanascimento.setText(year + "-" + month + "-" + dayOfMonth);
             }
         };
-    }
-
-    public void onClickRegistar(View view) {
-
-            if(validarRegisto()==true){
 
 
 
-                 //   perfil.setNome(edt_nome.getText().toString());
-                  //  perfil.setApelido(edt_apelido.getText().toString());
-                    perfil.setMorada(edt_morada.getText().toString());
-                    perfil.setCodigo_postal(edt_codPostal.getText().toString());
-                    perfil.setTelemovel(edt_telemovel.getText().toString());
-                    perfil.setNacionalidade(edt_nacionalidade.getText().toString());
+        btn_registar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //if(validarRegisto()==true){
+
+                    String nome = edt_nome.getText().toString();
+                    String apelido = edt_apelido.getText().toString();
+                    String morada = edt_morada.getText().toString();
+                    String codigoPostal = edt_codPostal.getText().toString();
+                    String telemovel = edt_telemovel.getText().toString();
+                    String nacionalidade = edt_nacionalidade.getText().toString();
+                    String dataNascimento = edt_datanascimento.getText().toString();
+                    String username = edt_username.getText().toString();
+                    String email = edt_email.getText().toString();
+                    String password = edt_password.getText().toString();
+
+                    int genero;
                     if(rb_masculino.isChecked()){
-                    perfil.setGenero("1");
-                     }else{
-                    perfil.setGenero("0");
+                        genero=1;
+                    }else{
+                        genero=0;
 
-                }
+                    }
 
-                    perfil.setUsername(edt_username.getText().toString());
-                    perfil.setEmail(edt_email.getText().toString());
-                    perfil.setNova_password(edt_password.getText().toString());
+                    perfil = new Perfil(0,username,password,email,nome,apelido,morada,nacionalidade,null,codigoPostal,genero,telemovel,dataNascimento);
 
                     SingletonGestorRestaurante.getInstance(getApplicationContext()).adicionarUserAPI(perfil, getApplicationContext());
 
+                //}
 
             }
+        });
     }
 
-
-
     private boolean validarRegisto(){
-    String nome=edt_nome.getText().toString();
-    String apelido=edt_apelido.getText().toString();
-    String morada=edt_morada.getText().toString();
-    String cod_postal=edt_codPostal.getText().toString();
-    String telemovel=edt_telemovel.getText().toString();
-    String nacionalidade=edt_nacionalidade.getText().toString();
-        if(!rb_masculino.isChecked()||!rb_feminino.isChecked())
-        {
-            rb_masculino.setError("Tem que Selecionar 1 genero");
-            rb_feminino.setError("Tem que Selecionar 1 genero");
-        }
+
+        String nome=edt_nome.getText().toString();
+        String apelido=edt_apelido.getText().toString();
+        String morada=edt_morada.getText().toString();
+        String cod_postal=edt_codPostal.getText().toString();
+        String telemovel=edt_telemovel.getText().toString();
+        String nacionalidade=edt_nacionalidade.getText().toString();
         String username=edt_username.getText().toString();
         String email=edt_email.getText().toString();
         String password=edt_password.getText().toString();
 
+        if(!rb_masculino.isChecked()&&!rb_feminino.isChecked())
+        {
+            rb_masculino.setError("Tem que Selecionar 1 genero");
+            rb_feminino.setError("Tem que Selecionar 1 genero");
+            return false;
+
+        }
+
         if (nome.length()<3)
         {
             edt_nome.setError("Nome Invalido");
+            return false;
         }
 
         if (apelido.length()<3)
         {
             edt_apelido.setError("Apelido Invalido");
+            return false;
         }
 
         if (morada.length()<3)
         {
             edt_morada.setError("Morda Invalido");
+            return false;
         }
 
         if (cod_postal.length()<8)
         {
             edt_codPostal.setError("Codigo Postal Invalido");
+            return false;
         }
 
         if(telemovel.length()>9)
         {
             edt_telemovel.setError("Numero de telemovel invalido");
+            return false;
         }
 
         if(nacionalidade.length()<3)
         {
             edt_nacionalidade.setError("Nacionalidade Invalido");
-        }
-
-        if(!rb_masculino.isChecked()||!rb_feminino.isChecked())
-        {
-            rb_masculino.setError("Tem que Selecionar 1 genero");
-            rb_feminino.setError("Tem que Selecionar 1 genero");
+            return false;
         }
 
         if(username.length()<3){

@@ -11,4 +11,5 @@
     <string name="actBemVindo">Bem Vindo</string>
     <string name="menuBemvindo">Bem-Vindo</string>
     <string name="noInternet">Não existe ligação à internet</string>
+    <string name="contactos">Contactos</string>
 </resources>

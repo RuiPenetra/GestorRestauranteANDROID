@@ -1,6 +1,7 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -20,13 +21,15 @@ import com.google.android.material.navigation.NavigationView;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 
-public class MenuFuncionarioActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String PREF_INFO_USER ="PREF_INFO_USER";
+    public static final String IP="IP";
     public static final String EMAIL = "EMAIL";
     public static final String USERNAME="USERNAME";
-    public static final String PREF_INFO_USER ="PREF_INFO_USER";
+    public static final String PASSWORD ="PASSWORD";
     public static final String TOKEN="TOKEN";
-    public static final String IP="IP";
+    public static final String RELEMBRAR = "RELEMBRAR";
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private String username="";
@@ -102,6 +105,11 @@ public class MenuFuncionarioActivity extends AppCompatActivity implements Naviga
                 break;
             case R.id.nav_pedidos:
                 fragment = new PedidoFragment();
+                setTitle(item.getTitle());
+                break;
+            case R.id.nav_contactos:
+                Intent intent = new Intent(MenuFuncionarioActivity.this, ContactoActivity.class);
+                startActivity(intent);
                 setTitle(item.getTitle());
                 break;
         }

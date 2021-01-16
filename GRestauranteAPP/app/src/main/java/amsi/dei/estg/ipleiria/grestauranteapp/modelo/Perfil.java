@@ -4,16 +4,13 @@ import java.util.Date;
 
 public class Perfil {
 
-    private int id, status;
-    private String username, nova_password, email, nome,apelido,morada, nacionalidade, cargo, codigo_postal, genero, telemovel, datanascimento;
+    private int id,genero;
+    private String username, nova_password, email, nome,apelido,morada, nacionalidade, cargo, codigo_postal,  telemovel, datanascimento;
 
     public int getId() {
         return id;
     }
 
-    public int getStatus() {
-        return status;
-    }
 
     public String getUsername() {
         return username;
@@ -55,7 +52,7 @@ public class Perfil {
         return codigo_postal;
     }
 
-    public String getGenero() {
+    public int getGenero() {
         return genero;
     }
 
@@ -107,7 +104,7 @@ public class Perfil {
         this.codigo_postal = codigo_postal;
     }
 
-    public void setGenero(String genero) {
+    public void setGenero(int genero) {
         this.genero = genero;
     }
 
@@ -119,7 +116,7 @@ public class Perfil {
         this.datanascimento = datanascimento;
     }
 
-    public Perfil(int id, String username, String nova_password, String email, String nome, String apelido, String morada, String nacionalidade, String cargo, String codigo_postal, String genero, String telemovel, String datanascimento) {
+    public Perfil(int id, String username, String nova_password, String email, String nome, String apelido, String morada, String nacionalidade, String cargo, String codigo_postal, int genero, String telemovel, String datanascimento) {
 
         this.id = id;
         this.nome = nome;
