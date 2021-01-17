@@ -114,8 +114,4 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
         finish();
     }
 
-    @Override
-    public void onDeletePedido() {
-        //EMPTY
-    }
 }

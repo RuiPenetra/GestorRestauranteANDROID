@@ -171,27 +171,18 @@
             app:layout_constraintVertical_bias="0.423" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvCriarPedidoProduto"
+    <Button
+        android:id="@+id/btnCriarPedidoProduto"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="20dp"
-        android:backgroundTint="@color/black"
+        android:background="@color/black"
+        android:text="Adicionar ao pedido"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Adicionar ao pedido"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_gravity="center"/>
-    </androidx.cardview.widget.CardView>
+    </Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

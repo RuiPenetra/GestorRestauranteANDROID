@@ -22,19 +22,15 @@ import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaPedidoAdaptador;
+import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaPedidosProdutoAdaptador;
+import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaProdutoAdaptador;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Pedido;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 
 public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, PedidosListener {
 
-/*    private TabLayout tabPedidos;
-    private ViewPager viewPager;
-    private TabItem tabAtivos,tabConcluidos;
-    private PageAdapter pagerAdapter;*/
     private static final int CRIAR = 1 ;
-    private static final int DETALHES =2 ;
-    private static final int APAGAR =3 ;
     private static final int ID_UTILIZADOR =1 ;
     private ListView lvlPedidos;
     private CardView cvNovoPedido;
@@ -70,7 +66,7 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(),DetalhesPedidoActivity.class);
                 intent.putExtra(DetalhesPedidoActivity.ID, (int) id);
-                startActivityForResult(intent,DETALHES);
+                startActivity(intent);
             }
         });
 
@@ -95,16 +91,10 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode == Activity.RESULT_OK){
-            switch (requestCode){
-                case CRIAR:
-                    SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
-                    Toast.makeText(getContext(),"Pedido criado com sucesso", Toast.LENGTH_LONG).show();
-                    break;
-                case DETALHES:
-                    SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
-                    break;
-            }
+        if(resultCode == Activity.RESULT_OK && requestCode==CRIAR){
+
+            SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
+            Toast.makeText(getContext(),"Pedido criado com sucesso", Toast.LENGTH_LONG).show();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -114,6 +104,7 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         if(listapedidos != null)
             lvlPedidos.setAdapter(new ListaPedidoAdaptador(getContext(),listapedidos));
+
     }
 
     @Override
@@ -122,14 +113,11 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     @Override
-    public void onDeletePedido() {
-        //empty
-    }
-
-    @Override
     public void onRefresh() {
         SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
         swipeRefreshLayout.setRefreshing(false);
+        lvlPedidos.deferNotifyDataSetChanged();
+
     }
 
     @Override

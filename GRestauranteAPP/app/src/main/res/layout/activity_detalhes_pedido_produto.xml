@@ -168,12 +168,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/cvAtualizarPedidoProduto"
+        app:layout_constraintBottom_toTopOf="@id/btnAtualizarPedidoProduto"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent=".9">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cvSubtrair"
+            android:id="@+id/cvQuantSubtrair"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="70dp"
@@ -205,7 +205,7 @@
             app:layout_constraintWidth_percent=".1" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cvSomar"
+            android:id="@+id/cvQuantSomar"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
@@ -224,52 +224,32 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvAtualizarPedidoProduto"
+    <Button
+        android:id="@+id/btnAtualizarPedidoProduto"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:backgroundTint="#000000"
+        android:text="Atualizar"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
         app:layout_constraintWidth_percent=".4"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="20dp">
+        android:layout_margin="20dp"/>
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Atualizar"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_gravity="center"/>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvRemoverPedidoProduto"
+    <Button
+        android:id="@+id/btnRemoverPedidoProduto"
         android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:backgroundTint="#F44336"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="Remover"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
         app:layout_constraintWidth_percent=".4"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="20dp">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Remover"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_gravity="center"/>
-    </androidx.cardview.widget.CardView>
+        android:layout_margin="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

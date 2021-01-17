@@ -30,6 +30,7 @@ import amsi.dei.estg.ipleiria.grestauranteapp.R;
 import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaPedidoAdaptador;
 import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaPedidosProdutoAdaptador;
 import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaProdutoAdaptador;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosProdutoListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Pedido;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.PedidoProduto;
@@ -38,12 +39,11 @@ import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PedidosProdutoJsonParser;
 
-public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, PedidosProdutoListener {
+public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, PedidosProdutoListener{
 
     public static final String ID ="ID" ;
-    private static final int EDITAR_PEDIDOPRODUTO = 1 ;
-    private static final int ADICIONAR_PEDIDOPRODUTO =2 ;
-    private static final int APAGAR_PEDIDOPRODUTO =3 ;
+    private static final int EDITAR_PEDIDOPRODUTO= 3 ;
+    private static final int ADICIONAR_PEDIDOPRODUTO =4 ;
     private FloatingActionButton fab_criarPedidoProduto;
     private SwipeRefreshLayout swipeRefreshLayoutPedidosProduto;
     private ListView lvlPedidosProduto;
@@ -67,8 +67,11 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
 
 
         id_pedido = getIntent().getIntExtra(ID, -1);
+
         setTitle("Detalhes Pedido: "+id_pedido);
+
         swipeRefreshLayoutPedidosProduto.setOnRefreshListener(this);
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidoProdutosListener(this);
 
         SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
@@ -76,20 +79,11 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
 
         produtos=SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosBD();
 
-        if(produtos==null){
-            Log.i("#--->","vazioo");
-
-        }else{
-            Log.i("#--->",""+produtos);
-
-        }
-
         pedido=SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedido(id_pedido);
 
-        SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidoProdutosListener(this);
         SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(ip,token,getApplicationContext(),id_pedido);
 
-        FloatingActionButton fab_criarPedidoProduto = (FloatingActionButton) findViewById(R.id.fab_criarPedidoProduto);
+        FloatingActionButton fab_criarPedidoProduto = findViewById(R.id.fab_criarPedidoProduto);
 
         fab_criarPedidoProduto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,11 +153,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
                     break;
                 case EDITAR_PEDIDOPRODUTO:
                     SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(ip,token,getApplicationContext(),id_pedido);
-                    Toast.makeText(getApplicationContext(),"Pedido Produto editado com sucesso",Toast.LENGTH_LONG).show();
-                    break;
-                case APAGAR_PEDIDOPRODUTO:
-                    SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(ip,token,getApplicationContext(),id_pedido);
-                    Toast.makeText(getApplicationContext(),"Pedido Produto apagado com sucesso",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Pedido Produto editado/removido com sucesso",Toast.LENGTH_LONG).show();
                     break;
             }
         }
@@ -195,22 +185,6 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onRefreshListaPedidosProduto(ArrayList<PedidoProduto> pedidoProdutos) {
-        if(pedidoProdutos != null)
-            lvlPedidosProduto.setAdapter(new ListaPedidosProdutoAdaptador(getApplicationContext(),pedidoProdutos,produtos));
-    }
-
-    @Override
-    public void onCriar() {
-        //EMPTY
-    }
-
-    @Override
-    public void onDetalhes() {
-        //EMPTY
-    }
-
     private void dialogRemover() {
         AlertDialog.Builder builder;
         builder= new AlertDialog.Builder(this);
@@ -233,9 +207,25 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
     }
 
     @Override
+    public void onRefreshListaPedidosProduto(ArrayList<PedidoProduto> pedidoProdutos) {
+        if(pedidoProdutos != null)
+            lvlPedidosProduto.setAdapter(new ListaPedidosProdutoAdaptador(getApplicationContext(),pedidoProdutos,produtos));
+    }
+
+    @Override
+    public void onCriar() {
+        //EMPTY
+    }
+
+    @Override
     public void onRefresh() {
         SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(ip,token,getApplicationContext(),id_pedido);
         swipeRefreshLayoutPedidosProduto.setRefreshing(false);
+    }
+
+    @Override
+    public void onDetalhes() {
+
     }
 
     @Override

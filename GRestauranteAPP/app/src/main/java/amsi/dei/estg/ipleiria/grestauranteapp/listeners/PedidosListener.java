@@ -9,5 +9,4 @@ public interface PedidosListener {
 
     void onCreatePedido();
 
-    void onDeletePedido();
 }

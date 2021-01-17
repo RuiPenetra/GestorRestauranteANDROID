@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,7 +28,8 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
     public static final String ID_PEDIDO= "ID_PEDIDO";
     private Produto produto;
     private TextView tvCategoria,tvNome,tvIngredientes,tvPreco,tvQuantida;
-    private CardView cvSomar,cvSubtrair,cvCriarPedidoProduto;
+    private CardView cvSomar,cvSubtrair;
+    private Button btnCriarPedidoProduto;
     private ImageView imgvCategoriaProduto;
     private int id_produto;
     private int id_pedido;
@@ -58,7 +60,7 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
         cvSubtrair=findViewById(R.id.cvSubtrair);
         imgvCategoriaProduto=findViewById(R.id.imgvCategoriaProduto);
 
-        cvCriarPedidoProduto=findViewById(R.id.cvCriarPedidoProduto);
+        btnCriarPedidoProduto=findViewById(R.id.btnCriarPedidoProduto);
 
         SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
@@ -66,6 +68,12 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
 
         carregarDetalhesProduto();
 
+        if(id_pedido<=0){
+
+            cvSubtrair.setVisibility(View.INVISIBLE);
+            cvSomar.setVisibility(View.INVISIBLE);
+            btnCriarPedidoProduto.setVisibility(View.INVISIBLE);
+        }
         cvSomar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +85,7 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
 
                 preco=preco*quantidade;
 
-                tvPreco.setText(""+preco);
+                tvPreco.setText(String.format("%.2f", preco).replace(',', '.'));
             }
         });
 
@@ -85,19 +93,21 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
             @Override
             public void onClick(View v) {
                 int quantidade=Integer.parseInt(tvQuantida.getText().toString());
-                if(quantidade>=1){
+                float preco= Float.parseFloat(produto.getPreco());
+
+                if(quantidade>1){
                     quantidade=quantidade-1;
-                    if(quantidade!=0){
+                    preco= preco*quantidade;
+
+                    if(quantidade>0){
                         tvQuantida.setText(""+quantidade);
+                        tvPreco.setText(String.format("%.2f", preco).replace(',', '.'));
+
                     }else{
                         tvQuantida.setText("1");
+                        tvPreco.setText(String.format("%.2f", produto.getPreco()).replace(',', '.'));
                     }
 
-                    float preco= Float.parseFloat(produto.getPreco());
-
-                    preco=preco*quantidade;
-
-                    tvPreco.setText(String.valueOf(preco));
                 }else{
                     tvQuantida.setText("1");
                     tvPreco.setText(produto.getPreco());
@@ -106,14 +116,14 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
             }
         });
 
-        cvCriarPedidoProduto.setOnClickListener(new View.OnClickListener() {
+        btnCriarPedidoProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 int produto_id=produto.getId();
                 int quantidade=Integer.parseInt(tvQuantida.getText().toString());
                 int estado=0;
-                float preco=Float.parseFloat(tvPreco.getText().toString());
+                float preco=Float.parseFloat(tvPreco.getText().toString().replace(',', '.'));
 
                 pedidoProduto = new PedidoProduto(0,produto_id,id_pedido,quantidade,preco,estado);
 
@@ -127,7 +137,7 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
     private void carregarDetalhesProduto(){
 
         tvNome.setText(produto.getNome());
-        tvPreco.setText(String.valueOf(produto.getPreco()));
+        tvPreco.setText(produto.getPreco());
         tvQuantida.setText(String.valueOf(1));
 
         if (produto.getIngredientes()!= null){
@@ -189,6 +199,5 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
         //empty
 
     }
-
 
 }
