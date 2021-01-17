@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.LoginListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Perfil;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
@@ -155,10 +156,10 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     }
 
     @Override
-    public void onValidateLogin(String username,String password,String token) {
+    public void onValidateLogin(Perfil perfil) {
 
-        if (token != null) {
-            guardarInfoShared(username,password,token);
+        if (perfil != null) {
+            guardarInfoShared(perfil);
             Intent intent= new Intent(this, MenuActivity.class);
             startActivity(intent);
             finish();
@@ -169,16 +170,19 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
         }
     }
 
-    private void guardarInfoShared(String username,String password, String token){
+    private void guardarInfoShared(Perfil perfil){
 
         SharedPreferences sharedPrefUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefUser.edit();
-        editor.putString(MenuActivity.TOKEN,token);
+        editor.putString(MenuActivity.TOKEN,perfil.getToken());
+        editor.putString(MenuActivity.CARGO,perfil.getCargo());
+        editor.putString(MenuActivity.NOMECOMPLETO,perfil.getNome()+" "+perfil.getApelido());
+        editor.putInt(MenuActivity.GENERO,perfil.getGenero());
 
         if(cbRememberMe.isChecked()){
             editor.putBoolean(MenuActivity.RELEMBRAR,true);
-            editor.putString(MenuActivity.USERNAME,username);
-            editor.putString(MenuActivity.PASSWORD,password);
+            editor.putString(MenuActivity.USERNAME,edtUsername.getText().toString());
+            editor.putString(MenuActivity.PASSWORD,edtPassword.getText().toString());
         }else{
             editor.putBoolean(MenuActivity.RELEMBRAR,false);
         }

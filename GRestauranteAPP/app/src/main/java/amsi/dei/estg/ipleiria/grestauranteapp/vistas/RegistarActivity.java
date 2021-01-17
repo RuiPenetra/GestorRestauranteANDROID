@@ -127,7 +127,7 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
 
                     }
 
-                    perfil = new Perfil(0,username,password,email,nome,apelido,morada,nacionalidade,null,codigoPostal,genero,telemovel,dataNascimento);
+                    perfil = new Perfil(0,username,password,email,nome,apelido,morada,nacionalidade,null,codigoPostal,genero,telemovel,dataNascimento,null);
 
                     SingletonGestorRestaurante.getInstance(getApplicationContext()).adicionarUserAPI(ip,perfil, getApplicationContext());
 

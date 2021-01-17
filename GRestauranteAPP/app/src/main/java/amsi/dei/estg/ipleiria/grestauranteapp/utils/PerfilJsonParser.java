@@ -33,7 +33,7 @@ public class PerfilJsonParser {
             String username = perfil.getString("username");
             String email = perfil.getString("email");
 
-            auxPerfil = new Perfil(id, username, null, email, nome, apelido, morada, nacionalidade, cargo, codigoPostal, genero, telemovel, dataNascimento);
+            auxPerfil = new Perfil(id, username, null, email, nome, apelido, morada, nacionalidade, cargo, codigoPostal, genero, telemovel, dataNascimento,null);
             Log.i("--->", "" + auxPerfil);
 
         } catch (JSONException e) {

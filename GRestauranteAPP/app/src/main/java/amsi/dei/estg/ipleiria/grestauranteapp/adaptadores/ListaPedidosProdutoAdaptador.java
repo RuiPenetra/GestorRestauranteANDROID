@@ -73,11 +73,11 @@ public class ListaPedidosProdutoAdaptador extends BaseAdapter {
         return null;
     }
     private class ViewHolderLista{
-        private TextView tvNomeProduto, tvQuantidade, tvPreco,tvEstado;
+        private TextView tvNome_Produto, tvQuantidade, tvPreco,tvEstado;
         private ImageView imgCategoriaProduto;
 
         public  ViewHolderLista(View view){
-            tvNomeProduto=view.findViewById(R.id.tvProdutoNome);
+            tvNome_Produto=view.findViewById(R.id.tvProdutoNome);
             tvQuantidade=view.findViewById(R.id.tvQuantidade);
             tvPreco=view.findViewById(R.id.tvPrecoTotal);
             tvEstado=view.findViewById(R.id.tvEstado);
@@ -90,7 +90,7 @@ public class ListaPedidosProdutoAdaptador extends BaseAdapter {
 
             auxProduto= getProduto(produtos,pedidoProduto.getId_produto());
 
-            tvNomeProduto.setText(auxProduto.getNome());
+            tvNome_Produto.setText(auxProduto.getNome());
             tvQuantidade.setText(String.valueOf(pedidoProduto.getQuantidade()));
             tvPreco.setText(String.valueOf(pedidoProduto.getPreco()));
 

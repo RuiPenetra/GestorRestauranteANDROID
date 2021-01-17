@@ -18,9 +18,9 @@ import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PerfilListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Perfil;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 
-public class BemVindoFragment extends Fragment implements PerfilListener {
+public class BemVindoFragment extends Fragment {
 
-    private String ip,token;
+    private String nomeCompleto;
     private int genero;
     private TextView tvNomeCompleto;
     private ImageView imgvUser;
@@ -35,25 +35,10 @@ public class BemVindoFragment extends Fragment implements PerfilListener {
         imgvUser=view.findViewById(R.id.imgv_perfil);
 
         SharedPreferences sharedPrefInfoUser = getActivity().getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
-        ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
-        token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
+        nomeCompleto= sharedPrefInfoUser.getString(MenuActivity.NOMECOMPLETO,null);
+        genero= sharedPrefInfoUser.getInt(MenuActivity.GENERO,-1);
 
-        SingletonGestorRestaurante.getInstance(getContext()).setPerfilListener(this);
-        SingletonGestorRestaurante.getInstance(getContext()).getPerfilAPI(ip,token,getContext());
-        return view;
-    }
-
-    @Override
-    public void onRefreshPerfil(Perfil perfil) {
-
-        SharedPreferences sharedPrefInfoUser=getActivity().getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPrefInfoUser.edit();
-        editor.putString(MenuActivity.NOMECOMPLETO,perfil.getNome()+""+perfil.getApelido());
-        editor.putString(MenuActivity.CARGO,perfil.getCargo());
-        editor.putInt(MenuActivity.GENERO,perfil.getGenero());
-        editor.apply();
-
-        tvNomeCompleto.setText(perfil.getNome()+""+perfil.getApelido());
+        tvNomeCompleto.setText(nomeCompleto);
 
         if(genero==0){
             imgvUser.setImageResource(R.drawable.female);
@@ -61,10 +46,8 @@ public class BemVindoFragment extends Fragment implements PerfilListener {
         }else{
             imgvUser.setImageResource(R.drawable.male);
         }
+
+        return view;
     }
 
-    @Override
-    public void onUpdatePerfil() {
-
-    }
 }

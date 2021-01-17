@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -75,6 +76,14 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
 
         produtos=SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosBD();
 
+        if(produtos==null){
+            Log.i("#--->","vazioo");
+
+        }else{
+            Log.i("#--->",""+produtos);
+
+        }
+
         pedido=SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedido(id_pedido);
 
         SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidoProdutosListener(this);
@@ -102,6 +111,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
                 Intent intent = new Intent(getApplicationContext(),DetalhesPedidoProdutoActivity.class);
                 intent.putExtra(DetalhesPedidoProdutoActivity.ID_PEDIDO_PRODUTO, (int) id);
                 startActivityForResult(intent,EDITAR_PEDIDOPRODUTO);
+                Toast.makeText(DetalhesPedidoActivity.this, ""+id, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -177,7 +187,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
         switch (item.getItemId()){
             case R.id.itemRemover:
                 if(Generic.isConnectionInternet(getApplicationContext())){
-                    //TODO: função abrir dialog
+                    dialogRemover();
                 }else{
                     Toast.makeText(this, R.string.noInternet, Toast.LENGTH_SHORT).show();
                 }
@@ -209,7 +219,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                      //  SingletonGestorRestaurante.getInstance(getApplicationContext()).removerPedidoAPI(pedido,getApplicationContext());
+                        SingletonGestorRestaurante.getInstance(getApplicationContext()).removerPedidoAPI(ip,token,pedido,getApplicationContext());
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

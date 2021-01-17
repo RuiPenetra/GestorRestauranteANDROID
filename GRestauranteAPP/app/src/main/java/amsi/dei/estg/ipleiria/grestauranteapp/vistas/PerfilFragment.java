@@ -34,12 +34,10 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private Button btn_atualizar;
     private ImageView imgPerfil;
     private TextView tvNomeCompleto,tvCargo;
-    private int year;
-    private int month;
-    private int day;
+    private int year,month,day, genero;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private String ip,password,token;
+    private String ip,nomeCompleto,token,cargo;
     private Perfil auxPerfil;
 
 
@@ -74,8 +72,6 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
         SharedPreferences sharedPrefInfoUser = getActivity().getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
         token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
-        password= sharedPrefInfoUser.getString(MenuActivity.PASSWORD,null);
-
 
         SingletonGestorRestaurante.getInstance(getContext()).setPerfilListener(this);
         SingletonGestorRestaurante.getInstance(getContext()).getPerfilAPI(ip,token,getContext());
@@ -151,9 +147,18 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
     private void carregardDadosPerfil(Perfil perfil) {
 
-        auxPerfil=perfil;
+        SharedPreferences sharedPrefInfoUser = getActivity().getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        nomeCompleto= sharedPrefInfoUser.getString(MenuActivity.NOMECOMPLETO,null);
+        genero= sharedPrefInfoUser.getInt(MenuActivity.GENERO,-1);
+
         tvNomeCompleto.setText(perfil.getNome()+ " " + perfil.getApelido());
         tvCargo.setText(perfil.getCargo());
+
+        if(genero==1){
+            imgPerfil.setImageResource(R.drawable.male);
+        }else{
+            imgPerfil.setImageResource(R.drawable.female);
+        }
 
         edt_nome.setText(perfil.getNome());
         edt_apelido.setText(perfil.getApelido());
@@ -172,7 +177,8 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
             rb_feminino.setChecked(true);
             imgPerfil.setImageResource(R.drawable.female);
         }
-        /*String password=edt_nova_password.getText().toString();
+
+                /*String password=edt_nova_password.getText().toString();
 
         if(perfil.getNovaPassword()!=password){
             edt_nova_password.setText(perfil.getNovaPassword());
@@ -180,6 +186,13 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
             edt_nova_password.setText(password);
         }*/
 
+        //Guardar na Shared dados atualizados
+        SharedPreferences.Editor editor = sharedPrefInfoUser.edit();
+        editor.putString(MenuActivity.CARGO,perfil.getCargo());
+        editor.putString(MenuActivity.NOMECOMPLETO,perfil.getNome()+" "+perfil.getApelido());
+        editor.putInt(MenuActivity.GENERO,perfil.getGenero());
+
+        editor.apply();
     }
 
     @Override

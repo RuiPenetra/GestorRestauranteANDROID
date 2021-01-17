@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -46,6 +48,8 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
 
         pedidoProduto= SingletonGestorRestaurante.getInstance(this).getPedidoProduto(id_pedido);
         produto= SingletonGestorRestaurante.getInstance(this).getProduto(pedidoProduto.getId_produto());
+
+
         setTitle("Pedido Produto: "+pedidoProduto.getId());
 
         carregarDadosPedidoProduto();
@@ -70,6 +74,8 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
 
         tv_PedProd_Quantidade.setText(String.valueOf(pedidoProduto.getQuantidade()));
         tv_PedProd_Preco.setText(String.valueOf(pedidoProduto.getPreco()));
+
+        Log.i("---->",""+produto.getNome());
         tv_ProdNome.setText(produto.getNome());
         tv_ProdIngredientes.setText(produto.getIngredientes());
 

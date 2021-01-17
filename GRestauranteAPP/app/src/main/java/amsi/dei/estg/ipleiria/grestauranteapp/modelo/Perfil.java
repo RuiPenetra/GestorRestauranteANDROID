@@ -5,7 +5,7 @@ import java.util.Date;
 public class Perfil {
 
     private int id,genero;
-    private String username, nova_password, email, nome,apelido,morada, nacionalidade, cargo, codigo_postal,  telemovel, datanascimento;
+    private String username, nova_password, email, nome,apelido,morada, nacionalidade, cargo, codigo_postal,  telemovel, datanascimento,token;
 
     public int getId() {
         return id;
@@ -20,9 +20,8 @@ public class Perfil {
         return email;
     }
 
-//    public String getAcess_token() {
-//        return acess_token;
-//    }
+    public String getToken() { return token;
+    }
 
     public String getNome() {
         return nome;
@@ -116,7 +115,11 @@ public class Perfil {
         this.datanascimento = datanascimento;
     }
 
-    public Perfil(int id, String username, String nova_password, String email, String nome, String apelido, String morada, String nacionalidade, String cargo, String codigo_postal, int genero, String telemovel, String datanascimento) {
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Perfil(int id, String username, String nova_password, String email, String nome, String apelido, String morada, String nacionalidade, String cargo, String codigo_postal, int genero, String telemovel, String datanascimento,String token) {
 
         this.id = id;
         this.nome = nome;
@@ -131,6 +134,7 @@ public class Perfil {
         this.username = username;
         this.email = email;
         this.nova_password = nova_password;
+        this.token = token;
     }
 
 }
