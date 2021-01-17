@@ -28,6 +28,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
     public static final String PREF_INFO_USER ="PREF_INFO_USER";
     public static final String IP="IP";
+    public static final String ID="ID";
     public static final String USERNAME="USERNAME";
     public static final String PASSWORD ="PASSWORD";
     public static final String TOKEN="TOKEN";

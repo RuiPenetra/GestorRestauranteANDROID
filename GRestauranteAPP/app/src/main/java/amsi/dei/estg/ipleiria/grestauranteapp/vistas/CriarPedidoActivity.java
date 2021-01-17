@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -26,12 +29,13 @@ import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 public class CriarPedidoActivity extends AppCompatActivity implements PedidosListener {
 
     public static final String ID ="ID" ;
-    private LinearLayout lilRestaurante;
-    private LinearLayout lilTakeaway;
+    private TextView tvTipo;
+    private EditText edtTipo;
+    private ImageView imgvTipo;
     private Button btnCriarPedido;
-    private EditText edtMesa;
     private Pedido pedido;
-    private String ip, token;
+    private String ip, token,cargo;
+    private int id_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,33 +46,50 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        lilRestaurante=findViewById(R.id.lilRestaurante);
-        lilTakeaway=findViewById(R.id.lilTakeaway);
+        tvTipo=findViewById(R.id.tvTipo);
+        edtTipo=findViewById(R.id.edt_tipo);
+        imgvTipo=findViewById(R.id.imgvTipo);
         btnCriarPedido=findViewById(R.id.btn_criarPedido);
-        edtMesa=findViewById(R.id.edt_mesa);
 
-        lilTakeaway.setVisibility(View.INVISIBLE);
-
-        SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidosListener(this);
 
         SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
         token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
+        cargo= sharedPrefInfoUser.getString(MenuActivity.CARGO,null);
+        id_user= sharedPrefInfoUser.getInt(MenuActivity.ID,-1);
+
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidosListener(this);
+
+
+        if(cargo.equals("cliente")) {
+
+            tvTipo.setText("Takeaway");
+            edtTipo.setInputType(InputType.TYPE_CLASS_TEXT);
+            edtTipo.setHint("Nome do pedido");
+            imgvTipo.setImageResource(R.drawable.male);
+        }else{
+            tvTipo.setText("Restaurante");
+            edtTipo.setInputType(InputType.TYPE_CLASS_NUMBER);
+            edtTipo.setHint("Nº Mesa");
+            imgvTipo.setImageResource(R.drawable.img_table);
+        }
 
         btnCriarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (Generic.isConnectionInternet(getApplicationContext())) {
-                    if (validarPedido() == true) {
-                        //TODO:Validar tipo de utilizador e consoante o cargo guardado na shared preferences
-                        //TODO: Criar pedido takeaway consoante o cargo
+                    if (edtTipo.getText() != null) {
 
                         Calendar c = Calendar.getInstance();
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                         String strDate = sdf.format(c.getTime());
 
-                        pedido = new Pedido(0, 1, Integer.parseInt(edtMesa.getText().toString()), null, null, 0, 0, strDate);
+                        if(cargo.equals("cliente")) {
+                            pedido = new Pedido(0, id_user, 0, edtTipo.getText().toString(), null, 0, 1, strDate);
+                        }else{
+                            pedido = new Pedido(0, id_user, Integer.parseInt(edtTipo.getText().toString()),null, null, 0, 0, strDate);
+                        }
 
                         SingletonGestorRestaurante.getInstance(getApplicationContext()).adicionarPedidoAPI(ip,token,pedido, getApplicationContext());
 
@@ -80,7 +101,7 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
         });
     }
 
-    private boolean validarPedido() {
+/*    private boolean validarPedido() {
 
         String n_mesa=edtMesa.getText().toString();
         //TODO:Guardar valor da editText NomePedido
@@ -94,13 +115,13 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
         }
 
         //TODO:Fazer validação nome pedido
-        /*if (nomePedido.length()<3) {
+        *//*if (nomePedido.length()<3) {
             edtNomePedido.setError("Serie Invalido");
             return false;
-        }*/
+        }*//*
 
         return true;
-    }
+    }*/
 
 
     @Override

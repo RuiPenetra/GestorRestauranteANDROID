@@ -174,6 +174,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
         SharedPreferences sharedPrefUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefUser.edit();
+        editor.putInt(MenuActivity.ID,perfil.getId());
         editor.putString(MenuActivity.TOKEN,perfil.getToken());
         editor.putString(MenuActivity.CARGO,perfil.getCargo());
         editor.putString(MenuActivity.NOMECOMPLETO,perfil.getNome()+" "+perfil.getApelido());

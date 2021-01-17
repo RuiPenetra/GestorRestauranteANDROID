@@ -22,7 +22,12 @@ public class PedidoJsonParser {
                 int id = pedido.getInt("id");
                 int tipo = pedido.getInt("tipo");
                 int estado = pedido.getInt("estado");
-                int id_mesa = pedido.getInt("id_mesa");
+                int id_mesa;
+                if(tipo==0){
+                    id_mesa = pedido.getInt("id_mesa");
+                }else{
+                    id_mesa=0;
+                }
                 int id_user = pedido.getInt("id_perfil");
                 String nome_pedido = pedido.getString("nome_pedido");
                 String data=pedido.getString("data");
@@ -45,11 +50,17 @@ public class PedidoJsonParser {
             int id = pedido.getInt("id");
             int tipo = pedido.getInt("tipo");
             int estado = pedido.getInt("estado");
-            int id_mesa = pedido.getInt("id_mesa");
+            int id_mesa;
+            if(tipo==0){
+                id_mesa = pedido.getInt("id_mesa");
+            }else{
+                id_mesa=0;
+            }
+            String nome_pedido = pedido.getString("nome_pedido");
             int id_user = pedido.getInt("id_perfil");
             String data=pedido.getString("data");
 
-            auxPedido = new Pedido(id,id_user,id_mesa,null,null,estado,tipo,data);
+            auxPedido = new Pedido(id,id_user,id_mesa,nome_pedido,null,estado,tipo,data);
             Log.i("--->", "" + auxPedido);
 
         } catch (JSONException e) {

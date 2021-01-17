@@ -31,6 +31,7 @@ import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, PedidosListener {
 
     private static final int CRIAR = 1 ;
+    private static final int EDITAR = 2 ;
     private static final int ID_UTILIZADOR =1 ;
     private ListView lvlPedidos;
     private CardView cvNovoPedido;
@@ -66,7 +67,7 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(),DetalhesPedidoActivity.class);
                 intent.putExtra(DetalhesPedidoActivity.ID, (int) id);
-                startActivity(intent);
+                startActivityForResult(intent,EDITAR);
             }
         });
 
@@ -91,10 +92,17 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode == Activity.RESULT_OK && requestCode==CRIAR){
-
-            SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
-            Toast.makeText(getContext(),"Pedido criado com sucesso", Toast.LENGTH_LONG).show();
+        if(resultCode == Activity.RESULT_OK){
+            switch (requestCode){
+                case CRIAR:
+                    SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
+                    Toast.makeText(getContext(),"Produto adicionado com sucesso", Toast.LENGTH_LONG).show();
+                    break;
+                case EDITAR:
+                    SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
+                    Toast.makeText(getContext(),"Pedido Produto editado/removido com sucesso",Toast.LENGTH_LONG).show();
+                    break;
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

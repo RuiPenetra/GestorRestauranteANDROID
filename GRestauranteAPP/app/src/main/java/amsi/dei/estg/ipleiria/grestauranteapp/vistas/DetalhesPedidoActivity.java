@@ -225,7 +225,8 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
 
     @Override
     public void onDetalhes() {
-
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override

@@ -349,15 +349,20 @@ public class SingletonGestorRestaurante {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "error.getMessage()", Toast.LENGTH_SHORT).show();
                 }
             }) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("data", pedido.getData());
-                    params.put("id_mesa", pedido.getId_mesa() + "");
                     params.put("id_perfil", pedido.getId_utilizador() + "");
+                    if(pedido.getTipo()==0){
+                        params.put("id_mesa", pedido.getId_mesa() + "");
+                    }else{
+                        params.put("nome_pedido", pedido.getNome_pedido());
+
+                    }
                     params.put("estado", pedido.getEstado() + "");
                     params.put("tipo", pedido.getTipo() + "");
                     return params;
