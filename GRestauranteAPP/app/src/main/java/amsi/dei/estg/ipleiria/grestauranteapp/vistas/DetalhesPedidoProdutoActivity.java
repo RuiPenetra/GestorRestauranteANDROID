@@ -153,7 +153,6 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
         tv_PedProd_Quantidade.setText(String.valueOf(pedidoProduto.getQuantidade()));
         tv_PedProd_Preco.setText(String.valueOf(pedidoProduto.getPreco()));
 
-        Log.i("---->",""+produto.getNome());
         tv_ProdNome.setText(produto.getNome());
         tv_ProdIngredientes.setText(produto.getIngredientes());
 

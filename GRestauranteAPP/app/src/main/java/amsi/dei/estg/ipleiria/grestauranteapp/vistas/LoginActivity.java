@@ -62,7 +62,6 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
         ip=sharedPrefInfoUser.getString("IP",null);
 
-        Toast.makeText(this, ""+ip, Toast.LENGTH_SHORT).show();
         boolean relembrar=sharedPrefInfoUser.getBoolean(MenuActivity.RELEMBRAR,false);
 
         if(relembrar==true){

@@ -71,7 +71,7 @@
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintHorizontal_bias="0"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/line"
@@ -93,19 +93,19 @@
                 />
 
             <ImageView
-                android:id="@+id/imgVmesa"
+                android:id="@+id/imgVtipo"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
                 android:src="@drawable/mesa"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintHorizontal_bias="0"
-                android:layout_marginLeft="40dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@+id/tv_NPedido"
-                app:layout_constraintTop_toTopOf="@id/imgNPedido"/>
+                app:layout_constraintTop_toTopOf="@id/imgNPedido"
+                app:layout_constraintVertical_bias="0" />
             <TextView
-                android:id="@+id/tv_Mesa"
+                android:id="@+id/tv_tipo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nº: 2"
@@ -116,9 +116,9 @@
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgVmesa"
-                app:layout_constraintTop_toTopOf="@+id/imgVmesa"
-                app:layout_constraintTop_toBottomOf="@id/imgVmesa"
+                app:layout_constraintStart_toEndOf="@+id/imgVtipo"
+                app:layout_constraintTop_toTopOf="@+id/imgVtipo"
+                app:layout_constraintTop_toBottomOf="@id/imgVtipo"
                 />
 
             <ImageView
@@ -176,7 +176,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_entrada"
+                    android:id="@+id/cv_DetPedentrada"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@drawable/bg_item"
@@ -199,7 +199,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_bebida"
+                    android:id="@+id/cv_DetPedbebida"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
@@ -222,7 +222,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_sopa"
+                    android:id="@+id/cv_DetPedsopa"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
@@ -245,7 +245,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_carne"
+                    android:id="@+id/cv_DetPedcarne"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
@@ -268,7 +268,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_peixe"
+                    android:id="@+id/cv_DetPedpeixe"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
@@ -291,7 +291,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_sobremesa"
+                    android:id="@+id/cv_DetPedsobremesa"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"

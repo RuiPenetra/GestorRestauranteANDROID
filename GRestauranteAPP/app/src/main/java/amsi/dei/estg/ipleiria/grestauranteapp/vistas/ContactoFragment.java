@@ -72,52 +72,46 @@ public class ContactoFragment extends Fragment {
         return view;
     }
 
+    private void call_action() {
+        String dial = "tel:" + number;
+        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+    }
 
+    public boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(getContext(),android.Manifest.permission.CALL_PHONE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("TAG", "Permission is granted");
+                return true;
+            } else {
 
-            private void call_action() {
-                String dial = "tel:" + number;
-                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+                Log.v("TAG", "Permission is revoked");
+                requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 1);
+                return false;
             }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("TAG", "Permission is granted");
+            return true;
+        }
+    }
 
-            public boolean isPermissionGranted() {
-                if (Build.VERSION.SDK_INT >= 23) {
-                    if (checkSelfPermission(getContext(),android.Manifest.permission.CALL_PHONE)
-                            == PackageManager.PERMISSION_GRANTED) {
-                        Log.v("TAG", "Permission is granted");
-                        return true;
-                    } else {
 
-                        Log.v("TAG", "Permission is revoked");
-                        requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, 1);
-                        return false;
-                    }
-                } else { //permission is automatically granted on sdk<23 upon installation
-                    Log.v("TAG", "Permission is granted");
-                    return true;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
+                    call_action();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
                 }
+                return;
             }
 
-
-            @Override
-            public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-                switch (requestCode) {
-
-                    case 1: {
-
-                        if (grantResults.length > 0
-                                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
-                            call_action();
-                        } else {
-                            Toast.makeText(getActivity().getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-                        }
-                        return;
-                    }
-
-
-                }
-
-            }
+        }
+    }
 
 }
 
