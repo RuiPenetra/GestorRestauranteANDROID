@@ -29,16 +29,6 @@
         android:layout_marginBottom="50dp"
         android:layout_marginLeft="20dp"/>
 
-    <ImageView
-        android:id="@+id/imgSair"
-        android:layout_width="33dp"
-        android:layout_height="35dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintBottom_toTopOf="@id/imgUser"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/ic_logout"/>
 
     <TextView
         android:id="@+id/tvNomeCompleto"

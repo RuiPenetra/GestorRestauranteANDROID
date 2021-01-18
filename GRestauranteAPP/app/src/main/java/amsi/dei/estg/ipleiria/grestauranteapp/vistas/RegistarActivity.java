@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -228,8 +229,13 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
     }
 
     @Override
-    public void onRegistar() {
-        setResult(RESULT_OK);
-        finish();
+    public void onRegistar(Perfil perfil) {
+
+        if(perfil!=null){
+            setResult(RESULT_OK);
+            finish();
+        }else{
+            Toast.makeText(this, "Utilizador ja existe, verifique os campos", Toast.LENGTH_SHORT).show();
+        }
     }
 }

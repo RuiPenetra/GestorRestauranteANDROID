@@ -41,6 +41,11 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private Perfil auxPerfil;
 
 
+    public PerfilFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -78,7 +83,6 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
 
         //Atualziar password futuramente
-
         edt_nova_password.setEnabled(false);
         btn_dataNascimento.setOnClickListener(new View.OnClickListener() {
             @Override

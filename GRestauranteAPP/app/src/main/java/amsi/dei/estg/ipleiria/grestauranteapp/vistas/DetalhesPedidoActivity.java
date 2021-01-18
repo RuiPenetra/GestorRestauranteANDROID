@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
@@ -48,21 +49,23 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
     private FloatingActionButton fab_criarPedidoProduto;
     private SwipeRefreshLayout swipeRefreshLayoutPedidosProduto;
     private ListView lvlPedidosProduto;
-    private TextView tvNPedido,tvDataHora,tvNmesa,tvEstado;
+    private TextView tvNPedido,tvDataHora,tvTipo,tvEstado;
+    private ImageView imgvTipo;
     private int id_pedido;
     private ArrayList<Produto> produtos;
     private Pedido pedido;
-    private String ip,token;
+    private String ip,token,cargo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_pedido);
 
-        tvNmesa=findViewById(R.id.tv_Mesa);
+        tvTipo=findViewById(R.id.tv_tipo);
         tvDataHora=findViewById(R.id.tv_DataHora);
         tvEstado=findViewById(R.id.tv_estado);
         tvNPedido=findViewById(R.id.tv_NPedido);
+        imgvTipo=findViewById(R.id.imgVtipo);
         swipeRefreshLayoutPedidosProduto=findViewById(R.id.swipeRefreshLayoutPedidoProdutos);
         lvlPedidosProduto=findViewById(R.id.lvl_pedidoProdutos);
 
@@ -74,6 +77,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
         SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
         token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
+        cargo= sharedPrefInfoUser.getString(MenuActivity.CARGO,null);
 
 
         swipeRefreshLayoutPedidosProduto.setOnRefreshListener(this);
@@ -106,18 +110,26 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
                 Intent intent = new Intent(getApplicationContext(),DetalhesPedidoProdutoActivity.class);
                 intent.putExtra(DetalhesPedidoProdutoActivity.ID_PEDIDO_PRODUTO, (int) id);
                 startActivityForResult(intent,EDITAR_PEDIDOPRODUTO);
-                Toast.makeText(DetalhesPedidoActivity.this, ""+id, Toast.LENGTH_SHORT).show();
             }
         });
 
-        carregarDadosPdido(pedido);
+
+        carregarDadosPedido(pedido);
     }
 
-    private void carregarDadosPdido(Pedido pedido) {
+    private void carregarDadosPedido(Pedido pedido) {
 
         tvNPedido.setText(String.valueOf(pedido.getId()));
-        tvNmesa.setText(String.valueOf(pedido.getId_mesa()));
+        tvTipo.setText(String.valueOf(pedido.getId_mesa()));
         tvDataHora.setText(pedido.getData());
+
+        if(!cargo.equals("cliente")){
+            tvTipo.setText(String.valueOf(pedido.getId_mesa()));
+            imgvTipo.setImageResource(R.drawable.mesa);
+        }else{
+            tvTipo.setText(String.valueOf(pedido.getNome_pedido()));
+            imgvTipo.setImageResource(R.drawable.ic_perfil);
+        }
 
         switch (pedido.getEstado()){
             case 0:
@@ -133,8 +145,6 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
                 tvEstado.setBackgroundResource(R.drawable.badge_concluido);
                 break;
         }
-
-
 
     }
 

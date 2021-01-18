@@ -1,11 +1,13 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -36,18 +38,16 @@ public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private static final int CATEG_SOBREMESA =5 ;
     private static final int CATEG_BEBIDA =6 ;
     private static final int CATEG_OUTRAS =-1 ;
-    private CardView btn_categoria;
-    private FragmentTransaction transaction;
-    private CardView card_entrada;
-    private CardView card_sopa;
-    private CardView card_carne;
-    private CardView card_peixe;
-    private CardView card_sobremesa;
-    private CardView card_bebida;
+    private CardView card_entrada,card_sopa,card_carne,card_peixe,card_sobremesa,card_bebida;
     private ListView lvlProdutos;
     private SwipeRefreshLayout swipeRefreshLayout;
     private String ip;
 
+
+
+    public ProdutoFragment() {
+        // Required empty public constructor
+    }
 
 
     @Nullable
@@ -75,6 +75,16 @@ public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         SingletonGestorRestaurante.getInstance(getContext()).setProdutosListener(this);
         SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(ip,TODAS_CATEGORIAS,getContext());
+
+
+        lvlProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(),DetalhesProdutoLogadoActivity.class);
+                intent.putExtra(DetalhesProdutoLogadoActivity.ID_PRODUTO, (int) id);
+                startActivity(intent);
+            }
+        });
 
         card_entrada.setOnClickListener(new View.OnClickListener() {
             @Override

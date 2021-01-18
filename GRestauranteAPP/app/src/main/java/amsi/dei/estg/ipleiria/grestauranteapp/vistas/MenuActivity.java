@@ -45,7 +45,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     public static final String CARGO ="CARGO";
     private NavigationView navigationView;
     private DrawerLayout drawer;
-    private String nome_completo;
+    private String nome_completo,cargo;
     private int genero;
     private FragmentManager fragmentManager;
     private TextView tvNomeCompleto;
@@ -77,6 +77,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences sharedPrefInfoUser=getSharedPreferences(PREF_INFO_USER, Context.MODE_PRIVATE);
         nome_completo=sharedPrefInfoUser.getString(NOMECOMPLETO,null);
         genero=sharedPrefInfoUser.getInt(GENERO,-1);
+        cargo=sharedPrefInfoUser.getString(CARGO,null);
 
         View hView=navigationView.getHeaderView(0);
 

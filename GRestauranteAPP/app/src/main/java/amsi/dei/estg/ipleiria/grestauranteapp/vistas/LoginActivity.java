@@ -62,7 +62,6 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
         ip=sharedPrefInfoUser.getString("IP",null);
 
-        Toast.makeText(this, ""+ip, Toast.LENGTH_SHORT).show();
         boolean relembrar=sharedPrefInfoUser.getBoolean(MenuActivity.RELEMBRAR,false);
 
         if(relembrar==true){
@@ -74,31 +73,6 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
     }
 
- /*   public void login() {
-        String username= etUsername.getText().toString();
-        String password=etPassword.getText().toString();
-
-        if (RememberMe.isChecked()){
-            editor.putBoolean("savelogin",true);
-            editor.putString("username",username);
-            editor.putString("password",password);
-            editor.putString("token",TOKEN);
-            editor.commit();
-
-        }else {
-            editor.putBoolean("savelogin",false);
-            editor.remove("username");
-            editor.remove("password");
-            editor.remove("token");
-            editor.commit();
-
-        }
-
-        if (ProdutoJsonParser.isConnectionInternet(getApplicationContext())) {
-            SingletonGestorRestaurante.getInstance(getApplicationContext()).loginAPI(username, password, getApplicationContext());
-        } else
-            Toast.makeText(getApplicationContext(), "Não existe ligação a internet", Toast.LENGTH_SHORT).show();
-    }*/
 
     public void onClickLogin(View view) {
         if (Generic.isConnectionInternet(getApplicationContext())) {

@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -14,10 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".vistas.DetalhesProdutoLogadoActivity"
+            android:parentActivityName=".vistas.MenuActivity" />
         <activity
             android:name=".vistas.ContactoActivity"
-            android:parentActivityName=".vistas.StartActivity">
-        </activity>
+            android:parentActivityName=".vistas.StartActivity"/>
         <activity
             android:name=".vistas.DetalhesPedidoProdutoActivity"
             android:parentActivityName=".vistas.DetalhesPedidoActivity" />
