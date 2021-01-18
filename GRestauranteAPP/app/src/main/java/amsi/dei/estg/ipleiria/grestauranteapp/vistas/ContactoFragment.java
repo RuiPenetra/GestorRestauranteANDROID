@@ -31,7 +31,7 @@ public class ContactoFragment extends Fragment {
         // Required empty public constructor
     }
 
-
+//FRAGMENTO DE CONTACTOS DA PARA TELEFONAR E MANDAR MAIL DA PERMISSAO EM RUNTIME
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

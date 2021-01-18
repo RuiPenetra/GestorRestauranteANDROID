@@ -207,6 +207,7 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     @Override
+    //MANDA TOAST CASO O PERFIL FOI ATUALZIADO COM SUCESSO
     public void onUpdatePerfil() {
         Toast.makeText(getContext(), "Perfil atualizado com sucesso", Toast.LENGTH_SHORT).show();
     }

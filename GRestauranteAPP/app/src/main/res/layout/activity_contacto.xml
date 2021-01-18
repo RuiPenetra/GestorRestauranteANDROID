@@ -73,22 +73,22 @@
             android:id="@+id/imgbCall"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_margin="30dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/ic_call"
             android:src="@drawable/ic_baseline_call_24"
-            android:layout_margin="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/imgbMail"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@drawable/ic_mail"
             android:layout_margin="30dp"
+            android:background="@drawable/ic_mail"
             android:src="@drawable/ic_baseline_email_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

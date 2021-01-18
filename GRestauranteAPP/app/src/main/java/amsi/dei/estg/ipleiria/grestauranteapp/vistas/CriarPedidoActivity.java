@@ -39,6 +39,7 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
     private int id_user;
 
     @Override
+    //VAI BUSCAR SHARED PREFERENCE CRIA PEDIDO TAKEAWAY CASO SEJA CLIENTE E PEDIDO DE RESTAURANTE CASO O CARGO NAO SEJA CLIENTE
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Criar Pedido");
@@ -101,7 +102,7 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
             }
         });
     }
-
+    //VALIDAÇÃO DO PEDIDO
     private boolean validarPedido() {
 
 

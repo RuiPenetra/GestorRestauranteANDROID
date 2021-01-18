@@ -132,7 +132,7 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
             }
         });
     }
-
+    //CARREGA OS DADOS DE CADA PRODUTO DENTRO DO PEDIDO
     private void carregarDadosPedidoProduto() {
 
         switch (pedidoProduto.getEstado()){
@@ -184,7 +184,7 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
         }
 
     }
-
+    //CONFIRMA SE QUER REMOVER O PRODUTO DENTRO DO PEDIDO
     private void dialogRemover() {
         AlertDialog.Builder builder;
         builder= new AlertDialog.Builder(this);

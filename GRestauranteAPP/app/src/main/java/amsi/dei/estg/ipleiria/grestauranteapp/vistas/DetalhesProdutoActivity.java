@@ -130,7 +130,7 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
 
 
     }
-
+    //CARERGA INFORMAÇÕES DE 1 PRODUTO
     private void carregarDetalhesProduto(){
 
         tvNome.setText(produto.getNome());
