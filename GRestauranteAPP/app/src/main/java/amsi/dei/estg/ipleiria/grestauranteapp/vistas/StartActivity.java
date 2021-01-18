@@ -35,6 +35,11 @@ public class StartActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onClickContactos(View view) {
+        Intent intent= new Intent(this, ContactoActivity.class);
+        startActivity(intent);
+    }
+
     public void onClickSettings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);

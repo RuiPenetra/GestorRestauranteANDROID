@@ -463,7 +463,7 @@ public class SingletonGestorRestaurante {
                         if (registoListener != null)
                             registoListener.onRegistar();
                     } else {
-                        Toast.makeText(context, "Erro impossivel criar o pedido", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Erro impossivel criar o utilizador", Toast.LENGTH_SHORT).show();
 
                     }
 

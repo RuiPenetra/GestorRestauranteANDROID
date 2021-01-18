@@ -1,6 +1,7 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -28,6 +29,9 @@ private String number;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacto);
+        setTitle("Contactos");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         call = findViewById(R.id.call);
         number = "915899612";
@@ -105,5 +109,7 @@ private String number;
             // other 'case' lines to check for other
             // permissions this app might request
         }
+
     }
+
 }
