@@ -159,7 +159,7 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
         switch (produto.getCategoria()) {
             case 1:
                 tv_ProdCategoria.setText("Entrada");
-                img_Categoria.setImageResource(R.drawable.entradas);
+                img_Categoria.setImageResource(R.drawable.aperitivo);
                 break;
             case 2:
                 tv_ProdCategoria.setText("Sopa");

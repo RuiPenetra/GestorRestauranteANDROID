@@ -106,7 +106,7 @@
             android:layout_height="20dp"
             android:elevation="20dp"
             android:textSize="14sp"
-            android:text="20,00"
+            android:text="@string/tvItemPrecoPedidoProduto"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintEnd_toEndOf="parent"

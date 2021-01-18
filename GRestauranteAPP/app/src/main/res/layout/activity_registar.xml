@@ -34,7 +34,7 @@
                     android:id="@+id/tv_logo_nome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bem Vindo!"
+                    android:text="@string/tvBemvindoRegistar"
                     android:textSize="40sp"
                     android:fontFamily="@font/brandon_grotesque_extra_bold"/>
 
@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/brandon_grotesque"
-                    android:text="Faça o registo para continuar"
+                    android:text="@string/tvMessagemRegistar"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -64,7 +64,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="DADOS PESSOAIS"
+                        android:text="@string/tvRegistDadosPEssoais"
                         android:textSize="18sp"
                         android:fontFamily="@font/brandon_grotesque_black"/>
 
@@ -231,7 +231,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
-                        android:hint="Nacionalidade">
+                        android:hint="@string/tvNacionalidade">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edt_nacionalidade"
@@ -253,7 +253,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="Género:"
+                        android:text="@string/tvGenero"
                         android:textSize="18sp"/>
 
                     <RadioGroup
@@ -266,7 +266,7 @@
                             android:id="@+id/radio_masculino"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Masculino"
+                            android:text="@string/rbMasculino"
                             android:layout_marginLeft="20dp"
                             android:textColor="@color/gray"/>
 
@@ -275,7 +275,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:text="Feminino"
+                            android:text="@string/rbFemenino"
                             android:textColor="@color/gray"/>
 
                         <RadioGroup
@@ -294,7 +294,7 @@
                    <TextView
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
-                       android:text="DADOS DE ACESSO"
+                       android:text="@string/tvDadosAcesso"
                        android:textSize="18sp"
                        android:fontFamily="@font/brandon_grotesque_black"
                        android:textAllCaps="true" />
@@ -345,7 +345,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
-                        android:hint="Email">
+                        android:hint="@string/edtEmail">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edt_email"
@@ -369,7 +369,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Password"
+                        android:hint="@string/edtPassword"
                         app:passwordToggleEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -389,7 +389,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:background="#000"
-                    android:text="Registar"
+                    android:text="@string/btnRegistar"
                     android:textColor="#fff" />
 
             </LinearLayout>

@@ -112,7 +112,7 @@ public class ListaPedidosProdutoAdaptador extends BaseAdapter {
 
             switch (auxProduto.getCategoria()){
                 case 1:
-                    imgCategoriaProduto.setImageResource(R.drawable.entradas);
+                    imgCategoriaProduto.setImageResource(R.drawable.aperitivo);
                     break;
                 case 2:
                     imgCategoriaProduto.setImageResource(R.drawable.sopa);

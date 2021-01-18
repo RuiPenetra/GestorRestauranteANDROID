@@ -20,14 +20,14 @@
             android:id="@+id/tv_logo_nome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Olá, Bem Vindo!"
+            android:text="@string/tvLoginBemvindo"
             android:textSize="40sp"
             android:fontFamily="@font/brandon_grotesque_extra_bold"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Faça login para continuar"
+            android:text="@string/tvMesagemLogin"
             android:textSize="18sp"
             android:fontFamily="@font/brandon_grotesque"/>
 
@@ -68,7 +68,7 @@
                 android:id="@+id/Remember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Relembrar"
+                android:text="@string/cbRelembrar"
                 android:layout_gravity="right"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"/>
@@ -80,13 +80,13 @@
                 android:layout_marginTop="30dp"
                 android:background="#000"
                 android:onClick="onClickLogin"
-                android:text="Login"
+                android:text="@string/btnLogin"
                 android:textColor="#fff" />
             <Button
                 android:id="@+id/btnRegistar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Registar"
+                android:text="@string/btnRegistar"
                 android:background="#AD000000"
                 android:textColor="#fff"
                 android:layout_marginTop="20dp"

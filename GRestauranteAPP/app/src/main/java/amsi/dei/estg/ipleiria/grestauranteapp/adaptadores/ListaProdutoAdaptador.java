@@ -78,7 +78,7 @@ public class ListaProdutoAdaptador extends BaseAdapter {
             switch (produto.getCategoria()){
                 case 1:
                     tvCategoria.setText("Entrada");
-                    imgCapa.setImageResource(R.drawable.entradas);
+                    imgCapa.setImageResource(R.drawable.aperitivo);
                     break;
                 case 2:
                     tvCategoria.setText("Sopa");

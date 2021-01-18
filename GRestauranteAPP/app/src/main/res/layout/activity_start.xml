@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:fontFamily="@font/brandon_grotesque_extra_bold"
-                android:text="Restaurante"
+                android:text="@string/tvRestaurante"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black"
                 android:textSize="45sp" />

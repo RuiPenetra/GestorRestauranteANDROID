@@ -23,7 +23,7 @@
                 android:id="@+id/tvTipo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Restaurante"
+                android:text="@string/tvTipo"
                 android:textSize="30sp"
                 android:fontFamily="@font/brandon_grotesque_black"
                 android:layout_margin="20dp"/>
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="50dp"
                     android:background="#000"
-                    android:text="Criar"
+                    android:text="@string/btnCriarPedido"
                     android:textColor="#fff" />
 
             </com.google.android.material.textfield.TextInputLayout>

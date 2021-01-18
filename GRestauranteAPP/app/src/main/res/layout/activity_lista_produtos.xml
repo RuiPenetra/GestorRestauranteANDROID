@@ -21,7 +21,7 @@
             android:id="@+id/tv_nome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Categorias"
+            android:text="@string/tvCategoriaListProdutos"
             android:textSize="24sp"
             android:textStyle="bold"
             android:fontFamily="@font/brandon_grotesque_black"

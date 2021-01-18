@@ -112,7 +112,7 @@ public class DetalhesProdutoLogadoActivity extends AppCompatActivity {
         switch (produto.getCategoria()){
             case 1:
                 tvCategoria.setText("Entrada");
-                imgvCategoriaProduto.setImageResource(R.drawable.entradas);
+                imgvCategoriaProduto.setImageResource(R.drawable.aperitivo);
                 break;
             case 2:
                 tvCategoria.setText("Sopa");
