@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,7 +82,7 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
             public void onClick(View v) {
 
                 if (Generic.isConnectionInternet(getApplicationContext())) {
-                    if (edtTipo.getText() != null) {
+                    if (validarPedido()==true) {
 
                         Calendar c = Calendar.getInstance();
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -101,27 +104,41 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
         });
     }
 
-/*    private boolean validarPedido() {
-
-        String n_mesa=edtMesa.getText().toString();
-        //TODO:Guardar valor da editText NomePedido
-
-        //String nomePedido=edtNomepedido.getText().toString();
+    private boolean validarPedido() {
 
 
-        if (n_mesa.length()==0) {
-            edtMesa.setError("Mesa invalida");
-            return false;
+        if (cargo.equals("cliente")) {
+
+            String nomePedido=edtTipo.getText().toString();
+
+
+            if (nomePedido.isEmpty()) {
+                edtTipo.setError("O nome do Pedido nao pode estar vazio");
+                return false;
+            }
+
+            if (nomePedido.length() < 3) {
+                edtTipo.setError("Nome Pedido demasiado pequeno");
+                return false;
+            }
+            if(!nomePedido.toString().matches("[a-zA-Z ]+")){
+                edtTipo.setError("Nome Pedido so pode conter letras");
+                return false;
+            }
+
+        } else {
+           String n_mesa = edtTipo.getText().toString();
+
+            if(TextUtils.isEmpty(n_mesa)) {
+                edtTipo.setError("Não pode ser vazio");
+                return false;
+            }
+
+
         }
 
-        //TODO:Fazer validação nome pedido
-        *//*if (nomePedido.length()<3) {
-            edtNomePedido.setError("Serie Invalido");
-            return false;
-        }*//*
-
         return true;
-    }*/
+    }
 
 
     @Override
