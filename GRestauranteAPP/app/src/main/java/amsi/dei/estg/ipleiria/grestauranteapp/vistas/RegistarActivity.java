@@ -171,7 +171,7 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
 
         if (morada.length()<3)
         {
-            edt_morada.setError("Morda Invalido");
+            edt_morada.setError("Morada Invalido");
             return false;
         }
 

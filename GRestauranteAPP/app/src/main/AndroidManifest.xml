@@ -14,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".vistas.ContactoActivity"></activity>
+        <activity
+            android:name=".vistas.ContactoActivity"
+            android:parentActivityName=".vistas.StartActivity">
+        </activity>
         <activity
             android:name=".vistas.DetalhesPedidoProdutoActivity"
             android:parentActivityName=".vistas.DetalhesPedidoActivity" />
