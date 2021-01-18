@@ -100,7 +100,28 @@ public class ContactoFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
 
+<<<<<<< HEAD
             case 1: {
+=======
+            @Override
+            public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+                switch (requestCode) {
+
+                    case 1: {
+
+                        if (grantResults.length > 0
+                                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
+                            call_action();
+                        } else {
+                            Toast.makeText(getActivity().getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                        }
+                        return;
+                    }
+
+
+                }
+>>>>>>> master
 
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

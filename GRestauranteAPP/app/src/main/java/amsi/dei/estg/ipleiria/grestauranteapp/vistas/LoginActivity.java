@@ -77,28 +77,37 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     public void onClickLogin(View view) {
         if (Generic.isConnectionInternet(getApplicationContext())) {
 
-            String username=edtUsername.getText().toString();
-            String password=edtPassword.getText().toString();
-
-            if(!isUsernameValido(username)){
-                edtUsername.setError("Username inválido");
-            }
-
-            if(!isPasswordValida(password)){
-                edtUsername.setError("Password inválida");
-            }
-
-            if(ip==null){
-
-                Toast.makeText(this, "Tem de defenir o endereço de ip", Toast.LENGTH_SHORT).show();
-            }else{
-                SingletonGestorRestaurante.getInstance(getApplicationContext()).loginAPI(ip,username,password,getApplicationContext());
+            if(Validarlogin()==true) {
+                String username = edtUsername.getText().toString();
+                String password = edtPassword.getText().toString();
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).loginAPI(ip, username, password, getApplicationContext());
             }
 
         }else{
             Toast.makeText(getApplicationContext(), R.string.noInternet, Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    private boolean Validarlogin() {
+        String username=edtUsername.getText().toString();
+        String password=edtPassword.getText().toString();
+
+
+        if (!isUsernameValido(username)){
+            edtUsername.setError("Username não pode ser vazio");
+            return false;
+        }
+        if (!isPasswordValida(password)){
+            edtPassword.setError("Password não pode estar vazia");
+            return false;
+        }
+        if(ip==null){
+            Toast.makeText(this, "Tem de defenir o endereço de ip", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
     private boolean isUsernameValido(String username){
@@ -132,7 +141,6 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
     @Override
     public void onValidateLogin(Perfil perfil) {
-
         if (perfil != null) {
             guardarInfoShared(perfil);
             Intent intent= new Intent(this, MenuActivity.class);
@@ -161,9 +169,6 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
             editor.putString(MenuActivity.PASSWORD,edtPassword.getText().toString());
         }else{
             editor.putBoolean(MenuActivity.RELEMBRAR,false);
-            editor.remove(MenuActivity.USERNAME);
-            editor.remove(MenuActivity.PASSWORD);
-            editor.remove(MenuActivity.TOKEN);
         }
 
         editor.apply();

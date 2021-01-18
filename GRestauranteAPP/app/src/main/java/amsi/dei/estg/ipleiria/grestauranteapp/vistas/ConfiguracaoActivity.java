@@ -38,6 +38,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 enderecoIP=edt_endereçoIP.getText().toString();
+                enderecoIP=enderecoIP.trim();
 
                 if(enderecoIP.length()<10){
 
@@ -47,7 +48,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPrefUser.edit();
                     editor.putString(IP,enderecoIP);
                     editor.apply();
-                    Toast.makeText(ConfiguracaoActivity.this, "", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConfiguracaoActivity.this, "Ip guardado com sucesso", Toast.LENGTH_SHORT).show();
                 }
             }
         });
