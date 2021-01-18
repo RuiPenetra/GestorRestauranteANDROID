@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
         if(username==null)
             return false;
 
-        return username.length()>3;
+        return username.length()>=3;
     }
 
     private boolean isPasswordValida(String password){

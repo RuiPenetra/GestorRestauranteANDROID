@@ -33,7 +33,7 @@ public class ProdutoBDHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //código sql de criação de tabela
         String createTableProduto = "CREATE TABLE " + TABLE_NAME + "( " +
-                ID_PRODUTO + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ID_PRODUTO + " INTEGER PRIMARY KEY, " +
                 NOME_PRODUTO + " TEXT NOT NULL, " +
                 INGREDIENTES_PRODUTO + " TEXT NOT NULL, " +
                 PRECO_PRODUTO + " TEXT NOT NULL, " +
