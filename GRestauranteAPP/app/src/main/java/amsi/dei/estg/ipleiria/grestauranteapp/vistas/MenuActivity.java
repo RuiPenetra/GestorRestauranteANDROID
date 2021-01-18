@@ -1,16 +1,21 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -23,6 +28,8 @@ import com.google.android.material.navigation.NavigationView;
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PerfilListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Perfil;
+import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
+import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -125,5 +132,67 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater=getMenuInflater();
+        menuInflater.inflate(R.menu.menu_logout,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.itemLogout:
+                dialogLogout();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void dialogLogout() {
+        AlertDialog.Builder builder;
+        builder= new AlertDialog.Builder(this);
+        builder.setTitle("Sair")
+                .setMessage("Pretende mesmo terminar a sessão?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        limparShared();
+
+                        Intent intent= new Intent(MenuActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setIcon(android.R.drawable.ic_delete)
+                .show();
+    }
+
+    private void limparShared() {
+
+        SharedPreferences sharedPrefUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefUser.edit();
+        editor.remove(RELEMBRAR);
+        editor.remove(ID);
+        editor.remove(USERNAME);
+        editor.remove(PASSWORD);
+        editor.remove(TOKEN);
+        editor.remove(CARGO);
+        editor.remove(NOMECOMPLETO);
+        editor.remove(GENERO);
+        editor.apply();
+    }
+
 
 }

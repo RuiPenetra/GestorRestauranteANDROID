@@ -76,6 +76,10 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
         SingletonGestorRestaurante.getInstance(getContext()).setPerfilListener(this);
         SingletonGestorRestaurante.getInstance(getContext()).getPerfilAPI(ip,token,getContext());
 
+
+        //Atualziar password futuramente
+
+        edt_nova_password.setEnabled(false);
         btn_dataNascimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,8 +125,8 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
                                 auxPerfil.setGenero(0);
 
                             }
-                        auxPerfil.setUsername(edt_username.getText().toString());
-                        auxPerfil.setEmail(edt_email.getText().toString());
+                            auxPerfil.setUsername(edt_username.getText().toString());
+                            auxPerfil.setEmail(edt_email.getText().toString());
                             if(edt_nova_password.getText().toString()!=""){
                                 auxPerfil.setNova_password(edt_nova_password.getText().toString());
                             }
@@ -178,13 +182,9 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
             imgPerfil.setImageResource(R.drawable.female);
         }
 
-                /*String password=edt_nova_password.getText().toString();
+        //Guardar o perfil para ser acessado dentro do onClickListener do butão atualizar
+        auxPerfil=perfil;
 
-        if(perfil.getNovaPassword()!=password){
-            edt_nova_password.setText(perfil.getNovaPassword());
-        }else{
-            edt_nova_password.setText(password);
-        }*/
 
         //Guardar na Shared dados atualizados
         SharedPreferences.Editor editor = sharedPrefInfoUser.edit();
@@ -205,7 +205,6 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
     @Override
     public void onUpdatePerfil() {
         Toast.makeText(getContext(), "Perfil atualizado com sucesso", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override

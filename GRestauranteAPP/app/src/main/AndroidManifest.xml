@@ -44,7 +44,6 @@
         <activity
             android:name=".vistas.RegistarActivity"
             android:parentActivityName=".vistas.LoginActivity" />
-        <activity android:name=".vistas.MenuClienteActivity" />
         <activity
             android:name=".vistas.MenuActivity"
             android:launchMode="singleTop"

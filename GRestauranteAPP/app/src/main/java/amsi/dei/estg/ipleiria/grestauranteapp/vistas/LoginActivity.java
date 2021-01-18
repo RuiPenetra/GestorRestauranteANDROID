@@ -120,6 +120,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
             }else{
                 SingletonGestorRestaurante.getInstance(getApplicationContext()).loginAPI(ip,username,password,getApplicationContext());
             }
+
         }else{
             Toast.makeText(getApplicationContext(), R.string.noInternet, Toast.LENGTH_SHORT).show();
 
@@ -139,6 +140,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
         return password.length()>=4;
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(resultCode== Activity.RESULT_OK && requestCode==CRIAR)
@@ -165,7 +167,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
         } else {
 
-            Toast.makeText(this, "Erro ao ir buscar token", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Utilizador não existe", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -185,6 +187,9 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
             editor.putString(MenuActivity.PASSWORD,edtPassword.getText().toString());
         }else{
             editor.putBoolean(MenuActivity.RELEMBRAR,false);
+            editor.remove(MenuActivity.USERNAME);
+            editor.remove(MenuActivity.PASSWORD);
+            editor.remove(MenuActivity.TOKEN);
         }
 
         editor.apply();

@@ -33,36 +33,38 @@ private String number;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        call = findViewById(R.id.call);
+        call = findViewById(R.id.imgbCall);
+        mail=findViewById(R.id.imgbMail);
+
+
         number = "915899612";
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isPermissionGranted()) {
-                    call_action();
+                    String dial = "tel:" + number;
+                    startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
                 }
 
             }
         });
 
+        mail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] TO_EMAILS= {"2180687@my.ipleiria.pt"};
 
-            mail=findViewById(R.id.mail);
-            mail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String[] TO_EMAILS= {"2180687@my.ipleiria.pt"};
+                Intent intent= new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL,TO_EMAILS);
 
-                    Intent intent= new Intent(Intent.ACTION_SENDTO);
-                    intent.setData(Uri.parse("mailto:"));
-                    intent.putExtra(Intent.EXTRA_EMAIL,TO_EMAILS);
+                intent.putExtra(Intent.EXTRA_SUBJECT,"EMAIL [Cliente]");
 
-                    intent.putExtra(Intent.EXTRA_SUBJECT,"EMAIL [Cliente]");
-
-                    startActivity(Intent.createChooser(intent,"Choose one application"));
+                startActivity(Intent.createChooser(intent,"Choose one application"));
 
 
-                    }
-                });
+                }
+            });
     }
 
     private void call_action() {
@@ -106,8 +108,6 @@ private String number;
                 return;
             }
 
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
 
     }

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">GRestauranteAPP</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menuPerfil">Perfil</string>
     <string name="menuProdutos">Produtos</string>
@@ -12,4 +11,5 @@
     <string name="menuBemvindo">Bem-Vindo</string>
     <string name="noInternet">Não existe ligação à internet</string>
     <string name="contactos">Contactos</string>
+    <string name="tv_Horario">08:00 - 23:00</string>
 </resources>

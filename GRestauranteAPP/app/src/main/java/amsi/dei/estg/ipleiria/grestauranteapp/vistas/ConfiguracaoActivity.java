@@ -25,15 +25,14 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracao);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
-
+        setTitle("Configurações");
         btn_guardar=findViewById(R.id.bnGuardarIp);
         edt_endereçoIP=findViewById(R.id.edtEnderecoIP);
 
         SharedPreferences sharedPrefUser = getSharedPreferences(PREF_INFO_USER, Context.MODE_PRIVATE);
         enderecoIP=sharedPrefUser.getString(IP,null);
 
-edt_endereçoIP.setText(enderecoIP);
+        edt_endereçoIP.setText(enderecoIP);
 
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override

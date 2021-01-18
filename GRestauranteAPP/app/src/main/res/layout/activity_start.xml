@@ -8,15 +8,6 @@
     android:background="@color/fundo">
 
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="50dp"
-        android:layout_margin="20dp"
-        android:onClick="onClickSettings"
-        android:src="@drawable/ic_config"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <ImageView
         android:id="@+id/imageView"
         android:layout_width="360dp"
         android:layout_height="380dp"
@@ -79,7 +70,6 @@
                 android:layout_height="84dp"
                 android:background="#000000"
                 android:fontFamily="@font/brandon_grotesque_extra_bold"
-                android:onClick="onClickLogin"
                 android:text="Login"
                 android:textColor="@color/fundo"
                 android:textSize="20sp" />
@@ -88,16 +78,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="10dp" />
 
-            <Button
-                android:id="@+id/btn_contactos"
-                android:layout_width="197dp"
-                android:layout_height="84dp"
-                android:background="#000000"
-                android:fontFamily="@font/brandon_grotesque_extra_bold"
-                android:onClick="onClickContactos"
-                android:text="Contactos"
-                android:textColor="@color/fundo"
-                android:textSize="20sp"  />
         </LinearLayout>
 
         <LinearLayout
@@ -113,13 +93,51 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/imgvProdutos"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabConttactos"
+        android:layout_width="70dp"
+        android:layout_height="100dp"
         android:layout_margin="20dp"
+        android:backgroundTint="#222222"
+        android:outlineAmbientShadowColor="#222222"
+        android:src="@drawable/ic_telefone"
+        app:backgroundTint="#222222"
+        app:fabCustomSize="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:maxImageSize="40dp" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabListaProdutos"
+        android:layout_width="70dp"
+        android:layout_height="100dp"
+        android:layout_margin="20dp"
+        android:backgroundTint="#222222"
+        android:outlineAmbientShadowColor="#222222"
+        android:src="@drawable/ic_produto"
+        app:backgroundTint="#222222"
+        app:fabCustomSize="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:fontFamily="@font/brandon_grotesque_extra_bold"
-        android:src="@drawable/ic_produto" />
+
+        app:maxImageSize="40dp" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabConfiguracoes"
+        android:layout_width="70dp"
+        android:layout_height="100dp"
+        android:layout_margin="20dp"
+        android:backgroundTint="#222222"
+        android:outlineAmbientShadowColor="#222222"
+        android:src="@drawable/ic_config"
+        app:backgroundTint="#222222"
+        app:fabCustomSize="70dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:maxImageSize="40dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

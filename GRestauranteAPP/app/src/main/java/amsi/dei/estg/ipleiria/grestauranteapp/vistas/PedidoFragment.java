@@ -23,8 +23,6 @@ import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaPedidoAdaptador;
-import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaPedidosProdutoAdaptador;
-import amsi.dei.estg.ipleiria.grestauranteapp.adaptadores.ListaProdutoAdaptador;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Pedido;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;

@@ -19,7 +19,7 @@
             android:title="@string/menuProdutos" />
         <item
             android:id="@+id/nav_pedidos"
-            android:icon="@drawable/ic_pedidos"
+            android:icon="@drawable/ic_tipo"
             android:title="@string/menuPedidos" />
     </group>
     <item android:title="Contactar" >
