@@ -9,7 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Generic {
-
+    //VE SE TEM LIGAÇÃO A INTERNET
     public static boolean isConnectionInternet(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();

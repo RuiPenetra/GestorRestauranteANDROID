@@ -27,6 +27,7 @@ public class BemVindoFragment extends Fragment {
 
     @Nullable
     @Override
+    //FRAGMENTO INICIAL DEPOIS DO LOGIN SER FEITO MOSTRA O NOME DE UTILIZADOR
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_bemvindo,container,false);
 

@@ -71,7 +71,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         carregarFragmentoInicial();
         carregarCabecalho();
     }
-
+    //CARREGA CABEÇALHO DO MENU
     private void carregarCabecalho() {
 
         SharedPreferences sharedPrefInfoUser=getSharedPreferences(PREF_INFO_USER, Context.MODE_PRIVATE);
@@ -103,6 +103,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager.beginTransaction().replace(R.id.contentFragment,fragment).commit();
     }
     @Override
+    //HAMBURGER MENU
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment= null;
         switch (item .getItemId()) {
@@ -135,6 +136,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    //BOTAO DE LOGOUT
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater menuInflater=getMenuInflater();
@@ -153,7 +155,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-
+    //CONFIRMAÇÃO DE LOGOUT
     private void dialogLogout() {
         AlertDialog.Builder builder;
         builder= new AlertDialog.Builder(this);
@@ -179,7 +181,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 .setIcon(android.R.drawable.ic_delete)
                 .show();
     }
-
+    //LIMPA A SHARED PREFERENCE
     private void limparShared() {
 
         SharedPreferences sharedPrefUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);

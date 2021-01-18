@@ -21,6 +21,7 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     private EditText edt_endereçoIP;
     private String enderecoIP;
     @Override
+    // GUARDA O IP DA API CASO SEJA IP VALIDO
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracao);

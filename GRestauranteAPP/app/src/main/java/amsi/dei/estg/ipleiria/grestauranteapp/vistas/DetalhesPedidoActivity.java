@@ -116,7 +116,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
 
         carregarDadosPedido(pedido);
     }
-
+    //CARREGA OS DADOS DE 1 PEDIDO FEITO COM AS INFORMAÇÔES DE MESA , ESTADO , N PEDIDO, ID MESA etc...
     private void carregarDadosPedido(Pedido pedido) {
 
         tvNPedido.setText(String.valueOf(pedido.getId()));
@@ -195,7 +195,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
         }
         return super.onOptionsItemSelected(item);
     }
-
+    // ÇONFIRMA SE QUER REALMENTE APAGAR
     private void dialogRemover() {
         AlertDialog.Builder builder;
         builder= new AlertDialog.Builder(this);

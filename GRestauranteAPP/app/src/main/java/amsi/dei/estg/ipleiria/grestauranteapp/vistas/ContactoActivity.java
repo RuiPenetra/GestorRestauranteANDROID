@@ -26,6 +26,7 @@ private ImageButton call,mail;
 private String number;
 
     @Override
+    //ATIVIDADE DE CONTACTOS DA PARA MANDAR MAIL E TELEFONAR DA PERMISSAO EM RUNTIME
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacto);

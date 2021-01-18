@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
         SingletonGestorRestaurante.getInstance(getApplicationContext()).setLoginListener(this);
     }
-
+    //CARREGA A INFORMAÇÃO DA SHARED
     private void lerShared() {
         SharedPreferences sharedPrefInfoUser = getSharedPreferences(PREF_INFO_USER, Context.MODE_PRIVATE);
 
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
         }
 
     }
-
+    //TESTA LIGAÇÃO A INTERNET E TESTA A VALIDAÇÃO DO LOGIN
     public void onClickLogin(View view) {
         if (Generic.isConnectionInternet(getApplicationContext())) {
 
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
         }
     }
-
+    //VALIDA LOGIN
     private boolean Validarlogin() {
         String username=edtUsername.getText().toString();
         String password=edtPassword.getText().toString();
@@ -108,14 +108,14 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
         return true;
     }
-
+    //VALIDA USERNAME
     private boolean isUsernameValido(String username){
         if(username==null)
             return false;
 
         return username.length()>=3;
     }
-
+    //VALIDA PASSWORD
     private boolean isPasswordValida(String password){
         if(password==null)
             return false;
@@ -132,13 +132,14 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
-
+    //MUDA PARA A ATIVIDADE REGISTAR
     public void onClickRegistar(View view) {
             Intent intent = new Intent(this, RegistarActivity.class);
             startActivityForResult(intent,CRIAR);
     }
 
     @Override
+    //VE SE O UTILIZADOR EXISTE
     public void onValidateLogin(Perfil perfil) {
         if (perfil != null) {
             guardarInfoShared(perfil);
@@ -151,7 +152,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
             Toast.makeText(this, "Utilizador não existe", Toast.LENGTH_SHORT).show();
         }
     }
-
+    //GUARDA INFORMAÇÃO NA SHARED
     private void guardarInfoShared(Perfil perfil){
 
         SharedPreferences sharedPrefUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);

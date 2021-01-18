@@ -57,6 +57,7 @@ public class ListaProdutosActivity extends AppCompatActivity implements SwipeRef
 
 
     @Override
+    //LISTA PRODUTOS DA PARA LISTAR POR CATEGORIA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_produtos);

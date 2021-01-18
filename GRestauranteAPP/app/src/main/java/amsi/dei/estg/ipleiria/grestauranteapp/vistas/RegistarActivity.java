@@ -136,7 +136,7 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
             }
         });
     }
-
+    //VALIDAÇÃO DO REGISTAR
     private boolean validarRegisto(){
 
         String nome=edt_nome.getText().toString();
@@ -216,11 +216,11 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
         }
         return true;
     }
-
+    //VALIDAÇÂO DO EMAIL
     private boolean isEmailValido(String email){
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
-
+    //VALIDAÇÃO DA PASSWORD
     private boolean isPasswordValida(String password){
         if(password==null)
             return false;
