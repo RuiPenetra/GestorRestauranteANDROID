@@ -73,7 +73,6 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
     }
 
-
     public void onClickLogin(View view) {
         if (Generic.isConnectionInternet(getApplicationContext())) {
 
