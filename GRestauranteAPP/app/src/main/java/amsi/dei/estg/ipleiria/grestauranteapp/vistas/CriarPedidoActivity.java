@@ -66,7 +66,7 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
             tvTipo.setText("Takeaway");
             edtTipo.setInputType(InputType.TYPE_CLASS_TEXT);
             edtTipo.setHint("Nome do pedido");
-            imgvTipo.setImageResource(R.drawable.male);
+            imgvTipo.setImageResource(R.drawable.takeaway);
         }else{
             tvTipo.setText("Restaurante");
             edtTipo.setInputType(InputType.TYPE_CLASS_NUMBER);

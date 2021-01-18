@@ -310,15 +310,16 @@ public class SingletonGestorRestaurante {
             JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET,BaseUrl + ip + mUrlAPIPedidos +"?access-token=" + token, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    pedidos = PedidoJsonParser.parserJsonPedidos(response);
 
+                    pedidos = PedidoJsonParser.parserJsonPedidos(response);
                     if(pedidosListener!=null)
                         pedidosListener.onRefreshListaPedidos(pedidos);
+
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, "Tente mais tarde", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
 

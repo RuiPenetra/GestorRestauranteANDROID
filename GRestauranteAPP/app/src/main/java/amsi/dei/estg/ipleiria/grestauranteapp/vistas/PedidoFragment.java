@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,8 +36,9 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private static final int ID_UTILIZADOR =1 ;
     private ListView lvlPedidos;
     private CardView cvNovoPedido;
+    private ImageView imgvTipo;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private String ip,token;
+    private String ip,token,cargo;
 
 
     public PedidoFragment() {
@@ -53,11 +55,19 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
         lvlPedidos=view.findViewById(R.id.lvListaPedidos);
         cvNovoPedido=view.findViewById(R.id.cvNovoPedido);
         swipeRefreshLayout=view.findViewById(R.id.swipeRefreshLayoutPedidos);
+        imgvTipo=view.findViewById(R.id.imgv_Tipo);
         swipeRefreshLayout.setOnRefreshListener(this);
 
         SharedPreferences sharedPrefInfoUser = getActivity().getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
         token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
+        cargo= sharedPrefInfoUser.getString(MenuActivity.CARGO,null);
+
+        if(!cargo.equals("cliente")){
+            imgvTipo.setImageResource(R.drawable.restaurante);
+        }else{
+            imgvTipo.setImageResource(R.drawable.takeaway);
+        }
 
         SingletonGestorRestaurante.getInstance(getContext()).setPedidosListener(this);
         SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
@@ -124,7 +134,7 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
     public void onRefresh() {
         SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
         swipeRefreshLayout.setRefreshing(false);
-        lvlPedidos.deferNotifyDataSetChanged();
+
 
     }
 

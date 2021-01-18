@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Pedido;
-import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Produto;
 
 public class ListaPedidoAdaptador extends BaseAdapter {
 
@@ -62,19 +61,30 @@ public class ListaPedidoAdaptador extends BaseAdapter {
 
 
     private class ViewHolderLista{
-        private TextView tvMesa, tvData, tvEstado;
-//        private ImageView imgCapa;
+        private TextView tvTipo, tvData, tvEstado;
+        private ImageView imgvTipoPedido,imgvTipo;
 
         public  ViewHolderLista(View view){
-            tvMesa=view.findViewById(R.id.tvMesa);
+            tvTipo=view.findViewById(R.id.tvTipoPedido);
             tvData=view.findViewById(R.id.tvData);
             tvEstado=view.findViewById(R.id.tvEstado);
-//            imgCapa=view.findViewById(R.id.imgCapa);
+            imgvTipoPedido=view.findViewById(R.id.imgCapa);
+            imgvTipo=view.findViewById(R.id.imgvTipoPedido);
         }
 
         public void update(Pedido pedido){
-            tvMesa.setText("Nº "+pedido.getId_mesa());
             tvData.setText(pedido.getData());
+
+            if(pedido.getTipo()!=0){
+                imgvTipo.setImageResource(R.drawable.ic_perfil);
+                imgvTipoPedido.setImageResource(R.drawable.takeaway);
+                tvTipo.setText(pedido.getNome_pedido());
+            }else{
+                imgvTipo.setImageResource(R.drawable.img_table);
+                imgvTipoPedido.setImageResource(R.drawable.restaurante);
+                tvTipo.setText("Nº "+pedido.getId_mesa());
+            }
+
             switch (pedido.getEstado()){
                 case 0:
                     tvEstado.setText(" Em processo ");

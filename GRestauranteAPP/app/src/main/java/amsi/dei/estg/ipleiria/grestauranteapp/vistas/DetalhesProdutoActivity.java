@@ -69,9 +69,6 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
         carregarDetalhesProduto();
 
         if(id_pedido<=0){
-
-            cvSubtrair.setVisibility(View.INVISIBLE);
-            cvSomar.setVisibility(View.INVISIBLE);
             btnCriarPedidoProduto.setVisibility(View.INVISIBLE);
         }
         cvSomar.setOnClickListener(new View.OnClickListener() {
@@ -191,13 +188,11 @@ public class DetalhesProdutoActivity extends AppCompatActivity implements Pedido
     public void onCriar() {
         setResult(RESULT_OK);
         finish();
-
     }
 
     @Override
     public void onDetalhes() {
         //empty
-
     }
 
 }

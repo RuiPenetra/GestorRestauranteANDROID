@@ -4,11 +4,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="130dp"
     android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:layout_marginBottom="10dp">
 
     <ImageView
         android:id="@+id/imgCapa"
@@ -16,7 +14,7 @@
         android:layout_height="60dp"
         android:src="@drawable/pedido_restaurante"
         android:elevation="50dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout2"/>
@@ -24,18 +22,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
-        android:layout_height="115dp"
-        android:background="#FFFFFF"
+        android:layout_height="120dp"
+        android:background="@drawable/bg_item"
         android:elevation="3dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imgMesa"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:id="@+id/imgvTipoPedido"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/mesa"
             app:layout_constraintHorizontal_bias=".1"
             app:layout_constraintVertical_bias=".17"
@@ -46,7 +46,7 @@
             />
 
         <TextView
-            android:id="@+id/tvMesa"
+            android:id="@+id/tvTipoPedido"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text="Nºmesa"
@@ -57,25 +57,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             android:layout_marginStart="5dp"
-            app:layout_constraintStart_toEndOf="@id/imgMesa"
+            app:layout_constraintStart_toEndOf="@id/imgvTipoPedido"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias=".17" />
 
         <ImageView
             android:id="@+id/imgData"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/data"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias=".1"
             android:layout_marginTop="5dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imgMesa" />
+            app:layout_constraintTop_toBottomOf="@id/imgvTipoPedido" />
 
         <TextView
             android:id="@+id/tvData"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dp"
             android:gravity="center"
@@ -86,7 +86,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/imgData"
-            app:layout_constraintTop_toBottomOf="@id/tvMesa"
+            app:layout_constraintTop_toBottomOf="@id/tvTipoPedido"
             app:layout_constraintVertical_bias="0.083" />
 
         <TextView

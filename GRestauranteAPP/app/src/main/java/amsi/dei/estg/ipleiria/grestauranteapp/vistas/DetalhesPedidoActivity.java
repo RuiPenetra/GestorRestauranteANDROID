@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,15 +71,15 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
 
         setTitle("Detalhes Pedido: "+id_pedido);
 
-        swipeRefreshLayoutPedidosProduto.setOnRefreshListener(this);
-        SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidoProdutosListener(this);
-
         SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
         token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
 
-        produtos=SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosBD();
 
+        swipeRefreshLayoutPedidosProduto.setOnRefreshListener(this);
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidoProdutosListener(this);
+
+        produtos=SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosBD();
         pedido=SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedido(id_pedido);
 
         SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(ip,token,getApplicationContext(),id_pedido);

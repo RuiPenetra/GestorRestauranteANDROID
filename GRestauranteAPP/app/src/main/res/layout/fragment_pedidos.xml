@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#E5E5E5"
     tools:context=".vistas.PedidoFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#FFE7E1">
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -39,6 +39,7 @@
                         android:gravity="center">
 
                         <ImageView
+                            android:id="@+id/imgv_Tipo"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:src="@drawable/pedido_restaurante"/>
@@ -63,7 +64,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@drawable/bg_tabs"
             android:elevation="20dp">
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -74,7 +74,9 @@
                 <ListView
                     android:id="@+id/lvListaPedidos"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"/>
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

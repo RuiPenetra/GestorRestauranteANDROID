@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 
-public class SettingsActivity extends AppCompatActivity {
+public class ConfiguracaoActivity extends AppCompatActivity {
 
     public static final String IP="IP";
     public static final String PREF_INFO_USER="PREF_INFO_USER";
@@ -23,7 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_configuracao);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
 
@@ -48,7 +48,7 @@ edt_endereçoIP.setText(enderecoIP);
                     SharedPreferences.Editor editor = sharedPrefUser.edit();
                     editor.putString(IP,enderecoIP);
                     editor.apply();
-                    Toast.makeText(SettingsActivity.this, "", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConfiguracaoActivity.this, "", Toast.LENGTH_SHORT).show();
                 }
             }
         });

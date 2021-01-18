@@ -44,7 +44,6 @@ public class RegistarActivity extends AppCompatActivity implements RegistoListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registar);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.fundo)));
         setTitle("Registar");
 
         getSupportActionBar().setElevation(0);
