@@ -74,57 +74,40 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
     }
 
- /*   public void login() {
-        String username= etUsername.getText().toString();
-        String password=etPassword.getText().toString();
-
-        if (RememberMe.isChecked()){
-            editor.putBoolean("savelogin",true);
-            editor.putString("username",username);
-            editor.putString("password",password);
-            editor.putString("token",TOKEN);
-            editor.commit();
-
-        }else {
-            editor.putBoolean("savelogin",false);
-            editor.remove("username");
-            editor.remove("password");
-            editor.remove("token");
-            editor.commit();
-
-        }
-
-        if (ProdutoJsonParser.isConnectionInternet(getApplicationContext())) {
-            SingletonGestorRestaurante.getInstance(getApplicationContext()).loginAPI(username, password, getApplicationContext());
-        } else
-            Toast.makeText(getApplicationContext(), "Não existe ligação a internet", Toast.LENGTH_SHORT).show();
-    }*/
-
     public void onClickLogin(View view) {
         if (Generic.isConnectionInternet(getApplicationContext())) {
 
-            String username=edtUsername.getText().toString();
-            String password=edtPassword.getText().toString();
-
-            if(!isUsernameValido(username)){
-                edtUsername.setError("Username inválido");
-            }
-
-            if(!isPasswordValida(password)){
-                edtUsername.setError("Password inválida");
-            }
-
-            if(ip==null){
-
-                Toast.makeText(this, "Tem de defenir o endereço de ip", Toast.LENGTH_SHORT).show();
-            }else{
-                SingletonGestorRestaurante.getInstance(getApplicationContext()).loginAPI(ip,username,password,getApplicationContext());
+            if(Validarlogin()==true) {
+                String username = edtUsername.getText().toString();
+                String password = edtPassword.getText().toString();
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).loginAPI(ip, username, password, getApplicationContext());
             }
 
         }else{
             Toast.makeText(getApplicationContext(), R.string.noInternet, Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    private boolean Validarlogin() {
+        String username=edtUsername.getText().toString();
+        String password=edtPassword.getText().toString();
+
+
+        if (!isUsernameValido(username)){
+            edtUsername.setError("Username não pode ser vazio");
+            return false;
+        }
+        if (!isPasswordValida(password)){
+            edtPassword.setError("Password não pode estar vazia");
+            return false;
+        }
+        if(ip==null){
+            Toast.makeText(this, "Tem de defenir o endereço de ip", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
     private boolean isUsernameValido(String username){
@@ -158,7 +141,6 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
     @Override
     public void onValidateLogin(Perfil perfil) {
-
         if (perfil != null) {
             guardarInfoShared(perfil);
             Intent intent= new Intent(this, MenuActivity.class);
@@ -187,9 +169,6 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
             editor.putString(MenuActivity.PASSWORD,edtPassword.getText().toString());
         }else{
             editor.putBoolean(MenuActivity.RELEMBRAR,false);
-            editor.remove(MenuActivity.USERNAME);
-            editor.remove(MenuActivity.PASSWORD);
-            editor.remove(MenuActivity.TOKEN);
         }
 
         editor.apply();
