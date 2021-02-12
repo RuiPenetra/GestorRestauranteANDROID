@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E5E5E5"
-    tools:context=".vistas.DetalhesProdutoLogadoActivity">
+    tools:context=".vistas.DetalhesItemCarrinhoActivity">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constrainLayoutDetImgCategoria"
+        android:id="@+id/constrain_itemCar_Categoria"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="170dp"
         app:layout_constraintWidth_percent=".6"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,39 +20,39 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/bg_banner"
         android:padding="20dp"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="30dp">
 
         <ImageView
-            android:id="@+id/imgvDetCategoriaProduto"
+            android:id="@+id/img_itemCar_ProdutoCategoria"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/bebidas"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constrainLayoutDetalhes1"
+        android:id="@+id/const_itemCar_detalhes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constrainLayoutDetImgCategoria"
+        app:layout_constraintTop_toBottomOf="@+id/constrain_itemCar_Categoria"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent=".9">
 
         <TextView
-            android:id="@+id/tvDetCategoria"
+            android:id="@+id/tv_itemCar_categoria"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/tvCategoriaDetProdFrag"
+            android:text="@string/tvCategoriaDetProduto"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold"
@@ -63,11 +64,11 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/tvDetNomeProduto"
+            android:id="@+id/tv_itemCar_nomeProduto"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/tvDetNomeProduto"
+            android:text="@string/nome_produto"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -75,22 +76,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias=".6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDetCategoria"
+            app:layout_constraintTop_toBottomOf="@id/tv_itemCar_categoria"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/tvDelIngredientes"
+            android:id="@+id/tv_itemCar_ingredientes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:lineSpacingExtra="2dp"
-            android:text="@string/tvDeltIngredientes"
+            android:text="@string/tvIngredientesDetProduto"
             android:textColor="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDetNomeProduto"
+            app:layout_constraintTop_toBottomOf="@id/tv_itemCar_nomeProduto"
             app:layout_constraintVertical_bias="0.144" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -99,14 +100,14 @@
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/btn_adicionar_itemCar"
+        app:layout_constraintBottom_toTopOf="@+id/btn_itemCar_atualizar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constrainLayoutDetalhes1"
+        app:layout_constraintTop_toBottomOf="@+id/const_itemCar_detalhes"
         app:layout_constraintVertical_bias="0.8"
         app:layout_constraintWidth_percent=".5">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cvDetSubtrair"
+            android:id="@+id/cv_itemCar_Subtrair"
             android:layout_width="50dp"
             android:layout_height="50dp"
             app:cardCornerRadius="13dp"
@@ -126,7 +127,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/tvDetQuantidadePedida"
+            android:id="@+id/tv_itemCar_QuantidadePedida"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -135,18 +136,18 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@id/cvDetSubtrair"
+            app:layout_constraintStart_toEndOf="@id/cv_itemCar_Subtrair"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cvDetSomar"
+            android:id="@+id/cv_itemCar_Somar"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="13dp"
             android:padding="10dp"
             app:cardCornerRadius="13dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tvDetQuantidadePedida"
+            app:layout_constraintStart_toEndOf="@id/tv_itemCar_QuantidadePedida"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
@@ -160,14 +161,14 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/tvDetPreco"
+        android:id="@+id/tv_itemCar_Preco"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/tvDetPreco"
         android:textAlignment="textEnd"
         android:textColor="@color/gray"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_adicionar_itemCar"
+        app:layout_constraintBottom_toTopOf="@+id/btnCard"
         app:layout_constraintEnd_toStartOf="@+id/imgvEuro"
         app:layout_constraintStart_toEndOf="@+id/constraintLayout"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout"
@@ -175,32 +176,42 @@
         app:layout_constraintWidth_percent="0.3" />
 
     <ImageView
-        android:id="@+id/imgvEuro"
+        android:id="@+id/imgv_itemCar_Euro"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:src="@drawable/ic_euro"
-        app:layout_constraintBottom_toBottomOf="@+id/tvDetPreco"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_itemCar_Preco"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvDetPreco"
+        app:layout_constraintTop_toTopOf="@+id/tv_itemCar_Preco"
         app:layout_constraintVertical_bias="0.625" />
 
     <Button
-        android:id="@+id/btn_adicionar_itemCar"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:text="Adicionar ao Carrinho"
-        android:textSize="17sp"
-        android:layout_margin="10dp"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:id="@+id/btn_itemCar_atualizar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/black"
+        android:text="@string/btn_itemCar_atualizar"
         android:textStyle="bold"
-        android:drawableStart="@drawable/ic_carrinho"
-        android:background="@color/black"
-        android:paddingStart="40dp"
-        android:paddingEnd="40dp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintWidth_percent=".4"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="20dp"/>
+
+    <Button
+        android:id="@+id/btn_itemCar_remover"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="@string/btrn_itemCar_remover"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        app:layout_constraintWidth_percent=".4"
+        app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_margin="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

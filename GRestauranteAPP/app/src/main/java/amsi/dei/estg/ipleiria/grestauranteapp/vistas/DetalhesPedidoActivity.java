@@ -5,8 +5,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,6 +23,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,11 +53,12 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
     private SwipeRefreshLayout swipeRefreshLayoutPedidosProduto;
     private ListView lvlPedidosProduto;
     private TextView tvNPedido,tvDataHora,tvTipo,tvEstado;
-    private ImageView imgvTipo;
-    private int id_pedido;
+    private ImageView imgvTipo,imgvPedido;
+    private int id_pedido,estado;
     private ArrayList<Produto> produtos;
     private Pedido pedido;
     private String ip,token,cargo;
+    private ProgressBar pb_Estado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +70,9 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
         tvEstado=findViewById(R.id.tv_estado);
         tvNPedido=findViewById(R.id.tv_NPedido);
         imgvTipo=findViewById(R.id.imgVtipo);
+        imgvPedido=findViewById(R.id.imgPedidoTipo);
         swipeRefreshLayoutPedidosProduto=findViewById(R.id.swipeRefreshLayoutPedidoProdutos);
+        pb_Estado=findViewById(R.id.pb_itemDetPedido);
         lvlPedidosProduto=findViewById(R.id.lvl_pedidoProdutos);
 
 
@@ -88,7 +94,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
 
         SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(ip,token,getApplicationContext(),id_pedido);
 
-        FloatingActionButton fab_criarPedidoProduto = findViewById(R.id.fab_criarPedidoProduto);
+        fab_criarPedidoProduto = findViewById(R.id.fab_criarPedidoProduto);
 
         fab_criarPedidoProduto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,24 +132,49 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
         if(!cargo.equals("cliente")){
             tvTipo.setText(String.valueOf(pedido.getId_mesa()));
             imgvTipo.setImageResource(R.drawable.mesa);
+            pb_Estado.setIndeterminate(false);
+
+            switch (pedido.getEstado()){
+                case 1:
+                    pb_Estado.setProgressDrawable(getDrawable(R.drawable.pb_processo));
+                    pb_Estado.setProgress(30);
+                    tvEstado.setText("Em processo");
+                    break;
+                case 2:
+                    pb_Estado.setProgressDrawable(getDrawable(R.drawable.pb_preparacao));
+                    tvEstado.setText("Em preparação");
+                    pb_Estado.setProgress(70);
+                    break;
+                case 3:
+                    pb_Estado.setProgressDrawable(getDrawable(R.drawable.pb_concluido));
+                    tvEstado.setText("Concluido");
+                    pb_Estado.setProgress(100);
+                    fab_criarPedidoProduto.hide();
+                    break;
+            }
         }else{
             tvTipo.setText(String.valueOf(pedido.getNome_pedido()));
             imgvTipo.setImageResource(R.drawable.ic_perfil);
-        }
+            imgvPedido.setVisibility(View.INVISIBLE);
+            fab_criarPedidoProduto.hide();
 
-        switch (pedido.getEstado()){
-            case 0:
-                tvEstado.setText(" Em Processo ");
-                tvEstado.setBackgroundResource(R.drawable.badge_processo);
-                break;
-            case 1:
-                tvEstado.setText(" Em Progresso ");
-                tvEstado.setBackgroundResource(R.drawable.badge_progresso);
-                break;
-            case 2:
-                tvEstado.setText(" Concluido ");
-                tvEstado.setBackgroundResource(R.drawable.badge_concluido);
-                break;
+            switch (pedido.getEstado()) {
+                case 1:
+                    tvEstado.setText(" Pedido esta a ser processado..");
+                    pb_Estado.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.processo), android.graphics.PorterDuff.Mode.SRC_IN);
+                    break;
+                case 2:
+                    tvEstado.setText(" Pedido em preparação..");
+                    pb_Estado.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.preparacao), android.graphics.PorterDuff.Mode.SRC_IN);
+                    break;
+                case 3:
+                    tvEstado.setText(" Pedido concluido ");
+                    pb_Estado.setIndeterminate(false);
+                    pb_Estado.setProgress(100);
+                    pb_Estado.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.concluido), android.graphics.PorterDuff.Mode.SRC_IN);
+
+                    break;
+            }
         }
 
     }
@@ -174,7 +205,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        if(pedido!=null){
+        if(pedido!=null && pedido.getEstado()<2){
             MenuInflater menuInflater=getMenuInflater();
             menuInflater.inflate(R.menu.menu_detalhes_pedido,menu);
             return super.onCreateOptionsMenu(menu);

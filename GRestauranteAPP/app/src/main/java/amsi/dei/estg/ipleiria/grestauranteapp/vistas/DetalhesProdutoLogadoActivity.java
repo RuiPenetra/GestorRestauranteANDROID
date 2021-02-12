@@ -3,25 +3,36 @@ package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.CarrinhoListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Carrinho;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.PedidoProduto;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Produto;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 
-public class DetalhesProdutoLogadoActivity extends AppCompatActivity {
+public class DetalhesProdutoLogadoActivity extends AppCompatActivity implements CarrinhoListener {
 
     public static final String ID_PRODUTO = "ID_PRODUTO";
     private TextView tvCategoria,tvNome,tvIngredientes,tvPreco,tvQuantida;
     private CardView cvSomar,cvSubtrair;
     private ImageView imgvCategoriaProduto;
-    private int id_produto;
+    private int id_produto,id_user;
     private Produto produto;
+    private Button btn_adicionar_itemCar;
+    private Carrinho itemCarrinho;
+    private String cargo;
 
 
     @Override
@@ -47,6 +58,18 @@ public class DetalhesProdutoLogadoActivity extends AppCompatActivity {
         cvSomar=findViewById(R.id.cvDetSomar);
         cvSubtrair=findViewById(R.id.cvDetSubtrair);
         imgvCategoriaProduto=findViewById(R.id.imgvDetCategoriaProduto);
+        btn_adicionar_itemCar=findViewById(R.id.btn_adicionar_itemCar);
+
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).setCarrinhoListener(this);
+
+        SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        cargo= sharedPrefInfoUser.getString(MenuClienteActivity.CARGO,null);
+        id_user= sharedPrefInfoUser.getInt(MenuClienteActivity.ID,-1);
+        Log.i("##>",""+id_user);
+
+        if(!cargo.equals("cliente")){
+            btn_adicionar_itemCar.setVisibility(View.GONE);
+        }
 
         carregarDetalhesProduto();
 
@@ -90,6 +113,15 @@ public class DetalhesProdutoLogadoActivity extends AppCompatActivity {
                     tvPreco.setText(produto.getPreco());
 
                 }
+            }
+        });
+
+        btn_adicionar_itemCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemCarrinho = new Carrinho(0,id_user, produto.getId(),produto.getCategoria(),produto.getNome(),Integer.parseInt(tvQuantida.getText()+""),tvPreco.getText()+"");
+                SingletonGestorRestaurante.getInstance(getApplicationContext()).adicionarItemCarrinhoBD(itemCarrinho);
+
             }
         });
     }
@@ -140,6 +172,23 @@ public class DetalhesProdutoLogadoActivity extends AppCompatActivity {
                 imgvCategoriaProduto.setImageResource(R.drawable.food);
                 break;
         }
+    }
+
+    @Override
+    public void onRefreshListaItemsCarrinho(ArrayList<Carrinho> itemsCarrinho) {
+        //EMPTY
+    }
+
+    @Override
+    public void onAddItems() {
+        //EMPTY
+    }
+
+    @Override
+    public void onDetalhes(boolean estado) {
+        setResult(RESULT_OK);
+        finish();
+
     }
 
 }

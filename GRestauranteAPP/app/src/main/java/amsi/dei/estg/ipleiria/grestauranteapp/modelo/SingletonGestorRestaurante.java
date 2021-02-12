@@ -2,9 +2,13 @@ package amsi.dei.estg.ipleiria.grestauranteapp.modelo;
 
 
 import android.content.Context;
+import android.util.Base64;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -14,17 +18,20 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import amsi.dei.estg.ipleiria.grestauranteapp.listeners.LoginListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.CarrinhoListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.AutenticacaoListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosProdutoListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PerfilListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.ProdutosListener;
-import amsi.dei.estg.ipleiria.grestauranteapp.listeners.RegistoListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.AutenticacaoJsonParser;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PedidoJsonParser;
@@ -35,22 +42,26 @@ import amsi.dei.estg.ipleiria.grestauranteapp.utils.ProdutoJsonParser;
 public class SingletonGestorRestaurante {
     private static SingletonGestorRestaurante instance = null;
     private ArrayList<Produto> produtos;
+    private ArrayList<Carrinho> itemsCarrinho;
     private ArrayList<Pedido> pedidos;
     private ArrayList<PedidoProduto> pedidoProdutos;
     private Perfil perfil;
-    private ProdutoBDHelper produtosBD;
+    private GRestauranteBDHelper produtosBD;
+    private GRestauranteBDHelper itemsCarrinhoBD;
     private static RequestQueue volleyQueue = null;
     private static final String BaseUrl = "http://";
-    private static final String mUrlAPIAuth = "/GestorRestauranteAPI/API/web/v1/auth";
+    private static final String mUrlAPIUser = "/GestorRestauranteAPI/API/web/v1/user/";
+    private static final String mUrlAPISemAutenticacao = "/GestorRestauranteAPI/API/web/v1/noauth";
     private static final String mUrlAPIProdutos = "/GestorRestauranteAPI/API/web/v1/produto";
     private static final String mUrlAPIPedidos = "/GestorRestauranteAPI/API/web/v1/pedido";
     private static final String mUrlAPIPedidosProduto = "/GestorRestauranteAPI/API/web/v1/pedidoproduto";
     private static final String mUrlAPIPerfil = "/GestorRestauranteAPI/API/web/v1/perfil";
     private ProdutosListener produtosListener;
-    private LoginListener loginListener;
+    private AutenticacaoListener loginListener;
     private PerfilListener perfilListener;
     private PedidosListener pedidosListener;
-    private RegistoListener registoListener;
+    private AutenticacaoListener autenticacaoListener;
+    private CarrinhoListener carrinhoListener;
     private PedidosProdutoListener pedidosProdutoListener;
 
     public static synchronized SingletonGestorRestaurante getInstance(Context context) {
@@ -64,11 +75,14 @@ public class SingletonGestorRestaurante {
     private SingletonGestorRestaurante(Context context) {
         produtos = new ArrayList<>();
         pedidos = new ArrayList<>();
+        itemsCarrinho = new ArrayList<>();
         pedidoProdutos = new ArrayList<>();
-        produtosBD = new ProdutoBDHelper(context);
+        produtosBD = new GRestauranteBDHelper(context);
+        itemsCarrinhoBD = new GRestauranteBDHelper(context);
     }
 
     public Produto getProduto(int id){
+        produtos=getProdutosBD();
         for (Produto p : produtos){
             if(p.getId() == id)
                 return p;
@@ -76,12 +90,22 @@ public class SingletonGestorRestaurante {
         return null;
     }
 
+    public int getCountItemsCarrinho(){
+        return itemsCarrinho.size();
+    }
     // # PEDIDOS
 
     public Pedido getPedido(int id) {
         for (Pedido p : pedidos)
             if (p.getId() == id)
                 return p;
+        return null;
+    }
+
+    public Carrinho getItemCarrinho(int id) {
+        for (Carrinho item : itemsCarrinho)
+            if (item.getId() == id)
+                return item;
         return null;
     }
 
@@ -96,6 +120,10 @@ public class SingletonGestorRestaurante {
         return perfil;
     }
 
+    public ArrayList<Carrinho> getItemsCarrinho() {
+        return itemsCarrinho;
+    }
+
     /************** Listeners ******************************/
 
     public void setPedidosListener(PedidosListener pedidosListener) {
@@ -106,7 +134,7 @@ public class SingletonGestorRestaurante {
         this.produtosListener = produtosListener;
     }
 
-    public void setLoginListener(LoginListener loginListener) { this.loginListener = loginListener; }
+    public void setLoginListener(AutenticacaoListener loginListener) { this.loginListener = loginListener; }
 
     public void setPerfilListener(PerfilListener perfilListener){
         this.perfilListener = perfilListener;
@@ -116,8 +144,13 @@ public class SingletonGestorRestaurante {
         this.pedidosProdutoListener = pedidoProdutosListener;
     }
 
-    public void setRegistoListener(RegistoListener registoListener) {
-        this.registoListener = registoListener;
+    public void setRegistoListener(AutenticacaoListener autenticacaoListener) {
+        this.autenticacaoListener = autenticacaoListener;
+
+    }
+
+    public void setCarrinhoListener(CarrinhoListener carrinhoListener) {
+        this.carrinhoListener = carrinhoListener;
 
     }
 
@@ -140,6 +173,87 @@ public class SingletonGestorRestaurante {
             adicionarProdutoBD(p);
     }
 
+    public void  getItemsCarrinhoBD(int id_utilizador) {
+        itemsCarrinho = itemsCarrinhoBD.getItemsCarrinhoBD(id_utilizador);
+
+        if(carrinhoListener!=null){
+            carrinhoListener.onRefreshListaItemsCarrinho(itemsCarrinho);
+        }
+    }
+
+    public void adicionarItemCarrinhoBD(Carrinho itemCarrinho) {
+
+        Carrinho valExistItem=null;
+        itemsCarrinho = itemsCarrinhoBD.getItemsCarrinhoBD(itemCarrinho.getId_utilizador());
+
+        for (Carrinho item : itemsCarrinho) {
+
+            if(item.getId_produto()==itemCarrinho.getId_produto()){
+                valExistItem=item;
+            }
+
+        }
+
+        if(valExistItem!=null){
+            valExistItem.setQuantidade(valExistItem.getQuantidade() + itemCarrinho.getQuantidade());
+
+            float precoExist = Float.parseFloat(valExistItem.getPreco());
+            float precoNova = Float.parseFloat(itemCarrinho.getPreco());
+
+            valExistItem.setPreco(String.format("%.2f", precoExist + precoNova).replace(',', '.'));
+
+            editarItemCarrinhoBD(valExistItem);
+        }else{
+            itemsCarrinhoBD.adicionarItemCarrinhoBD(itemCarrinho);
+            if(carrinhoListener!=null){
+                carrinhoListener.onDetalhes(true);
+            }
+        }
+    }
+
+    public void adicionarItemsCarrinhoBD(ArrayList<Carrinho> itemsCarrinho,int id_utilizador) {
+        itemsCarrinhoBD.removerAllItemsCarrinhoBD(id_utilizador);
+        for (Carrinho item : itemsCarrinho)
+            adicionarItemCarrinhoBD(item);
+    }
+
+    public void removerItemCarrinhoBD(int id) {
+        Carrinho item = getItemCarrinho(id);
+
+        if (item != null)
+            if (itemsCarrinhoBD.removerItemCarrinhoBD(item))
+                itemsCarrinho.remove(item);
+
+        if(carrinhoListener!=null){
+            carrinhoListener.onDetalhes(false);
+        }
+    }
+
+    public void removerItemsCarrinhoBD(int id_utilizador) {
+        itemsCarrinhoBD.removerAllItemsCarrinhoBD(id_utilizador);
+
+        if(carrinhoListener!=null){
+            carrinhoListener.onAddItems();
+        }
+    }
+
+
+    public void editarItemCarrinhoBD(Carrinho itemCarrinho) {
+        Carrinho item = getItemCarrinho(itemCarrinho.getId());
+
+        if (item != null) {
+            if (itemsCarrinhoBD.editarItemCarrinhoBD(item)) {
+                item.setQuantidade(itemCarrinho.getQuantidade());
+                item.setPreco(itemCarrinho.getPreco());
+            }
+        }
+
+        if (carrinhoListener!=null){
+            carrinhoListener.onDetalhes(true);
+        }
+
+    }
+
 
     /************** Métodos de acesso à API ******************************/
 
@@ -150,26 +264,35 @@ public class SingletonGestorRestaurante {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
 
         } else {
-            StringRequest req = new StringRequest(Request.Method.POST, BaseUrl + ip + mUrlAPIAuth + "/login", new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.GET, BaseUrl + ip + mUrlAPIUser, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Perfil perfil = AutenticacaoJsonParser.parserJsonLogin(response);
+                    perfil = AutenticacaoJsonParser.parserJsonLogin(response);
 
                     if (loginListener != null)
-                        loginListener.onValidateLogin(perfil);
+                        loginListener.onValidarLogin(perfil);
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Não existe nenhum utilizador com estes dados de acesso", Toast.LENGTH_SHORT).show();
                 }
             }) {
                 @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("username", username);
-                    params.put("password", password);
-                    return params;
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    String credentials = username + ":" + password;
+
+                    byte[] login=null;
+
+                    try {
+                        login=credentials.getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    HashMap<String, String> headers = new HashMap<>();
+                    String base64EncodedCredentials = Base64.encodeToString(login, Base64.NO_WRAP);
+                    headers.put("Authorization", "Basic " + base64EncodedCredentials);
+                    return headers;
                 }
             };
             volleyQueue.add(req);
@@ -192,13 +315,10 @@ public class SingletonGestorRestaurante {
             }
         } else {
 
-            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, BaseUrl + ip + (id_categoria==0 ? mUrlAPIProdutos : mUrlAPIProdutos + "/categoria/" + id_categoria), null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, BaseUrl + ip + (id_categoria==0 ? mUrlAPISemAutenticacao + "/produto" : mUrlAPISemAutenticacao + "/produtocategoria/" + id_categoria), null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    Log.i("#-->",""+response);
-
                     produtos = ProdutoJsonParser.parserJsonProdutos(response);
-                    Log.i("#-->",""+produtos);
 
                     if(id_categoria==0){
                         adicionarProdutosBD(produtos);
@@ -231,7 +351,6 @@ public class SingletonGestorRestaurante {
                 @Override
                 public void onResponse(String response) {
                     perfil = PerfilJsonParser.parserJsonPerfil(response);
-
                     if(perfilListener!=null ){
                         perfilListener.onRefreshPerfil(perfil);
                     }else{
@@ -256,19 +375,19 @@ public class SingletonGestorRestaurante {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
 
         } else {
-            StringRequest req = new StringRequest(Request.Method.PUT, BaseUrl + ip + mUrlAPIPerfil + "/" + perfil.getId() + "/atualizar?access-token=" + token, new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.PUT, BaseUrl + ip + mUrlAPIPerfil + "/" + perfil.getId() + "?access-token=" + token, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
 
-                    Perfil p = PerfilJsonParser.parserJsonPerfil(response);
+                    boolean save= PerfilJsonParser.parserJsonAtualizar(response);
 
-                    if (perfilListener != null) {
-                        perfilListener.onUpdatePerfil();
-                    } else {
-                        Toast.makeText(context, "Impossivel atualizar", Toast.LENGTH_SHORT).show();
-                        ;
+                    if(save==true){
+                        if (perfilListener != null) {
+                            perfilListener.onUpdatePerfil();
+                        }
+                    }else{
+                        Toast.makeText(context, "Impossivel atualizar o perfil", Toast.LENGTH_SHORT).show();
                     }
-
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -305,15 +424,17 @@ public class SingletonGestorRestaurante {
         if (!Generic.isConnectionInternet(context)) {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
         } else {
-            StringRequest req = new StringRequest(Request.Method.POST, BaseUrl + ip + mUrlAPIAuth + "/registar", new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.POST, BaseUrl + ip + mUrlAPISemAutenticacao +"/registaruser", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    boolean save= AutenticacaoJsonParser.parserJsonRegistar(response);
 
-                    Perfil perfil = PerfilJsonParser.parserJsonPerfil(response);
-
-                    if (registoListener != null)
-                        registoListener.onRegistar(perfil);
-
+                    if(save==true){
+                        if (autenticacaoListener != null)
+                            autenticacaoListener.onValidarRegisto();
+                    }else{
+                        Toast.makeText(context, "Impossivel registar utilizador", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -359,7 +480,18 @@ public class SingletonGestorRestaurante {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    String responseBody = null;
+                    try {
+                        responseBody = new String(error.networkResponse.data, "utf-8");
+                        JSONObject data = new JSONObject(responseBody);
+
+                        String message = data.getString("message");
+
+                        Toast.makeText(context, ""+message, Toast.LENGTH_SHORT).show();
+
+                    } catch (UnsupportedEncodingException | JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -374,17 +506,24 @@ public class SingletonGestorRestaurante {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
 
         } else {
-            StringRequest req = new StringRequest(Request.Method.POST, BaseUrl + ip + mUrlAPIPedidos + "/criar?access-token=" + token, new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.POST, BaseUrl + ip + (pedido.getTipo()==0 ? mUrlAPIPedidos + "/restaurante" : mUrlAPIPedidos + "/takeaway") + "?access-token=" + token, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Pedido pedido = PedidoJsonParser.parserJsonPedido(response);
+                    boolean save= PedidoJsonParser.parserJsonRegistar(response);
 
-                    if (pedido != null) {
+                    if(save==true){
                         if (pedidosListener != null)
-                            pedidosListener.onCreatePedido();
-                    } else {
-                        Toast.makeText(context, "Erro impossivel criar o pedido", Toast.LENGTH_SHORT).show();
-
+                            switch (pedido.getTipo()){
+                                case 0:
+                                    pedidosListener.onCriarPedidoRestaurante();
+                                    break;
+                                case 1:
+                                    pedidosListener.onCriarPedidoTakeaway();
+                                    break;
+                            }
+                    }else{
+                        if(pedido.getTipo()==0)
+                            Toast.makeText(context, "Mesa encontra-se indisponivel", Toast.LENGTH_SHORT).show();
                     }
                 }
             }, new Response.ErrorListener() {
@@ -402,14 +541,50 @@ public class SingletonGestorRestaurante {
                         params.put("id_mesa", pedido.getId_mesa() + "");
                     }else{
                         params.put("nome_pedido", pedido.getNome_pedido());
-
                     }
                     params.put("estado", pedido.getEstado() + "");
-                    params.put("tipo", pedido.getTipo() + "");
                     return params;
                 }
             };
             volleyQueue.add(req);
+        }
+    }
+
+    public void adicionarItemsCarrinhoAPI(final String ip,final String token, final Carrinho item, final int quantItems, final Context context) {
+
+        if (!Generic.isConnectionInternet(context)) {
+
+            Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
+
+        } else {
+
+                StringRequest req = new StringRequest(Request.Method.POST, BaseUrl + ip + mUrlAPIPedidosProduto + "/takeaway"+ "?access-token=" + token, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //Empty
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+
+                        Map<String,String> params=new HashMap<>();
+                        params.put("id_produto",item.getId_produto()+"");
+                        params.put("quant",item.getQuantidade()+"");
+                        params.put("preco",item.getPreco()+"");
+                        params.put("items",quantItems+"");
+
+                        Log.i("##>",""+params);
+
+                        return params;
+                    }
+                };
+                volleyQueue.add(req);
+
         }
     }
 
@@ -419,7 +594,7 @@ public class SingletonGestorRestaurante {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
         } else {
 
-            StringRequest req = new StringRequest(Request.Method.DELETE, BaseUrl + ip + mUrlAPIPedidos + "/" + pedido.getId() + "/apagar?access-token=" + token, new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.DELETE, BaseUrl + ip + mUrlAPIPedidos + "/" + pedido.getId() + "?access-token=" + token, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
 
@@ -447,13 +622,12 @@ public class SingletonGestorRestaurante {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
 
         } else {
-            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, BaseUrl + ip + mUrlAPIPedidosProduto + "/all/" + id_pedido + "?access-token=" + token, null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, BaseUrl + ip + mUrlAPIPedidosProduto + "/" + id_pedido + "?access-token=" + token, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     pedidoProdutos = PedidosProdutoJsonParser.parserJsonPedidosProduto(response);
 
                     if (pedidosProdutoListener != null){
-                        pedidosListener.onCreatePedido();
                         pedidosProdutoListener.onRefreshListaPedidosProduto(pedidoProdutos);
 
                     }
@@ -478,19 +652,17 @@ public class SingletonGestorRestaurante {
 
         } else {
 
-            StringRequest req = new StringRequest(Request.Method.POST, BaseUrl + ip + mUrlAPIPedidosProduto + "/criar?access-token=" + token,new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.POST, BaseUrl + ip + mUrlAPIPedidosProduto + "/restaurante" + "?access-token=" + token,new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    PedidoProduto pedidoProduto=PedidosProdutoJsonParser.parserJsonPedidoProduto(response);
 
-                    //O pedido produto irá sempre ser diferente de null contudo caso não seja decidimos implementar esta condição
-                    if(pedidoProduto!=null){
-                        if(pedidosProdutoListener!=null)
+                    boolean save=PedidosProdutoJsonParser.parserJsonAddRestaurante(response);
+
+                    if(save==true){
+                        if (pedidosProdutoListener != null)
                             pedidosProdutoListener.onCriar();
-
                     }else{
-                        //Apartida nunca entra mas caso entre temos esta segurança
-                        Toast.makeText(context, "Erro impossivel adicionar o produto", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Impossivel adicionar Produto ao pedido", Toast.LENGTH_SHORT).show();
                     }
                 }
             }, new Response.ErrorListener() {
@@ -505,7 +677,6 @@ public class SingletonGestorRestaurante {
                     params.put("id_pedido",pedidoProduto.getId_pedido()+"");
                     params.put("id_produto",pedidoProduto.getId_produto()+"");
                     params.put("quant_Pedida",pedidoProduto.getQuantidade()+"");
-                    params.put("estado", pedidoProduto.getEstado()+"");
                     params.put("preco",pedidoProduto.getPreco()+"");
                     return params;
                 }
@@ -524,19 +695,16 @@ public class SingletonGestorRestaurante {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
 
         } else {
-            StringRequest req = new StringRequest(Request.Method.PUT, BaseUrl + ip + mUrlAPIPedidosProduto + "/" + pedidoProduto.getId() + "/atualizar?access-token=" + token, new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.PUT, BaseUrl + ip + mUrlAPIPedidosProduto + "/" + pedidoProduto.getId() + "?access-token=" + token, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
 
-                    PedidoProduto pedidoProduto = PedidosProdutoJsonParser.parserJsonPedidoProduto(response);
-
+                    //TODO: A ver isso
                     if (pedidosProdutoListener != null) {
                         pedidosProdutoListener.onDetalhes();
                     } else {
                         Toast.makeText(context, "Impossivel atualizar", Toast.LENGTH_SHORT).show();
-
                     }
-
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -563,14 +731,12 @@ public class SingletonGestorRestaurante {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
         } else {
 
-            StringRequest req = new StringRequest(Request.Method.DELETE, BaseUrl + ip + mUrlAPIPedidosProduto + "/" + pedidoProduto.getId() + "/apagar?access-token=" + token, new Response.Listener<String>() {
+            StringRequest req = new StringRequest(Request.Method.DELETE, BaseUrl + ip + mUrlAPIPedidosProduto + "/" + pedidoProduto.getId() + "?access-token=" + token, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-
                     if (pedidosProdutoListener != null){
                         pedidosProdutoListener.onDetalhes();
                     }
-
                 }
             }, new Response.ErrorListener() {
                 @Override

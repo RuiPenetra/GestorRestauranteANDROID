@@ -64,5 +64,18 @@ public class PedidosProdutoJsonParser {
         }
         return auxPedidoProduto;
     }
+
+
+    public static boolean parserJsonAddRestaurante(String response) {
+        boolean reposta=false;
+        try {
+            JSONObject rest = new JSONObject(response);
+            reposta= rest.getBoolean("SaveError");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return reposta;
+    }
 }
 

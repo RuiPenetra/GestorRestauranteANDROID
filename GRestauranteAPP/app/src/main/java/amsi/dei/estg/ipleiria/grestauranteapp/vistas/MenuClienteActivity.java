@@ -1,5 +1,13 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,29 +17,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
-import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PerfilListener;
-import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Perfil;
-import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
+import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Carrinho;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 
-public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MenuClienteActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     public static final String PREF_INFO_USER ="PREF_INFO_USER";
     public static final String IP="IP";
@@ -39,101 +35,70 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     public static final String USERNAME="USERNAME";
     public static final String PASSWORD ="PASSWORD";
     public static final String TOKEN="TOKEN";
+    public static final String EMAIL ="EMAIL";
     public static final String RELEMBRAR = "RELEMBRAR";
     public static final String NOMECOMPLETO = "NOMECOMPLETO";
     public static final String GENERO = "GENERO";
     public static final String CARGO ="CARGO";
-    public static final String EMAIL ="EMAIL";
-    private NavigationView navigationView;
-    private DrawerLayout drawer;
-    private String nome_completo,cargo;
-    private int genero;
+    private BottomNavigationView bottomNavigationView;
     private FragmentManager fragmentManager;
-    private TextView tvNomeCompleto;
-    private ImageView imgPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_menu_cliente);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setTitle("Bem-Vindo");
+        bottomNavigationView =findViewById(R.id.bottom_navigation_view);
 
-        navigationView = findViewById(R.id.nav_view);
-        drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.ndOpen, R.string.ndClose);
-        toggle.syncState();
-
-        drawer.addDrawerListener(toggle);
-        navigationView.setNavigationItemSelectedListener(this);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
         fragmentManager = getSupportFragmentManager();
 
         carregarFragmentoInicial();
-        carregarCabecalho();
-    }
-    //CARREGA CABEÇALHO DO MENU
-    private void carregarCabecalho() {
 
-        SharedPreferences sharedPrefInfoUser=getSharedPreferences(PREF_INFO_USER, Context.MODE_PRIVATE);
-        nome_completo=sharedPrefInfoUser.getString(NOMECOMPLETO,null);
-        genero=sharedPrefInfoUser.getInt(GENERO,-1);
-        cargo=sharedPrefInfoUser.getString(CARGO,null);
+        FloatingActionButton fab_carrinho= findViewById(R.id.fabCarrinho);
 
-        View hView=navigationView.getHeaderView(0);
+        fab_carrinho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),CarrinhoActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        tvNomeCompleto=hView.findViewById(R.id.tvNomeCompleto);
-        imgPerfil=hView.findViewById(R.id.imgUser);
-
-        tvNomeCompleto.setText(nome_completo);
-
-        if(genero==0){
-            imgPerfil.setImageResource(R.drawable.female);
-
-        }else{
-            imgPerfil.setImageResource(R.drawable.male);
-        }
-        setTitle(R.string.actBemVindo);
 
     }
 
-
-    private void carregarFragmentoInicial(){
-        navigationView.setCheckedItem(R.id.nav_bemvindo);
-        Fragment fragment=new BemVindoFragment();
-        fragmentManager.beginTransaction().replace(R.id.contentFragment,fragment).commit();
-    }
-    @Override
-    //HAMBURGER MENU
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment= null;
         switch (item .getItemId()) {
-            case R.id.nav_bemvindo:
-                fragment = new BemVindoFragment();
-                setTitle(item.getTitle());
-                break;
-            case R.id.nav_perfil:
-                fragment = new PerfilFragment();
-                setTitle(item.getTitle());
-                break;
-            case R.id.nav_produtos:
+            case R.id.navB_produtos:
                 fragment = new ProdutoFragment();
                 setTitle(item.getTitle());
                 break;
-            case R.id.nav_pedidos:
+            case R.id.navB_pedidos:
                 fragment = new PedidoFragment();
                 setTitle(item.getTitle());
                 break;
-            case R.id.nav_contactos:
-                fragment= new ContactoFragment();
+            case R.id.navB_contactos:
+                fragment = new ContactoFragment();
+                setTitle(item.getTitle());
+                break;
+            case R.id.navB_perfil:
+                fragment = new PerfilFragment();
                 setTitle(item.getTitle());
                 break;
         }
         if (fragment != null)
-            fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.container_menu, fragment).commit();
 
-        drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void carregarFragmentoInicial(){
+        bottomNavigationView.setSelectedItemId(R.id.nav_bemvindo);
+        Fragment fragment=new BemVindoFragment();
+        fragmentManager.beginTransaction().replace(R.id.container_menu,fragment).commit();
     }
 
     @Override
@@ -168,7 +133,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
                         limparShared();
 
-                        Intent intent= new Intent(MenuActivity.this, LoginActivity.class);
+                        Intent intent= new Intent(MenuClienteActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                     }
@@ -197,6 +162,5 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         editor.remove(GENERO);
         editor.apply();
     }
-
 
 }
