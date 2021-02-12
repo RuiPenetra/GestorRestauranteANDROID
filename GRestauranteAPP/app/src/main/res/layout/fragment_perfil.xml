@@ -408,8 +408,7 @@
                     android:layout_marginTop="30dp"
                     android:background="#000"
                     android:text="Atualizar"
-                    android:textColor="#fff"
-                    android:layout_marginBottom="40dp"/>
+                    android:textColor="#fff" />
 
             </LinearLayout>
 

@@ -1,6 +1,5 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.vistas;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,11 +28,8 @@ import amsi.dei.estg.ipleiria.grestauranteapp.listeners.ProdutosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Produto;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 
-import static android.app.Activity.RESULT_OK;
-
 public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ProdutosListener {
 
-    private static final int ADD_CARRINHO = 1 ;
     private static final int TODAS_CATEGORIAS =0 ;
     private static final int CATEG_ENTRADA =1 ;
     private static final int CATEG_SOPA =2 ;
@@ -79,8 +74,6 @@ public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRe
         swipeRefreshLayout.setOnRefreshListener(this);
 
         SingletonGestorRestaurante.getInstance(getContext()).setProdutosListener(this);
-
-        //TODO: ip da shared
         SingletonGestorRestaurante.getInstance(getContext()).getProdutosCategoriaAPI(ip,TODAS_CATEGORIAS,getContext());
 
 
@@ -89,7 +82,7 @@ public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRe
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(),DetalhesProdutoLogadoActivity.class);
                 intent.putExtra(DetalhesProdutoLogadoActivity.ID_PRODUTO, (int) id);
-                startActivityForResult(intent,ADD_CARRINHO);
+                startActivity(intent);
             }
         });
 
@@ -141,14 +134,6 @@ public class ProdutoFragment extends Fragment implements SwipeRefreshLayout.OnRe
         });
         return view;
     }
-
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode == RESULT_OK && requestCode== ADD_CARRINHO){
-            Toast.makeText(getContext(), "Produto Adicionado ao carrinho", Toast.LENGTH_SHORT).show();
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
 
     @Override
     public void onRefreshListaPordutos(ArrayList<Produto> listaProdutos) {

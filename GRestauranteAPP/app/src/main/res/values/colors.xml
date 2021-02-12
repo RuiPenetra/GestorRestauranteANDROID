@@ -7,11 +7,7 @@
     <color name="fundo">#F8F8F8</color>
     <color name="actionBar">#00F8F8F8</color>
     <color name="gray">#5E5E5E</color>
-    <color name="black">#222222</color>
-    <color name="white">#FFFFFF</color>
-    <color name="processo">#2196F3</color>
-    <color name="preparacao">#FF9800</color>
-    <color name="concluido">#3FD345</color>
+    <color name="black">#000000</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#5E5E5E</color>
 
 </resources>

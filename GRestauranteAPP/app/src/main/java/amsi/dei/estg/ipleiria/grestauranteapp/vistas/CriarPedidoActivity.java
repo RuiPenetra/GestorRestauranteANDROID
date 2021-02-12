@@ -22,9 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
-import amsi.dei.estg.ipleiria.grestauranteapp.listeners.CarrinhoListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosListener;
-import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Carrinho;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Pedido;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
@@ -38,7 +36,6 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
     private Button btnCriarPedido;
     private Pedido pedido;
     private String ip, token,cargo;
-    private ArrayList<Carrinho> itemsCarrinho;
     private int id_user;
 
     @Override
@@ -57,7 +54,6 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
         btnCriarPedido=findViewById(R.id.btn_criarPedido);
 
 
-        //TODO:Ainda a ver
         SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
         token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
@@ -73,7 +69,6 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
             edtTipo.setInputType(InputType.TYPE_CLASS_TEXT);
             edtTipo.setHint("Nome do pedido");
             imgvTipo.setImageResource(R.drawable.takeaway);
-            btnCriarPedido.setText("Concluir Pedido");
         }else{
             tvTipo.setText("Restaurante");
             edtTipo.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -109,6 +104,8 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
     }
     //VALIDAÇÃO DO PEDIDO
     private boolean validarPedido() {
+
+
         if (cargo.equals("cliente")) {
 
             String nomePedido=edtTipo.getText().toString();
@@ -135,21 +132,13 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
                 edtTipo.setError("Não pode ser vazio");
                 return false;
             }
+
+
         }
 
         return true;
     }
 
-    public void guardarItemsCarrinhoAPI(){
-        itemsCarrinho=SingletonGestorRestaurante.getInstance(getApplicationContext()).getItemsCarrinho();
-
-        for (Carrinho item:itemsCarrinho) {
-
-            SingletonGestorRestaurante.getInstance(getApplicationContext()).adicionarItemsCarrinhoAPI(ip, token, item,itemsCarrinho.size(), getApplicationContext());
-        }
-
-        SingletonGestorRestaurante.getInstance(getApplicationContext()).removerItemsCarrinhoBD(id_user);
-    }
 
     @Override
     public void onRefreshListaPedidos(ArrayList<Pedido> pedidos) {
@@ -157,22 +146,9 @@ public class CriarPedidoActivity extends AppCompatActivity implements PedidosLis
     }
 
     @Override
-    public void onCriarPedidoTakeaway() {
-        guardarItemsCarrinhoAPI();
+    public void onCreatePedido() {
         setResult(RESULT_OK);
         finish();
-    }
-
-    @Override
-    public void onCriarPedidoRestaurante() {
-        setResult(RESULT_OK);
-        finish();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        SingletonGestorRestaurante.getInstance(this).setPedidosListener(this);
     }
 
 }

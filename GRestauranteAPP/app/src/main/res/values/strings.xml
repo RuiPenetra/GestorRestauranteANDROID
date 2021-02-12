@@ -66,7 +66,4 @@
     <string name="tvNomeProduto">Burguer</string>
     <string name="tvPrecoItem">Preço</string>
     <string name="tvEstado">Estado</string>
-    <string name="btn_itemCar_atualizar">Atualizar</string>
-    <string name="btrn_itemCar_remover">Remover</string>
-    <string name="tvtakenomepedido">NomePedido</string>
 </resources>

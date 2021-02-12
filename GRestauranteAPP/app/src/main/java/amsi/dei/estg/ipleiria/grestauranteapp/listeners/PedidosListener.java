@@ -7,8 +7,6 @@ import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Pedido;
 public interface PedidosListener {
     void onRefreshListaPedidos(ArrayList<Pedido> pedidos);
 
-    void onCriarPedidoTakeaway();
-    void onCriarPedidoRestaurante();
-
+    void onCreatePedido();
 
 }

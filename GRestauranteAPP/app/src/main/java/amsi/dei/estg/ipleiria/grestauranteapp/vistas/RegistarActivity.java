@@ -4,25 +4,29 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
-import amsi.dei.estg.ipleiria.grestauranteapp.listeners.AutenticacaoListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PerfilListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.RegistoListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Perfil;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 
-public class RegistarActivity extends AppCompatActivity implements AutenticacaoListener {
+public class RegistarActivity extends AppCompatActivity implements RegistoListener {
 
     private EditText edt_datanascimento,edt_nome,edt_apelido,edt_morada,edt_codPostal,edt_telemovel,edt_nacionalidade,edt_username,edt_email,edt_password;
     private RadioButton rb_masculino;
@@ -225,13 +229,13 @@ public class RegistarActivity extends AppCompatActivity implements AutenticacaoL
     }
 
     @Override
-    public void onValidarLogin(Perfil perfil) {
-       //Empty
-    }
+    public void onRegistar(Perfil perfil) {
 
-    @Override
-    public void onValidarRegisto() {
-        setResult(RESULT_OK);
-        finish();
+        if(perfil!=null){
+            setResult(RESULT_OK);
+            finish();
+        }else{
+            Toast.makeText(this, "Utilizador ja existe, verifique os campos", Toast.LENGTH_SHORT).show();
+        }
     }
 }

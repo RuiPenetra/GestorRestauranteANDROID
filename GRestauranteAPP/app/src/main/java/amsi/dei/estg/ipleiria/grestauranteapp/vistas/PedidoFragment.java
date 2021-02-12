@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,10 +30,9 @@ import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, PedidosListener {
 
     private static final int CRIAR = 1 ;
-    private static final int REMOVER = 2 ;
+    private static final int EDITAR = 2 ;
     private static final int ID_UTILIZADOR =1 ;
     private ListView lvlPedidos;
-    private LinearLayout linearCriarPedido;
     private CardView cvNovoPedido;
     private ImageView imgvTipo;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -56,7 +54,6 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
         cvNovoPedido=view.findViewById(R.id.cvNovoPedido);
         swipeRefreshLayout=view.findViewById(R.id.swipeRefreshLayoutPedidos);
         imgvTipo=view.findViewById(R.id.imgv_Tipo);
-        linearCriarPedido=view.findViewById(R.id.linearCriarPedido);
         swipeRefreshLayout.setOnRefreshListener(this);
 
         SharedPreferences sharedPrefInfoUser = getActivity().getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
@@ -64,11 +61,10 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
         token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
         cargo= sharedPrefInfoUser.getString(MenuActivity.CARGO,null);
 
-
         if(!cargo.equals("cliente")){
             imgvTipo.setImageResource(R.drawable.restaurante);
         }else{
-            linearCriarPedido.setVisibility(View.GONE);
+            imgvTipo.setImageResource(R.drawable.takeaway);
         }
 
         SingletonGestorRestaurante.getInstance(getContext()).setPedidosListener(this);
@@ -79,7 +75,7 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(),DetalhesPedidoActivity.class);
                 intent.putExtra(DetalhesPedidoActivity.ID, (int) id);
-                startActivityForResult(intent,REMOVER);
+                startActivityForResult(intent,EDITAR);
             }
         });
 
@@ -110,9 +106,9 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
                     SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
                     Toast.makeText(getContext(),"Produto adicionado com sucesso", Toast.LENGTH_LONG).show();
                     break;
-                case REMOVER:
+                case EDITAR:
                     SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
-                    Toast.makeText(getContext(),"Pedido removido com sucesso",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"Pedido Produto editado/removido com sucesso",Toast.LENGTH_LONG).show();
                     break;
             }
         }
@@ -128,12 +124,7 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     @Override
-    public void onCriarPedidoTakeaway() {
-        //EMPTY
-    }
-
-    @Override
-    public void onCriarPedidoRestaurante() {
+    public void onCreatePedido() {
         //EMPTY
     }
 
@@ -141,6 +132,8 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
     public void onRefresh() {
         SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
         swipeRefreshLayout.setRefreshing(false);
+
+
     }
 
     @Override

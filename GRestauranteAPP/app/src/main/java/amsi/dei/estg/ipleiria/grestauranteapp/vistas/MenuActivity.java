@@ -43,7 +43,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     public static final String NOMECOMPLETO = "NOMECOMPLETO";
     public static final String GENERO = "GENERO";
     public static final String CARGO ="CARGO";
-    public static final String EMAIL ="EMAIL";
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private String nome_completo,cargo;

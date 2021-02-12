@@ -1,19 +1,12 @@
 package amsi.dei.estg.ipleiria.grestauranteapp.adaptadores;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
@@ -52,11 +45,7 @@ public class ListaPedidoAdaptador extends BaseAdapter {
             infalter=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if(convertView==null)
-            if(pedidos.get(position).getTipo()==0){
-                convertView= infalter.inflate(R.layout.item_lista_pedidos_restaurante,null);
-            }else{
-                convertView= infalter.inflate(R.layout.item_lista_pedidos_takeaway,null);
-            }
+            convertView= infalter.inflate(R.layout.item_lista_pedidos,null);
 
         ViewHolderLista viewHolder= (ViewHolderLista)convertView.getTag();
 
@@ -72,71 +61,43 @@ public class ListaPedidoAdaptador extends BaseAdapter {
 
 
     private class ViewHolderLista{
-        private TextView tv_rest_Mesa, tv_rest_Estado,tv_rest_n_pedido;
-        private TextView tv_take_Nomepedido, tv_takeData, tv_takeEstado;
-        private ImageView imgvRestPedido,imgvRestTipo;
-        private ProgressBar pb_itemTakeaway,pb_itemRestaurante;
+        private TextView tvTipo, tvData, tvEstado;
+        private ImageView imgvTipoPedido,imgvTipo;
 
         public  ViewHolderLista(View view){
-            tv_rest_Mesa=view.findViewById(R.id.tvRestMesa);
-            tv_rest_Estado=view.findViewById(R.id.tvRestEstado);
-            tv_rest_n_pedido=view.findViewById(R.id.tv_rest_n_pedido);
-            imgvRestPedido=view.findViewById(R.id.imgRestPedido);
-            pb_itemRestaurante=view.findViewById(R.id.pb_itemRestaurante);
-
-            tv_takeData=view.findViewById(R.id.tvTakeData);
-            tv_takeEstado=view.findViewById(R.id.tvTakeEstado);
-            tv_take_Nomepedido=view.findViewById(R.id.tvTakeNomePedido);
-            pb_itemTakeaway=view.findViewById(R.id.pb_itemTakeaway);
-
+            tvTipo=view.findViewById(R.id.tvTipoPedido);
+            tvData=view.findViewById(R.id.tvData);
+            tvEstado=view.findViewById(R.id.tvEstado);
+            imgvTipoPedido=view.findViewById(R.id.imgCapa);
+            imgvTipo=view.findViewById(R.id.imgvTipoPedido);
         }
 
         public void update(Pedido pedido){
-            //tv_rest_Data.setText(pedido.getData());
-            if(pedido.getTipo()!=1){
-                tv_rest_n_pedido.setText("Pedido nº: " +pedido.getId());
-                imgvRestPedido.setImageResource(R.drawable.restaurante);
-                tv_rest_Mesa.setText("Nº "+pedido.getId_mesa());
+            tvData.setText(pedido.getData());
 
-                pb_itemRestaurante.setIndeterminate(false);
-                switch (pedido.getEstado()){
-                    case 1:
-                        tv_rest_Estado.setText(" Pedido esta a ser processado..");
-                        pb_itemRestaurante.setProgressDrawable(context.getDrawable(R.drawable.pb_processo));
-                        pb_itemRestaurante.setProgress(30);
-                        break;
-                    case 2:
-                        tv_rest_Estado.setText(" Pedido em preparação..");
-                        pb_itemRestaurante.setProgressDrawable(context.getDrawable(R.drawable.pb_preparacao));
-                        pb_itemRestaurante.setProgress(70);
-                        break;
-                    case 3:
-                        tv_rest_Estado.setText(" Pedido concluido ");
-                        pb_itemRestaurante.setProgressDrawable(context.getDrawable(R.drawable.pb_concluido));
-                        pb_itemRestaurante.setProgress(100);
-                        break;
-                }
+            if(pedido.getTipo()!=0){
+                imgvTipo.setImageResource(R.drawable.ic_perfil);
+                imgvTipoPedido.setImageResource(R.drawable.takeaway);
+                tvTipo.setText(pedido.getNome_pedido());
             }else{
-                tv_take_Nomepedido.setText(pedido.getNome_pedido());
-                tv_takeData.setText(pedido.getData());
+                imgvTipo.setImageResource(R.drawable.img_table);
+                imgvTipoPedido.setImageResource(R.drawable.restaurante);
+                tvTipo.setText("Nº "+pedido.getId_mesa());
+            }
 
-                switch (pedido.getEstado()){
-                    case 1:
-                        tv_takeEstado.setText(" Pedido esta a ser processado..");
-                        pb_itemTakeaway.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, R.color.processo), android.graphics.PorterDuff.Mode.SRC_IN);
-                        break;
-                    case 2:
-                        tv_takeEstado.setText(" Pedido em preparação..");
-                        pb_itemTakeaway.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, R.color.preparacao), android.graphics.PorterDuff.Mode.SRC_IN);
-                        break;
-                    case 3:
-                        tv_takeEstado.setText(" Pedido concluido ");
-                        pb_itemTakeaway.setIndeterminate(false);
-                        pb_itemTakeaway.setProgress(100);
-                        pb_itemTakeaway.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, R.color.concluido), android.graphics.PorterDuff.Mode.SRC_IN);
-
-                        break;
-                }
+            switch (pedido.getEstado()){
+                case 0:
+                    tvEstado.setText(" Em processo ");
+                    tvEstado.setBackgroundResource(R.drawable.badge_processo);
+                    break;
+                case 1:
+                    tvEstado.setText(" Em progresso ");
+                    tvEstado.setBackgroundResource(R.drawable.badge_progresso);
+                    break;
+                case 2:
+                    tvEstado.setText(" Concluido ");
+                    tvEstado.setBackgroundResource(R.drawable.badge_concluido);
+                    break;
             }
         }
     }

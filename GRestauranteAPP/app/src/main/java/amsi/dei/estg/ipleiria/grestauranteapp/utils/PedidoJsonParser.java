@@ -68,16 +68,4 @@ public class PedidoJsonParser {
         }
         return auxPedido;
     }
-
-    public static boolean parserJsonRegistar(String response) {
-        boolean reposta=false;
-        try {
-            JSONObject rest = new JSONObject(response);
-            reposta= rest.getBoolean("SaveError");
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return reposta;
-    }
 }
