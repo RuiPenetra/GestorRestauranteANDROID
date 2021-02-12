@@ -52,7 +52,6 @@ public class SingletonGestorRestaurante {
     private static final String BaseUrl = "http://";
     private static final String mUrlAPIUser = "/GestorRestauranteAPI/API/web/v1/user/";
     private static final String mUrlAPISemAutenticacao = "/GestorRestauranteAPI/API/web/v1/noauth";
-    private static final String mUrlAPIProdutos = "/GestorRestauranteAPI/API/web/v1/produto";
     private static final String mUrlAPIPedidos = "/GestorRestauranteAPI/API/web/v1/pedido";
     private static final String mUrlAPIPedidosProduto = "/GestorRestauranteAPI/API/web/v1/pedidoproduto";
     private static final String mUrlAPIPerfil = "/GestorRestauranteAPI/API/web/v1/perfil";
@@ -299,7 +298,6 @@ public class SingletonGestorRestaurante {
         }
     }
 
-    //#--->Produtos
     public void getProdutosCategoriaAPI(final String ip, final int id_categoria,final Context context) {
         if (!Generic.isConnectionInternet(context)) {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
@@ -339,7 +337,6 @@ public class SingletonGestorRestaurante {
         }
     }
 
-    //#--->Perfil
     public void getPerfilAPI(final String ip,final String token,final Context context) {
         if (!Generic.isConnectionInternet(context)) {
 
@@ -463,7 +460,6 @@ public class SingletonGestorRestaurante {
         }
     }
 
-    //#--->Pedidos
     public void getPedidosAPI(final String ip,final String token,final Context context) {
         if (!Generic.isConnectionInternet(context)) {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();
@@ -616,7 +612,6 @@ public class SingletonGestorRestaurante {
 
     }
 
-    //#--->Pedidos Produto
     public void getPedidosProdutoAPI(final String ip,final String token, final Context context, final int id_pedido) {
         if (!Generic.isConnectionInternet(context)) {
             Toast.makeText(context, "Não existe ligação à internet", Toast.LENGTH_SHORT).show();

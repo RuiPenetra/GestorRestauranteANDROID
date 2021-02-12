@@ -37,8 +37,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constrainLayoutImgCategoria"
         android:layout_width="0dp"
-        android:layout_height="170dp"
-        app:layout_constraintWidth_percent=".6"
+        android:layout_height="150dp"
+        app:layout_constraintWidth_percent=".5"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,8 +50,8 @@
 
         <ImageView
             android:id="@+id/img_PedP_ProdutoCategoria"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:src="@drawable/bebidas"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

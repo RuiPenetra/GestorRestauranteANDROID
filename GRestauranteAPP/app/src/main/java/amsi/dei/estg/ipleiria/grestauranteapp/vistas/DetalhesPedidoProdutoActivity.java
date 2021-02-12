@@ -18,22 +18,25 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
+import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PedidosProdutoListener;
+import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Pedido;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.PedidoProduto;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Produto;
 import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 
-public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements PedidosProdutoListener {
+public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements PedidosProdutoListener, PedidosListener {
 
     public static final String ID_PEDIDO_PRODUTO ="ID_PEDIDO_PRODUTO" ;
     private TextView tv_PedProd_Estado,tv_PedProd_Quantidade,tv_PedProd_Preco,tv_ProdNome,tv_ProdCategoria,tv_ProdIngredientes;
     private ImageView img_Categoria;
     private CardView cvSomar,cvSubtrair;
     private PedidoProduto pedidoProduto;
+    private Pedido pedido;
     private Produto produto;
     private Button btnAtualizar,btnRemover;
-    private String ip,token;
+    private String ip,token,cargo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +59,20 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
         SharedPreferences sharedPrefInfoUser = getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
         token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
+        cargo= sharedPrefInfoUser.getString(MenuActivity.CARGO,null);
 
         int id_pedido= getIntent().getIntExtra(ID_PEDIDO_PRODUTO, -1);
         SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidoProdutosListener(this);
         pedidoProduto= SingletonGestorRestaurante.getInstance(this).getPedidoProduto(id_pedido);
         produto= SingletonGestorRestaurante.getInstance(this).getProduto(pedidoProduto.getId_produto());
-
-
         setTitle("Pedido Produto: "+pedidoProduto.getId());
+
+
+        if(cargo.equals("cliente")){
+
+            btnRemover.setVisibility(View.INVISIBLE);
+            btnAtualizar.setVisibility(View.INVISIBLE);
+        }
 
         carregarDadosPedidoProduto();
 
@@ -230,4 +239,18 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
     }
 
 
+    @Override
+    public void onRefreshListaPedidos(ArrayList<Pedido> pedidos) {
+        //
+    }
+
+    @Override
+    public void onCriarPedidoTakeaway() {
+        //Empty
+    }
+
+    @Override
+    public void onCriarPedidoRestaurante() {
+
+    }
 }

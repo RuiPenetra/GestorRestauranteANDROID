@@ -51,16 +51,6 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-
-        fabListaProdutos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(StartActivity.this, ListaProdutosActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
         fabConfiguracoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
