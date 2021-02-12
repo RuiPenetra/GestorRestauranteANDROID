@@ -8,26 +8,31 @@ import amsi.dei.estg.ipleiria.grestauranteapp.modelo.Perfil;
 public class AutenticacaoJsonParser {
 
     public static Perfil parserJsonLogin(String response) {
-        Perfil auxPerfil = null;
-
+        Perfil auxPerfil=null;
         try {
             JSONObject perfil = new JSONObject(response);
-            if (perfil.getBoolean("success")) {
-
-                int id = perfil.getInt("id_user");
-                String nome = perfil.getString("nome");
-                String apelido = perfil.getString("apelido");
-                int genero = perfil.getInt("genero");
-                String cargo = perfil.getString("cargo");
-                String token = perfil.getString("token");
-
-                auxPerfil = new Perfil(id, null, null, null, nome, apelido, null, null, cargo, null, genero, null, null,token);
-
-            }
+                int id = perfil.getInt("id");
+                String username = perfil.getString("username");
+                String email = perfil.getString("email");
+                String token = perfil.getString("auth_key");
+                 auxPerfil = new Perfil(id, username, null, email, null, null, null, null, null, null, 0, null, null, token);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return auxPerfil;
+
+    }
+
+    public static boolean parserJsonRegistar(String response) {
+        boolean reposta=false;
+        try {
+            JSONObject rest = new JSONObject(response);
+            reposta= rest.getBoolean("SaveError");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return reposta;
 
     }
 }

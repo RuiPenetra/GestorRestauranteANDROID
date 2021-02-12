@@ -14,11 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".vistas.DetalhesProdutoLogadoActivity"
+
+        <activity android:name=".vistas.DetalhesItemCarrinhoActivity"
+            android:parentActivityName=".vistas.CarrinhoActivity" />
+        <activity
+            android:name=".vistas.CarrinhoActivity"
+            android:parentActivityName=".vistas.MenuClienteActivity" />
+        <activity
+            android:name=".vistas.MenuClienteActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".vistas.DetalhesProdutoLogadoActivity"
             android:parentActivityName=".vistas.MenuActivity" />
         <activity
             android:name=".vistas.ContactoActivity"
-            android:parentActivityName=".vistas.StartActivity"/>
+            android:parentActivityName=".vistas.StartActivity" />
         <activity
             android:name=".vistas.DetalhesPedidoProdutoActivity"
             android:parentActivityName=".vistas.DetalhesPedidoActivity" />

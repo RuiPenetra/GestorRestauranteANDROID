@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.Calendar;
 import amsi.dei.estg.ipleiria.grestauranteapp.R;
 import amsi.dei.estg.ipleiria.grestauranteapp.listeners.PerfilListener;
@@ -37,8 +41,9 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private int year,month,day, genero;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private String ip,nomeCompleto,token,cargo;
+    private String ip,nomeCompleto,token,username,email;
     private Perfil auxPerfil;
+    private NavigationView navigationView;
 
 
     public PerfilFragment() {
@@ -70,13 +75,15 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
         tvNomeCompleto=view.findViewById(R.id.tvNome_completo);
         tvCargo= view.findViewById(R.id.tvCargo);
         imgPerfil=view.findViewById(R.id.img_perfil);
-
+         navigationView = view.findViewById(R.id.nav_view);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
         SharedPreferences sharedPrefInfoUser = getActivity().getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         ip= sharedPrefInfoUser.getString(MenuActivity.IP,null);
         token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
+        username= sharedPrefInfoUser.getString(MenuActivity.USERNAME,null);
+        email= sharedPrefInfoUser.getString(MenuActivity.EMAIL,null);
 
         SingletonGestorRestaurante.getInstance(getContext()).setPerfilListener(this);
         SingletonGestorRestaurante.getInstance(getContext()).getPerfilAPI(ip,token,getContext());
@@ -150,7 +157,93 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     private boolean validarPerfil() {
+        String nome=edt_nome.getText().toString();
+        String apelido=edt_apelido.getText().toString();
+        String morada=edt_morada.getText().toString();
+        String cod_postal=edt_codigoPostal.getText().toString();
+        String telemovel=edt_telemovel.getText().toString();
+        String nacionalidade=edt_nacionalidade.getText().toString();
+        String dataNascimento = edt_data_nascimento.getText().toString();
+        String username=edt_username.getText().toString();
+        String email=edt_email.getText().toString();
+        //String password=edt_password.getText().toString();
+
+        if(!rb_masculino.isChecked()&&!rb_feminino.isChecked())
+        {
+            rb_masculino.setError("Tem que Selecionar 1 genero");
+            rb_feminino.setError("Tem que Selecionar 1 genero");
+            return false;
+
+        }
+
+        if (nome.length()<3)
+        {
+            edt_nome.setError("Nome Invalido");
+            return false;
+        }
+
+        if (apelido.length()<3)
+        {
+            edt_apelido.setError("Apelido Invalido");
+            return false;
+        }
+
+        if (morada.length()<3)
+        {
+            edt_morada.setError("Morada Invalido");
+            return false;
+        }
+
+        if (cod_postal.length()<8)
+        {
+            edt_codigoPostal.setError("Codigo Postal Invalido");
+            return false;
+        }
+
+        if(telemovel.length()!=9)
+        {
+            edt_telemovel.setError("Numero de telemovel invalido");
+            return false;
+        }
+
+        if(nacionalidade.length()<3)
+        {
+            edt_nacionalidade.setError("Nacionalidade Invalido");
+            return false;
+        }
+
+        if(dataNascimento.isEmpty())
+        {
+            edt_data_nascimento.setError("Data Nascimento Invalida");
+            return false;
+        }
+
+        if(username.length()<3){
+            edt_username.setError("Username invalido");
+            return false;
+        }
+
+        if (!isEmailValido(email)) {
+            edt_email.setError("Email Invalido");
+            return false;
+        }
+
+    /*    if (!isPasswordValida(password)) {
+            edt_password.setError("Password Invalida");
+            return false;
+        }*/
         return true;
+    }
+    //VALIDAÇÂO DO EMAIL
+    private boolean isEmailValido(String email){
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+    //VALIDAÇÃO DA PASSWORD
+    private boolean isPasswordValida(String password){
+        if(password==null)
+            return false;
+
+        return password.length()>=4;
     }
 
     private void carregardDadosPerfil(Perfil perfil) {
@@ -158,6 +251,7 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
         SharedPreferences sharedPrefInfoUser = getActivity().getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
         nomeCompleto= sharedPrefInfoUser.getString(MenuActivity.NOMECOMPLETO,null);
         genero= sharedPrefInfoUser.getInt(MenuActivity.GENERO,-1);
+        username= sharedPrefInfoUser.getString(MenuActivity.USERNAME,null);
 
         tvNomeCompleto.setText(perfil.getNome()+ " " + perfil.getApelido());
         tvCargo.setText(perfil.getCargo());
@@ -175,8 +269,8 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
         edt_data_nascimento.setText(perfil.getDatanascimento());
         edt_nacionalidade.setText(perfil.getNacionalidade());
         edt_telemovel.setText(perfil.getTelemovel());
-        edt_username.setText(perfil.getUsername());
-        edt_email.setText(perfil.getEmail());
+        edt_username.setText(username);
+        edt_email.setText(email);
 
         if(perfil.getGenero()==1){
             rb_masculino.setChecked(true);
@@ -199,6 +293,7 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
         editor.apply();
     }
 
+
     @Override
     public void onRefreshPerfil(Perfil perfil) {
 
@@ -209,6 +304,19 @@ public class PerfilFragment extends Fragment implements SwipeRefreshLayout.OnRef
     @Override
     //MANDA TOAST CASO O PERFIL FOI ATUALZIADO COM SUCESSO
     public void onUpdatePerfil() {
+        SharedPreferences sharedPrefUser = getActivity().getSharedPreferences(MenuActivity.PREF_INFO_USER, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefUser.edit();
+        editor.putString(MenuActivity.USERNAME,edt_username.getText()+"");
+        editor.putString(MenuActivity.EMAIL,edt_email.getText()+"");
+        editor.apply();
+
+        tvNomeCompleto.setText(edt_nome.getText()+ " " + edt_apelido.getText());
+        if(rb_masculino.isChecked()){
+            imgPerfil.setImageResource(R.drawable.male);
+        }else{
+            imgPerfil.setImageResource(R.drawable.female);
+        }
+
         Toast.makeText(getContext(), "Perfil atualizado com sucesso", Toast.LENGTH_SHORT).show();
     }
 

@@ -19,8 +19,6 @@ public class PerfilJsonParser {
         try {
             JSONObject perfil = new JSONObject(response);
             int id = perfil.getInt("id_user");
-            Log.i("--->", "" + id);
-
             String nome = perfil.getString("nome");
             String apelido = perfil.getString("apelido");
             String morada = perfil.getString("morada");
@@ -30,10 +28,9 @@ public class PerfilJsonParser {
             String telemovel = perfil.getString("telemovel");
             int genero= perfil.getInt("genero");
             String cargo = perfil.getString("cargo");
-            String username = perfil.getString("username");
-            String email = perfil.getString("email");
 
-            auxPerfil = new Perfil(id, username, null, email, nome, apelido, morada, nacionalidade, cargo, codigoPostal, genero, telemovel, dataNascimento,null);
+
+            auxPerfil = new Perfil(id, null, null, null, nome, apelido, morada, nacionalidade, cargo, codigoPostal, genero, telemovel, dataNascimento,null);
             Log.i("--->", "" + auxPerfil);
 
         } catch (JSONException e) {
@@ -41,4 +38,20 @@ public class PerfilJsonParser {
         }
         return auxPerfil;
     }
+
+
+    public static boolean parserJsonAtualizar(String response) {
+        boolean reposta=false;
+        try {
+            JSONObject rest = new JSONObject(response);
+            reposta= rest.getBoolean("SaveError");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return reposta;
+
+    }
+
+
 }
