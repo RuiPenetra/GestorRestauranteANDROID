@@ -81,7 +81,13 @@ public class ListaProdutosActivity extends AppCompatActivity implements SwipeRef
         token= sharedPrefInfoUser.getString(MenuActivity.TOKEN,null);
 
         SingletonGestorRestaurante.getInstance(getApplicationContext()).setProdutosListener(this);
-        SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(ip,TODAS_CATEGORIAS,getApplicationContext());
+
+        if(ip==null){
+            Toast.makeText(getApplicationContext(), "Tem de defenir o endereço de ip", Toast.LENGTH_SHORT).show();
+
+        }else{
+            SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosCategoriaAPI(ip,TODAS_CATEGORIAS,getApplicationContext());
+        }
 
         id_pedido = getIntent().getIntExtra(ID_PEDIDO, -1);
 

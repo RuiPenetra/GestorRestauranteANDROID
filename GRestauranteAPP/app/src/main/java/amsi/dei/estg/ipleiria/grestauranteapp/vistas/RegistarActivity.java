@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -101,8 +102,7 @@ public class RegistarActivity extends AppCompatActivity implements AutenticacaoL
         btn_registar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(validarRegisto()==true){
+             if(validarRegisto()==true){
 
                     String nome = edt_nome.getText().toString();
                     String apelido = edt_apelido.getText().toString();
@@ -146,13 +146,6 @@ public class RegistarActivity extends AppCompatActivity implements AutenticacaoL
         String email=edt_email.getText().toString();
         String password=edt_password.getText().toString();
 
-        if(!rb_masculino.isChecked()&&!rb_feminino.isChecked())
-        {
-            rb_masculino.setError("Tem que Selecionar 1 genero");
-            rb_feminino.setError("Tem que Selecionar 1 genero");
-            return false;
-
-        }
 
         if (nome.length()<3)
         {
@@ -184,6 +177,14 @@ public class RegistarActivity extends AppCompatActivity implements AutenticacaoL
             return false;
         }
 
+        if(!rb_masculino.isChecked()&&!rb_feminino.isChecked())
+        {
+            rb_masculino.setError("Tem que Selecionar 1 genero");
+            rb_feminino.setError("Tem que Selecionar 1 genero");
+            return false;
+
+        }
+
         if(nacionalidade.length()<3)
         {
             edt_nacionalidade.setError("Nacionalidade Invalido");
@@ -210,6 +211,12 @@ public class RegistarActivity extends AppCompatActivity implements AutenticacaoL
             edt_password.setError("Password Invalida");
             return false;
         }
+
+        if(ip==null){
+            Toast.makeText(getApplicationContext(), "Tem de defenir o endereço de ip", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         return true;
     }
     //VALIDAÇÂO DO EMAIL
