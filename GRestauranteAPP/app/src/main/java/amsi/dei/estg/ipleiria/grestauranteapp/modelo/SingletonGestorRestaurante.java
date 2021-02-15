@@ -481,18 +481,9 @@ public class SingletonGestorRestaurante {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    String responseBody = null;
-                    try {
-                        responseBody = new String(error.networkResponse.data, "utf-8");
-                        JSONObject data = new JSONObject(responseBody);
 
-                        String message = data.getString("message");
+                        Toast.makeText(context, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
 
-                        Toast.makeText(context, "Não existe pedidos associados a este utilizador"+message, Toast.LENGTH_SHORT).show();
-
-                    } catch (UnsupportedEncodingException | JSONException e) {
-                        e.printStackTrace();
-                    }
                 }
             });
 
