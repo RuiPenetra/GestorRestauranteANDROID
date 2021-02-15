@@ -40,7 +40,7 @@ public class ContactoFragment extends Fragment {
 
 
         call = view.findViewById(R.id.call);
-        number = "915899612";
+        number = "910000000";
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

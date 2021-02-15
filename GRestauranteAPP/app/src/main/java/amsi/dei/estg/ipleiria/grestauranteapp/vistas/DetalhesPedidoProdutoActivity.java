@@ -74,6 +74,8 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
 
             btnRemover.setVisibility(View.INVISIBLE);
             btnAtualizar.setVisibility(View.INVISIBLE);
+            cvSomar.setEnabled(false);
+            cvSubtrair.setEnabled(false);
         }
 
         if(pedidoProduto.getEstado()==1){
@@ -94,13 +96,17 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
             public void onClick(View v) {
                 int quantidade=Integer.parseInt(tv_PedProd_Quantidade.getText().toString());
                 quantidade=quantidade+1;
-                tv_PedProd_Quantidade.setText(""+quantidade);
 
-                float preco= Float.parseFloat(produto.getPreco());
+                if(estado_pedido<3){
+                    tv_PedProd_Quantidade.setText(""+quantidade);
 
-                preco=preco*quantidade;
+                    float preco= Float.parseFloat(produto.getPreco());
 
-                tv_PedProd_Preco.setText(String.format("%.2f", preco).replace(',', '.'));
+                    preco=preco*quantidade;
+
+                    tv_PedProd_Preco.setText(String.format("%.2f", preco).replace(',', '.'));
+                }
+
             }
         });
 
@@ -110,7 +116,29 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
                 int quantidade=Integer.parseInt(tv_PedProd_Quantidade.getText().toString());
                 float preco= Float.parseFloat(produto.getPreco());
 
-                if(quantidade>pedidoProduto.getQuantidade()){
+
+                if(pedidoProduto.getEstado()==0){
+                        if(quantidade>1){
+                            quantidade=quantidade-1;
+                            preco= preco*quantidade;
+
+                            if(quantidade>0){
+                                tv_PedProd_Quantidade.setText(""+quantidade);
+                                tv_PedProd_Preco.setText(String.format("%.2f", preco).replace(',', '.'));
+
+                            }else{
+                                tv_PedProd_Quantidade.setText("1");
+                                tv_PedProd_Preco.setText(String.format("%.2f", produto.getPreco()).replace(',', '.'));
+                            }
+
+                        }else{
+                            tv_PedProd_Quantidade.setText("1");
+                            tv_PedProd_Preco.setText(produto.getPreco());
+
+                        }
+
+                }else if(pedidoProduto.getEstado()==1 && quantidade>pedidoProduto.getQuantidade()){
+
                     if(quantidade>1){
                         quantidade=quantidade-1;
                         preco= preco*quantidade;
@@ -130,6 +158,7 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
 
                     }
                 }
+
             }
         });
 
@@ -171,7 +200,7 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
                 tv_PedProd_Estado.setBackgroundResource(R.drawable.badge_progresso);
                 break;
             case 2:
-                tv_PedProd_Estado.setText(" Concluido ");
+                tv_PedProd_Estado.setText(" Entregue ");
                 tv_PedProd_Estado.setBackgroundResource(R.drawable.badge_concluido);
                 break;
         }
@@ -240,7 +269,7 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
 
     @Override
     public void onRefreshListaPedidosProduto(ArrayList<PedidoProduto> pedidoProdutos) {
-        //EMPTY
+        //Empty
     }
 
     @Override
@@ -258,7 +287,7 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
 
     @Override
     public void onRefreshListaPedidos(ArrayList<Pedido> pedidos) {
-        //
+        //Empty
     }
 
     @Override
@@ -268,6 +297,7 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
 
     @Override
     public void onCriarPedidoRestaurante() {
+        //Empty
 
     }
 }

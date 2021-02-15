@@ -101,11 +101,11 @@ public class ListaPedidosProdutoAdaptador extends BaseAdapter {
                     tvEstado.setBackgroundResource(R.drawable.badge_processo);
                     break;
                 case 1:
-                    tvEstado.setText(" Em Progresso ");
+                    tvEstado.setText(" Em Preparação ");
                     tvEstado.setBackgroundResource(R.drawable.badge_progresso);
                     break;
                 case 2:
-                    tvEstado.setText(" Concluido ");
+                    tvEstado.setText(" Entregue ");
                     tvEstado.setBackgroundResource(R.drawable.badge_concluido);
                     break;
             }

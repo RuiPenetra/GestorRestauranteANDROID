@@ -22,7 +22,7 @@ import amsi.dei.estg.ipleiria.grestauranteapp.R;
 import static android.Manifest.permission.CALL_PHONE;
 
 public class ContactoActivity extends AppCompatActivity {
-private ImageButton call,mail;
+private ImageButton imgBcall,imgBmail;
 private String number;
 
     @Override
@@ -34,12 +34,12 @@ private String number;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        call = findViewById(R.id.imgbCall);
-        mail=findViewById(R.id.imgbMail);
+        imgBcall = findViewById(R.id.imgBcall);
+        imgBmail=findViewById(R.id.imgBmail);
 
 
-        number = "915899612";
-        call.setOnClickListener(new View.OnClickListener() {
+        number = "910000000";
+        imgBcall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isPermissionGranted()) {
@@ -50,7 +50,7 @@ private String number;
             }
         });
 
-        mail.setOnClickListener(new View.OnClickListener() {
+        imgBmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String[] TO_EMAILS= {"2180687@my.ipleiria.pt"};
