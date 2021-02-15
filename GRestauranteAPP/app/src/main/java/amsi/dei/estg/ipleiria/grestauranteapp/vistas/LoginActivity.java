@@ -166,6 +166,7 @@ public class LoginActivity extends AppCompatActivity implements AutenticacaoList
             editor.putString(MenuActivity.EMAIL,email);
             editor.putString(MenuActivity.NOMECOMPLETO,perfil.getNome()+" "+perfil.getApelido());
             editor.putInt(MenuActivity.GENERO,perfil.getGenero());
+            editor.putString(MenuActivity.USERNAME,edtUsername.getText().toString());
 
             if(cbRememberMe.isChecked()){
                 editor.putBoolean(MenuActivity.RELEMBRAR,true);
@@ -184,6 +185,8 @@ public class LoginActivity extends AppCompatActivity implements AutenticacaoList
             editor.putString(MenuClienteActivity.EMAIL,email);
             editor.putString(MenuClienteActivity.NOMECOMPLETO,perfil.getNome()+" "+perfil.getApelido());
             editor.putInt(MenuClienteActivity.GENERO,perfil.getGenero());
+            editor.putString(MenuClienteActivity.USERNAME,edtUsername.getText().toString());
+
 
             if(cbRememberMe.isChecked()){
                 editor.putBoolean(MenuClienteActivity.RELEMBRAR,true);
@@ -204,24 +207,28 @@ public class LoginActivity extends AppCompatActivity implements AutenticacaoList
 
             Intent intent=null;
 
-            if(!perfil.getCargo().equals("cliente")){
+            if(perfil.getCargo().equals("cliente")){
                 intent= new Intent(this, MenuActivity.class);
-            }else{
+                startActivity(intent);
+                finish();
+            }else if(perfil.getCargo().equals("empregadoMesa")){
                 intent= new Intent(this, MenuClienteActivity.class);
+                startActivity(intent);
+                finish();
+            }else{
+                Toast.makeText(this, "Não tem premissão", Toast.LENGTH_SHORT).show();
             }
-            startActivity(intent);
-            finish();
 
         }
     }
 
     @Override
     public void onUpdatePerfil() {
-
+        //Empty
     }
 
     @Override
     public void onValidarRegisto() {
-
+        //Empty
     }
 }
