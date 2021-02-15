@@ -116,6 +116,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(),DetalhesPedidoProdutoActivity.class);
                 intent.putExtra(DetalhesPedidoProdutoActivity.ID_PEDIDO_PRODUTO, (int) id);
+                intent.putExtra(DetalhesPedidoProdutoActivity.ESTADO_PEDIDO, pedido.getEstado());
                 startActivityForResult(intent,EDITAR_PEDIDOPRODUTO);
             }
         });

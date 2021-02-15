@@ -29,6 +29,7 @@ import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements PedidosProdutoListener, PedidosListener {
 
     public static final String ID_PEDIDO_PRODUTO ="ID_PEDIDO_PRODUTO" ;
+    public static final String ESTADO_PEDIDO ="ESTADO_PEDIDO" ;
     private TextView tv_PedProd_Estado,tv_PedProd_Quantidade,tv_PedProd_Preco,tv_ProdNome,tv_ProdCategoria,tv_ProdIngredientes;
     private ImageView img_Categoria;
     private CardView cvSomar,cvSubtrair;
@@ -62,6 +63,7 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
         cargo= sharedPrefInfoUser.getString(MenuActivity.CARGO,null);
 
         int id_pedido= getIntent().getIntExtra(ID_PEDIDO_PRODUTO, -1);
+        int estado_pedido= getIntent().getIntExtra(ESTADO_PEDIDO, -1);
         SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidoProdutosListener(this);
         pedidoProduto= SingletonGestorRestaurante.getInstance(this).getPedidoProduto(id_pedido);
         produto= SingletonGestorRestaurante.getInstance(this).getProduto(pedidoProduto.getId_produto());
@@ -72,6 +74,17 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
 
             btnRemover.setVisibility(View.INVISIBLE);
             btnAtualizar.setVisibility(View.INVISIBLE);
+        }
+
+        if(pedidoProduto.getEstado()==1){
+
+            btnRemover.setVisibility(View.GONE);
+        }
+
+        if(estado_pedido==3){
+            btnAtualizar.setVisibility(View.GONE);
+            btnRemover.setVisibility(View.GONE);
+
         }
 
         carregarDadosPedidoProduto();
@@ -97,23 +110,25 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
                 int quantidade=Integer.parseInt(tv_PedProd_Quantidade.getText().toString());
                 float preco= Float.parseFloat(produto.getPreco());
 
-                if(quantidade>1){
-                    quantidade=quantidade-1;
-                    preco= preco*quantidade;
+                if(quantidade>pedidoProduto.getQuantidade()){
+                    if(quantidade>1){
+                        quantidade=quantidade-1;
+                        preco= preco*quantidade;
 
-                    if(quantidade>0){
-                        tv_PedProd_Quantidade.setText(""+quantidade);
-                        tv_PedProd_Preco.setText(String.format("%.2f", preco).replace(',', '.'));
+                        if(quantidade>0){
+                            tv_PedProd_Quantidade.setText(""+quantidade);
+                            tv_PedProd_Preco.setText(String.format("%.2f", preco).replace(',', '.'));
+
+                        }else{
+                            tv_PedProd_Quantidade.setText("1");
+                            tv_PedProd_Preco.setText(String.format("%.2f", produto.getPreco()).replace(',', '.'));
+                        }
 
                     }else{
                         tv_PedProd_Quantidade.setText("1");
-                        tv_PedProd_Preco.setText(String.format("%.2f", produto.getPreco()).replace(',', '.'));
+                        tv_PedProd_Preco.setText(produto.getPreco());
+
                     }
-
-                }else{
-                    tv_PedProd_Quantidade.setText("1");
-                    tv_PedProd_Preco.setText(produto.getPreco());
-
                 }
             }
         });
@@ -122,6 +137,8 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
             @Override
             public void onClick(View v) {
                 if (Generic.isConnectionInternet(getApplicationContext())) {
+
+
 
                     pedidoProduto.setQuantidade(Integer.parseInt(tv_PedProd_Quantidade.getText().toString()));
                     pedidoProduto.setPreco(Float.parseFloat(tv_PedProd_Preco.getText().toString().replace(',', '.')));
@@ -150,7 +167,7 @@ public class DetalhesPedidoProdutoActivity extends AppCompatActivity implements 
                 tv_PedProd_Estado.setBackgroundResource(R.drawable.badge_processo);
                 break;
             case 1:
-                tv_PedProd_Estado.setText(" Em Progresso ");
+                tv_PedProd_Estado.setText(" Em Preparação ");
                 tv_PedProd_Estado.setBackgroundResource(R.drawable.badge_progresso);
                 break;
             case 2:

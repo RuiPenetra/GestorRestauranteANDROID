@@ -228,15 +228,15 @@
         android:id="@+id/btnAtualizarPedidoProduto"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_margin="20dp"
         android:backgroundTint="#000000"
         android:text="@string/btnAtualizarDetProduto"
-        android:textStyle="bold"
         android:textColor="#FFFFFF"
-        app:layout_constraintWidth_percent=".4"
-        app:layout_constraintVertical_bias="0"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnRemoverPedidoProduto"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="20dp"/>
+        app:layout_constraintWidth_percent=".4" />
 
     <Button
         android:id="@+id/btnRemoverPedidoProduto"
