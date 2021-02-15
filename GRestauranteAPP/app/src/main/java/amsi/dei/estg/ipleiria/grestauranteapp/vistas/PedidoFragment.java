@@ -147,6 +147,7 @@ public class PedidoFragment extends Fragment implements SwipeRefreshLayout.OnRef
     public void onResume() {
         super.onResume();
         SingletonGestorRestaurante.getInstance(getContext()).setPedidosListener(this);
+        SingletonGestorRestaurante.getInstance(getContext()).getPedidosAPI(ip,token,getContext());
 
     }
 }

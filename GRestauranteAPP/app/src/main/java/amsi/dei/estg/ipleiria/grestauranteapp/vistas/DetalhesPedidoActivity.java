@@ -44,7 +44,7 @@ import amsi.dei.estg.ipleiria.grestauranteapp.modelo.SingletonGestorRestaurante;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.Generic;
 import amsi.dei.estg.ipleiria.grestauranteapp.utils.PedidosProdutoJsonParser;
 
-public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, PedidosProdutoListener{
+public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, PedidosProdutoListener,PedidosListener{
 
     public static final String ID ="ID" ;
     private static final int EDITAR_PEDIDOPRODUTO= 3 ;
@@ -88,6 +88,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
 
         swipeRefreshLayoutPedidosProduto.setOnRefreshListener(this);
         SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidoProdutosListener(this);
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidosListener(this);
 
         produtos=SingletonGestorRestaurante.getInstance(getApplicationContext()).getProdutosBD();
         pedido=SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedido(id_pedido);
@@ -190,6 +191,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
         if(resultCode == Activity.RESULT_OK){
             switch (requestCode){
                 case ADICIONAR_PEDIDOPRODUTO:
+                    SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosAPI(ip,token,getApplicationContext());
                     SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(ip,token,getApplicationContext(),id_pedido);
                     Toast.makeText(getApplicationContext(),"Produto adicionado com sucesso", Toast.LENGTH_LONG).show();
                     break;
@@ -261,6 +263,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
 
     @Override
     public void onRefresh() {
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosAPI(ip,token,getApplicationContext());
         SingletonGestorRestaurante.getInstance(getApplicationContext()).getPedidosProdutoAPI(ip,token,getApplicationContext(),id_pedido);
         swipeRefreshLayoutPedidosProduto.setRefreshing(false);
     }
@@ -274,7 +277,28 @@ public class DetalhesPedidoActivity extends AppCompatActivity implements SwipeRe
     @Override
     protected void onResume() {
         SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidoProdutosListener(this);
+        SingletonGestorRestaurante.getInstance(getApplicationContext()).setPedidosListener(this);
 
         super.onResume();
+    }
+
+    @Override
+    public void onRefreshListaPedidos(ArrayList<Pedido> pedidos) {
+
+        for (Pedido pedido:pedidos) {
+            if(pedido.getId()==id_pedido){
+                carregarDadosPedido(pedido);
+            }
+        }
+    }
+
+    @Override
+    public void onCriarPedidoTakeaway() {
+
+    }
+
+    @Override
+    public void onCriarPedidoRestaurante() {
+
     }
 }

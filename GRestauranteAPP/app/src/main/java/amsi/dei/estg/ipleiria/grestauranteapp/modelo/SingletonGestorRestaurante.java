@@ -469,8 +469,13 @@ public class SingletonGestorRestaurante {
                 public void onResponse(JSONArray response) {
 
                     pedidos = PedidoJsonParser.parserJsonPedidos(response);
-                    if(pedidosListener!=null)
-                        pedidosListener.onRefreshListaPedidos(pedidos);
+
+                    if(pedidos!=null){
+                        if(pedidosListener!=null)
+                            pedidosListener.onRefreshListaPedidos(pedidos);
+                    }else{
+                        Toast.makeText(context, "Não existe pedidos associados a este utilizador", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             }, new Response.ErrorListener() {
@@ -483,7 +488,7 @@ public class SingletonGestorRestaurante {
 
                         String message = data.getString("message");
 
-                        Toast.makeText(context, ""+message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Não existe pedidos associados a este utilizador"+message, Toast.LENGTH_SHORT).show();
 
                     } catch (UnsupportedEncodingException | JSONException e) {
                         e.printStackTrace();

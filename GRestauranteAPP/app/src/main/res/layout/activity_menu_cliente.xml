@@ -54,21 +54,6 @@
                 app:layout_anchor="@+id/bottomAppBar"
                 app:maxImageSize="30dp" />
 
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="20sp"
-                android:background="@drawable/badge_circle"
-                android:elevation="6dp"
-                android:gravity="center"
-                android:text="20.00 €"
-                android:textColor="#fff"
-                android:textSize="10sp"
-                app:layout_anchor="@+id/fabCarrinho"
-                app:layout_anchorGravity="end|top"
-                app:layout_constraintEnd_toEndOf="@id/fabCarrinho"
-                app:layout_constraintTop_toTopOf="@id/fabCarrinho" />
-
-
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
